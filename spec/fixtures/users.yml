@@ -1,0 +1,40 @@
+kyle:
+  id: 1
+  admin: true
+  first_name: Kyle
+  last_name: Blakie
+  username: kblakie
+  email: kblakie@example.org
+  confirmation_token: abc123
+  confirmed_at: <%= 1.hour.ago %>
+  confirmation_sent_at: <%= 2.hours.ago %>
+
+nancy:
+  id: 10
+  first_name: Nancy
+  last_name: Smith
+  username: nsmith
+  email: nsmith@example.org
+  confirmation_token: def456
+  confirmed_at: <%= 1.hour.ago %>
+  confirmation_sent_at: <%= 2.hours.ago %>
+
+unconfirmed:
+  id: 20
+  first_name: Temp
+  last_name: Person
+  username: rando
+  email: rando@example.org
+  confirmation_token:
+  confirmed_at:
+  confirmation_sent_at: <%= 1.minute.ago %>
+
+izzie:
+  id: 30
+  first_name: Julia
+  last_name: Gaillard
+  username: izzie
+  email: jgaillard@example.org
+  confirmation_token: ghi789
+  confirmed_at: <%= 1.hour.ago %>
+  confirmation_sent_at: <%= 2.hours.ago %>

@@ -1,6 +1,12 @@
 require 'spec_helper'
 
 describe Admin::UsersController do
+  fixtures :users
+
+  let(:user) { users(:kyle) }
+
+  before { sign_in user }
+
   describe '#index' do
     subject { get :index }
 

@@ -37,6 +37,9 @@ GEM
       thread_safe (~> 0.3, >= 0.3.4)
       tzinfo (~> 1.1)
     arel (6.0.0)
+    authority (3.1.0)
+      activesupport (>= 3.0.0)
+      rake (>= 0.8.7)
     bcrypt (3.1.10)
     builder (3.2.2)
     devise (3.5.2)
@@ -135,6 +138,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  authority (= 3.1.0)
   devise (= 3.5.2)
   dotenv-rails (= 2.0.2)
   foreman (= 0.78.0)

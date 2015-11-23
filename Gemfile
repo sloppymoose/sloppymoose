@@ -1,5 +1,6 @@
 source 'https://rubygems.org'
 
+gem 'authority',  '3.1.0'
 gem 'devise',     '3.5.2'
 gem 'dotenv-rails', '2.0.2'
 gem 'rails',      '4.2.1'

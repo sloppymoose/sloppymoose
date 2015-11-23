@@ -49,6 +49,9 @@ RSpec.configure do |config|
 
   config.infer_spec_type_from_file_location!
 
+  config.fixture_path = Rails.root.join('spec', 'fixtures')
+  config.use_transactional_fixtures = true
+
   # Limits the available syntax to the non-monkey patched syntax that is
   # recommended. For more details, see:
   #   - http://myronmars.to/n/dev-blog/2012/06/rspecs-new-expectation-syntax
@@ -75,6 +78,8 @@ RSpec.configure do |config|
   # the seed, which is printed after each run.
   #     --seed 1234
   config.order = :random
+
+  config.include Devise::TestHelpers, type: :controller
 
   # Seed global randomization in this process using the `--seed` CLI option.
   # Setting this allows you to use `--seed` to deterministically reproduce
