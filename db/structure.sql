@@ -63,7 +63,8 @@ CREATE TABLE users (
     confirmation_token character varying,
     confirmed_at timestamp without time zone,
     confirmation_sent_at timestamp without time zone,
-    unconfirmed_email character varying
+    unconfirmed_email character varying,
+    admin boolean DEFAULT false NOT NULL
 );
 
 
@@ -145,4 +146,6 @@ SET search_path TO "$user",public;
 INSERT INTO schema_migrations (version) VALUES ('20150525033942');
 
 INSERT INTO schema_migrations (version) VALUES ('20151122212658');
+
+INSERT INTO schema_migrations (version) VALUES ('20151123081359');
 
