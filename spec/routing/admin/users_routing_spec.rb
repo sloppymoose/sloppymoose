@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe 'admin users routing' do
   it 'routes GET /admin/users to /admin/users#index' do
