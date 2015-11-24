@@ -20,4 +20,13 @@
 # available at http://guides.rubyonrails.org/i18n.html.
 
 en:
-  hello: "Hello world"
+  activerecord:
+    attributes:
+      check_in:
+        created_on: 'Check in'
+    errors:
+      models:
+        check_in:
+          attributes:
+            created_on:
+              taken: has already been recorded

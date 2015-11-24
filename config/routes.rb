@@ -5,6 +5,8 @@ Rails.application.routes.draw do
 
   root 'welcome#index'
 
+  resources :check_ins, only: %i{index new create}
+
   namespace :admin do
     resources :users
   end

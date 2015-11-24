@@ -1,0 +1,7 @@
+<ul>
+  <% @check_ins.each do |check_in| %>
+    <li><%= check_in.created_at %></li>
+  <% end %>
+</ul>
+
+<%= link_to 'Home', root_path %>

@@ -20,6 +20,6 @@ describe CheckIn do
   it 'does not allow multiple check ins per day' do
     user.check_ins.create!(created_at: today)
     check_in = user.check_ins.create(created_at: today)
-    expect(check_in.errors[:created_on]).to include 'has already been taken'
+    expect(check_in.errors[:created_on]).to include 'has already been recorded'
   end
 end
