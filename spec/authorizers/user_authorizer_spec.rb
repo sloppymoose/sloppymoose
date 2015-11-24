@@ -54,7 +54,7 @@ describe UserAuthorizer do
       end
 
       it 'is not allowed by a different instance' do
-        expect(subject).to be_readable_by(other_user)
+        expect(subject).to_not be_readable_by(other_user)
       end
     end
   end
@@ -72,7 +72,7 @@ describe UserAuthorizer do
       subject { user.authorizer }
 
       it 'is allowed by an admin' do
-        expect(subject).to be_readable_by(admin)
+        expect(subject).to be_updateable_by(admin)
       end
 
       it 'is allowed by the instance' do
@@ -98,7 +98,7 @@ describe UserAuthorizer do
       subject { user.authorizer }
 
       it 'is allowed by an admin' do
-        expect(subject).to be_readable_by(admin)
+        expect(subject).to be_deletable_by(admin)
       end
 
       it 'is allowed by the instance' do

@@ -22,4 +22,8 @@ class UserAuthorizer < ApplicationAuthorizer
   def deletable_by?(user)
     user.admin? || resource.id == user.id
   end
+
+  def readable_by?(user)
+    user.admin? || resource.id == user.id
+  end
 end
