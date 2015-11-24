@@ -1,4 +1,6 @@
 class CheckIn < ActiveRecord::Base
+  include Authority::Abilities
+
   validates :user, presence: true
   validates :created_on,
     presence: true,
