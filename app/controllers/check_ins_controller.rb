@@ -1,6 +1,4 @@
 class CheckInsController < ApplicationController
-  before_filter :authenticate_user!
-
   def index
     @check_ins = current_user.check_ins
   end
