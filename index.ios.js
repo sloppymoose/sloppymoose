@@ -1,53 +1,28 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- */
-'use strict';
+import { App } from './client_app/native/components/App';
+import { applyMiddleware, combineReducers, createStore, compose } from 'redux';
+import { Provider } from 'react-redux/native';
+import React from 'react-native';
+import * as reducers from './client_app/react/reducers';
+import { routerReducer } from 'react-native-redux-router';
+import thunk from 'redux-thunk';
 
-var React = require('react-native');
-var {
-  AppRegistry,
-  StyleSheet,
-  Text,
-  View,
-} = React;
+window.React = React;
 
-var sloppymoose = React.createClass({
-  render: function() {
+const { AppRegistry, Component } = React;
+const mergedReducers = Object.assign({}, reducers, { routerReducer });
+const reducer = combineReducers(mergedReducers);
+const store = compose(
+  applyMiddleware(thunk)
+)(createStore)(reducer);
+
+class SloppyMoose extends Component {
+  render() {
     return (
-      <View style={styles.container}>
-        <Text style={styles.welcome}>
-          Welcome to React Native!
-        </Text>
-        <Text style={styles.instructions}>
-          To get started, edit index.ios.js
-        </Text>
-        <Text style={styles.instructions}>
-          Press Cmd+R to reload,{'\n'}
-          Cmd+D or shake for dev menu
-        </Text>
-      </View>
+      <Provider store={store}>
+        {() => <App/>}
+      </Provider>
     );
   }
-});
+}
 
-var styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF',
-  },
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
-  },
-  instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5,
-  },
-});
-
-AppRegistry.registerComponent('sloppymoose', () => sloppymoose);
+AppRegistry.registerComponent('sloppymoose', () => SloppyMoose);
