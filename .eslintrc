@@ -1,0 +1,66 @@
+{
+  "ecmaFeatures": {
+    "blockBindings": true,
+    "classes": true,
+    "jsx": true,
+    "modules": true
+  },
+
+  "env": {
+    "browser": true,
+    "mocha": true,
+    "node": true
+  },
+
+  "globals": {
+    "assert": true,
+    "expect": true,
+    "gapi": true
+  },
+
+  "parser": "babel-eslint",
+
+  "plugins": [
+    "react"
+  ],
+
+  "rules": {
+    "camelcase": 2,
+    "new-cap": [0, { "capIsNew": true }],
+    "eol-last": 2,
+    "jsx-quotes": [2, "prefer-double"],
+    "quotes": [2, "single", "avoid-escape"],
+    "no-mixed-spaces-and-tabs": 2,
+    "no-extra-semi": 2,
+    "no-trailing-spaces": 2,
+    "no-undef": 1,
+    "no-underscore-dangle": 0,
+    "no-unused-vars": [1, { "args": "none" }],
+    "semi": 2,
+    "semi-spacing": 2,
+    "vars-on-top": 1,
+    "react/display-name": 0,
+    "react/jsx-boolean-value": [1, "never"],
+    "react/jsx-closing-bracket-location": 2,
+    "react/jsx-curly-spacing": [1, "never", { "allowMultiline": false }],
+    "react/jsx-max-props-per-line": [1, { "maximum": 5 }],
+    "react/jsx-no-duplicate-props": [2, { "ignoreCase": true }],
+    "react/jsx-no-literals": 0,
+    "react/jsx-no-undef": 2,
+    "react/jsx-sort-prop-types": [1, { "ignoreCase": true }],
+    "react/jsx-sort-props": [1, { "ignoreCase": true }],
+    "react/jsx-uses-react": 0, // Handled by Babel/JSX transform
+    "react/jsx-uses-vars": 2,
+    "react/no-danger": 0,
+    "react/no-did-mount-set-state": 2,
+    "react/no-did-update-set-state": 2,
+    "react/no-multi-comp": 2,
+    "react/no-unknown-property": 2,
+    "react/prop-types": 2,
+    "react/react-in-jsx-scope": 0, // Handled by Babel/JSX transform
+    "react/require-extension": 1,
+    "react/self-closing-comp": 1,
+    "react/sort-comp": 2,
+    "react/wrap-multilines": 2
+  }
+}
