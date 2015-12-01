@@ -50,6 +50,8 @@ GEM
       thread_safe (~> 0.1)
       warden (~> 1.2.3)
     diff-lcs (1.2.5)
+    doorkeeper (3.0.1)
+      railties (>= 3.2)
     dotenv (2.0.2)
     dotenv-rails (2.0.2)
       dotenv (= 2.0.2)
@@ -140,6 +142,7 @@ PLATFORMS
 DEPENDENCIES
   authority (= 3.1.0)
   devise (= 3.5.2)
+  doorkeeper (= 3.0.1)
   dotenv-rails (= 2.0.2)
   foreman (= 0.78.0)
   pg (= 0.18.2)
