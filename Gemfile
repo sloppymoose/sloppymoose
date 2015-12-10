@@ -2,6 +2,7 @@ source 'https://rubygems.org'
 
 gem 'authority',  '3.1.0'
 gem 'devise',     '3.5.2'
+gem 'devise-doorkeeper', '1.1.1'
 gem 'doorkeeper', '3.0.1'
 gem 'dotenv-rails', '2.0.2'
 gem 'rails',      '4.2.1'

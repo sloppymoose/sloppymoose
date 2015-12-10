@@ -1,4 +1,6 @@
 Doorkeeper.configure do
+  Devise::Doorkeeper.configure_doorkeeper(self)
+
   # Change the ORM that doorkeeper will use (needs plugins)
   orm :active_record
 
@@ -6,6 +8,14 @@ Doorkeeper.configure do
   resource_owner_authenticator do
     # Put your resource owner authentication logic here.
     User.find_by_id(session[:user_id]) || redirect_to(new_user_session_url)
+  end
+
+  resource_owner_from_credentials do |routes|
+    user_params = params.fetch(:user, {})
+    user = User.find_for_database_authentication(email: user_params[:email])
+    if user && user.valid_for_authentication? { user.valid_password?(user_params[:password]) }
+      user
+    end
   end
 
   # If you want to restrict access to the web interface for adding oauth authorized applications, you need to declare the block below.
@@ -35,7 +45,7 @@ Doorkeeper.configure do
   # reuse_access_token
 
   # Issue access tokens with refresh token (disabled by default)
-  # use_refresh_token
+  use_refresh_token
 
   # Provide support for an owner to be assigned to each registered application (disabled by default)
   # Optional parameter :confirmation => true (default false) if you want to enforce ownership of
@@ -91,6 +101,7 @@ Doorkeeper.configure do
   #   http://tools.ietf.org/html/rfc6819#section-4.4.3
   #
   # grant_flows %w(authorization_code client_credentials)
+  grant_flows %w(password authorization_code client_credentials)
 
   # Under some circumstances you might want to have applications auto-approved,
   # so that the user skips the authorization step.
