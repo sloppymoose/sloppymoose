@@ -6,6 +6,9 @@ Rails.application.routes.draw do
 
   authenticate :user do
     resources :check_ins, only: %i{index new create}
+    namespace :api do
+      resources :check_ins, only: %i{index create}
+    end
   end
 
   authenticate :user, lambda {|u| u.try(:admin) } do
