@@ -1,5 +1,6 @@
 source 'https://rubygems.org'
 
+gem 'active_model_serializers', '0.10.0.rc3'
 gem 'authority',  '3.1.0'
 gem 'devise',     '3.5.2'
 gem 'devise-doorkeeper', '1.1.1'
