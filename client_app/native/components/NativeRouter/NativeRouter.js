@@ -1,5 +1,7 @@
+import { bindActionCreators } from 'redux';
 import { Component, PropTypes } from 'react-native';
 import { connect } from 'react-redux/native';
+import emptyFn from 'empty/function';
 import emptyObj from 'empty/object';
 import {
   HomeHandler,
@@ -7,6 +9,7 @@ import {
   SignInHandler,
   SignUpHandler
 } from '../RouteHandlers';
+import { initTokens } from '../../../react/actions/UserActions';
 import { Router, Route } from 'react-native-redux-router';
 
 function getState(state) {
@@ -15,20 +18,25 @@ function getState(state) {
   };
 }
 
+function getActions(dispatch) {
+  return bindActionCreators({ initTokens }, dispatch);
+}
+
 class _NativeRouter extends Component {
+  componentWillMount() {
+    this.props.initTokens();
+  }
   render() {
     return (
       <Router>
         <Route
           component={HomeHandler}
-          initial={this.props.user.signedIn}
           name="home"
           title="Home"
           type="replace"
         />
         <Route
           component={SignedOutHandler}
-          initial={!this.props.user.signedIn}
           name="signedOut"
           title="Signed out"
           type="replace"
@@ -51,13 +59,15 @@ class _NativeRouter extends Component {
 }
 
 _NativeRouter.propTypes = {
+  initTokens: PropTypes.func,
   user: PropTypes.shape({
     signedIn: PropTypes.bool
   })
 };
 
 _NativeRouter.defaultProps = {
+  initTokens: emptyFn,
   user: emptyObj
 };
 
-export const NativeRouter = connect(getState)(_NativeRouter);
+export const NativeRouter = connect(getState, getActions)(_NativeRouter);
