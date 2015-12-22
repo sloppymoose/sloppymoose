@@ -60,6 +60,7 @@ export class SignInForm extends Component {
     return (
       <View style={baseStyles.root}>
         <TextInput
+          autoCapitalize="none"
           keyboardType="email-address"
           onChangeText={this.handleEmailChangeText}
           placeholder="Email"
@@ -67,6 +68,7 @@ export class SignInForm extends Component {
           value={this.state.email}
         />
         <TextInput
+          autoCapitalize="none"
           onChangeText={this.handlePasswordChangeText}
           placeholder="Password"
           secureTextEntry
