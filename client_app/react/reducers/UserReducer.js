@@ -29,7 +29,7 @@ function signedIn(state, payload) {
   return update(state, {
     accessToken: { $set: accessToken },
     createdAt: { $set: createdAt },
-    mail: { $set: email },
+    email: { $set: email },
     expiresIn: { $set: expiresIn },
     refreshToken: { $set: refreshToken },
     signedIn: { $set: true }
