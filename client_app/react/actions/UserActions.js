@@ -92,6 +92,7 @@ export function signInUser(email, password) {
       .catch(error => {
         dispatch(reportSignInError(email, error));
         dispatch(endSignInUser(email));
+        throw error;
       });
   };
 }

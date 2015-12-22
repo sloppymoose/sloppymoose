@@ -9,6 +9,7 @@ import {
   View
 } from 'react-native';
 import emptyFn from 'empty/function';
+import emptyObj from 'empty/object';
 
 const baseStyles = StyleSheet.create({
   root: {
@@ -45,11 +46,17 @@ export class SignInForm extends Component {
   handleSignIn() {
     this.props.signInUser(this.state.email, this.state.password)
       .then(Actions.home)
-      .catch(() => {
-        console.info('TODO: RENDER ERROR?');
-      });
+      .catch(emptyFn);
   }
   render() {
+    let error = null;
+    if(this.props.user.error.message) {
+      error = (
+        <Text>
+          Error: {this.props.user.error.message}
+        </Text>
+      );
+    }
     return (
       <View style={baseStyles.root}>
         <TextInput
@@ -66,6 +73,7 @@ export class SignInForm extends Component {
           style={baseStyles.input}
           value={this.state.password}
         />
+        {error}
         <TouchableOpacity onPress={this.handleSignIn}>
           <View>
             <Text>
@@ -79,8 +87,16 @@ export class SignInForm extends Component {
 }
 
 SignInForm.propTypes = {
-  signInUser: PropTypes.func
+  signInUser: PropTypes.func,
+  user: PropTypes.shape({
+    error: PropTypes.shape({
+      message: PropTypes.string
+    })
+  })
 };
 SignInForm.defaultProps = {
-  signInUser: emptyFn
+  signInUser: emptyFn,
+  user: {
+    error: emptyObj
+  }
 };

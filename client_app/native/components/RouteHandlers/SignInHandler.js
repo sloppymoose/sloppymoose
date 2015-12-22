@@ -10,7 +10,6 @@ import {
 } from 'react-native';
 import { connect } from 'react-redux/native';
 import emptyFn from 'empty/function';
-import emptyObj from 'empty/object';
 import { SignInForm } from '../Forms/SignInForm';
 import { signInUser } from '../../../react/actions/UserActions';
 
@@ -26,8 +25,10 @@ const baseStyles = StyleSheet.create({
   }
 });
 
-function getState() {
-  return emptyObj;
+function getState(state) {
+  return {
+    user: state.user
+  };
 }
 
 function getActions(dispatch) {
@@ -48,13 +49,15 @@ class SignInContainer extends Component {
         </TouchableOpacity>
         <SignInForm
           signInUser={this.props.signInUser}
+          user={this.props.user}
         />
       </View>
     );
   }
 }
 SignInContainer.propTypes = {
-  signInUser: PropTypes.func
+  signInUser: PropTypes.func,
+  user: PropTypes.object
 };
 SignInContainer.defaultProps = {
   signInUser: emptyFn

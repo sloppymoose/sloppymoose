@@ -91,7 +91,10 @@ function handleResponse(response) {
     }
   } else {
     return response.json().then(json => {
-      throw new Error(`${json.error}: ${json.message} (${json.statusCode})`);
+      const message = json.message || json.error_description;
+      const statusCode = json.statusCode || response.status;
+      const error = new Error(`${json.error}: ${message} (${statusCode})`);
+      throw error;
     }, function(err) {
       throw err;
     });
