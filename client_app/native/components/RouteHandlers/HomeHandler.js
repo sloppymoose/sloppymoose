@@ -19,7 +19,7 @@ export class HomeContainer extends Component {
   render() {
     return (
       <HomeScreen
-        signedOut={this.props.signedOut}
+        signOutUser={this.props.signOutUser}
         user={this.props.user}
       />
     );
@@ -27,7 +27,7 @@ export class HomeContainer extends Component {
 }
 
 HomeContainer.propTypes = {
-  signedOut: PropTypes.bool,
+  signOutUser: PropTypes.bool,
   user: PropTypes.shape({
     accessToken: PropTypes.string,
     signedIn: PropTypes.bool

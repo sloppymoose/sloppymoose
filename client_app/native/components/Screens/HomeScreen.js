@@ -46,7 +46,7 @@ export class HomeScreen extends Component {
 }
 
 HomeScreen.propTypes = {
-  signedOut: PropTypes.bool,
+  signOutUser: PropTypes.bool,
   user: PropTypes.shape({
     accessToken: PropTypes.string,
     signedIn: PropTypes.bool
