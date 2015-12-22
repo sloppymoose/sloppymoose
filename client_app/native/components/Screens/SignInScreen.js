@@ -7,7 +7,7 @@ import {
   View
 } from 'react-native';
 import emptyFn from 'empty/function';
-import { SignInForm } from '../Forms/SignInForm';
+import { SignInForm } from '../Forms';
 
 const baseStyles = StyleSheet.create({
   root: {
