@@ -7,7 +7,8 @@ import {
   HomeHandler,
   SignedOutHandler,
   SignInHandler,
-  SignUpHandler
+  SignUpHandler,
+  SplashHandler
 } from '../RouteHandlers';
 import { initTokens } from '../../../react/actions/UserActions';
 import { Router, Route } from 'react-native-redux-router';
@@ -22,7 +23,7 @@ function getActions(dispatch) {
   return bindActionCreators({ initTokens }, dispatch);
 }
 
-class _NativeRouter extends Component {
+class NativeRouterContainer extends Component {
   componentWillMount() {
     this.props.initTokens();
   }
@@ -30,21 +31,27 @@ class _NativeRouter extends Component {
     return (
       <Router>
         <Route
+          component={SplashHandler}
+          initial
+          name="splash"
+          title=""
+        />
+        <Route
           component={HomeHandler}
           name="home"
           title="Home"
           type="replace"
         />
         <Route
-          component={SignedOutHandler}
-          name="signedOut"
-          title="Signed out"
-          type="replace"
-        />
-        <Route
           component={SignInHandler}
           name="signIn"
           title="Sign In"
+          type="replace"
+        />
+        <Route
+          component={SignedOutHandler}
+          name="signedOut"
+          title="Signed out"
           type="replace"
         />
         <Route
@@ -58,16 +65,16 @@ class _NativeRouter extends Component {
   }
 }
 
-_NativeRouter.propTypes = {
+NativeRouterContainer.propTypes = {
   initTokens: PropTypes.func,
   user: PropTypes.shape({
     signedIn: PropTypes.bool
   })
 };
 
-_NativeRouter.defaultProps = {
+NativeRouterContainer.defaultProps = {
   initTokens: emptyFn,
   user: emptyObj
 };
 
-export const NativeRouter = connect(getState, getActions)(_NativeRouter);
+export const NativeRouter = connect(getState, getActions)(NativeRouterContainer);
