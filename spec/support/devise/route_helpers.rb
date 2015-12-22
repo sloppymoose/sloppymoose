@@ -27,6 +27,8 @@ module Devise
     def _warden
       return warden if defined?(warden)
       instance_double('Warden::Proxy').tap do |warden|
+        allow(warden).to receive(:authenticate?).with(scope: nil)
+          .and_return(_authenticated?)
         allow(warden).to receive(:authenticate!).with(scope: :user)
           .and_return(_authenticated?)
         allow(warden).to receive(:user).with(:user).and_return(_current_user)
