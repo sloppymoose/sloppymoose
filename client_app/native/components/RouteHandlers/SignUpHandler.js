@@ -1,38 +1,34 @@
 import { Actions } from 'react-native-redux-router';
-import { Component, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { bindActionCreators } from 'redux';
+import { Component, PropTypes } from 'react-native';
+import { connect } from 'react-redux/native';
+import { SignUpScreen } from '../Screens';
+import { signUpUser } from '../../../react/actions/UserActions';
 
-const baseStyles = StyleSheet.create({
-  root: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF',
-  }
-});
+function getState(state) {
+  return {
+    user: state.user
+  };
+}
 
-export class SignUpHandler extends Component {
+function getActions(dispatch) {
+  return bindActionCreators({ signUpUser }, dispatch);
+}
+
+export class SignUpContainer extends Component {
   render() {
     return (
-      <View style={baseStyles.root}>
-        <Text>Sign Up</Text>
-        <TouchableOpacity onPress={Actions.signedOut}>
-          <View>
-            <Text>
-              Go Back?
-            </Text>
-          </View>
-        </TouchableOpacity>
-        <Text>Username</Text>
-        <Text>E-mail</Text>
-        <Text>Password</Text>
-        <TouchableOpacity onPress={Actions.home}>
-          <View>
-            <Text>
-              Sign Up
-            </Text>
-          </View>
-        </TouchableOpacity>
-      </View>
+      <SignUpScreen
+        onBackPress={Actions.signedOut}
+        signUpUser={this.props.signUpUser}
+        user={this.props.user}
+      />
     );
   }
 }
+SignUpContainer.propTypes = {
+  signUpUser: PropTypes.func,
+  user: PropTypes.object
+};
+
+export const SignUpHandler = connect(getState, getActions)(SignUpContainer);

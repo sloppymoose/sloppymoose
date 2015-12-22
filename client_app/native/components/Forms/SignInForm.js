@@ -45,15 +45,14 @@ export class SignInForm extends Component {
   }
   handleSignIn() {
     this.props.signInUser(this.state.email, this.state.password)
-      .then(Actions.home)
       .catch(emptyFn);
   }
   render() {
-    let error = null;
-    if(this.props.user.error.message) {
-      error = (
+    let signInError = null;
+    if(this.props.user.signInError.message) {
+      signInError = (
         <Text>
-          Error: {this.props.user.error.message}
+          Error: {this.props.user.signInError.message}
         </Text>
       );
     }
@@ -75,7 +74,7 @@ export class SignInForm extends Component {
           style={baseStyles.input}
           value={this.state.password}
         />
-        {error}
+        {signInError}
         <TouchableOpacity onPress={this.handleSignIn}>
           <View>
             <Text>
@@ -91,7 +90,7 @@ export class SignInForm extends Component {
 SignInForm.propTypes = {
   signInUser: PropTypes.func,
   user: PropTypes.shape({
-    error: PropTypes.shape({
+    signInError: PropTypes.shape({
       message: PropTypes.string
     })
   })
@@ -99,6 +98,6 @@ SignInForm.propTypes = {
 SignInForm.defaultProps = {
   signInUser: emptyFn,
   user: {
-    error: emptyObj
+    signInError: emptyObj
   }
 };

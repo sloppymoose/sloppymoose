@@ -33,7 +33,7 @@ export class HomeScreen extends Component {
     return (
       <View style={baseStyles.root}>
         <Text>Sloppy Moose</Text>
-        <Text>Welcome User!</Text>
+        <Text>Welcome {this.props.user.email}!</Text>
         <Text>Expires In: {this.props.user.expiresIn}</Text>
         <Text>Created At: {this.props.user.createdAt * 1000}</Text>
         <Text>Expires At: {expiresAt}</Text>
