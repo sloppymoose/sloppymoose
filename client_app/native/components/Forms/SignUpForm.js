@@ -72,7 +72,7 @@ export class SignUpForm extends Component {
   }
   render() {
     let signUpError = null;
-    const errMsg = this.props.user.getIn(['signUpError','message']);
+    const errMsg = this.props.user.get('signUpError').message;
     if(errMsg) {
       signUpError = (
         <Text>
@@ -143,7 +143,7 @@ export class SignUpForm extends Component {
 SignUpForm.propTypes = {
   signUpUser: PropTypes.func,
   user: ImmutablePropTypes.contains({
-    signUpError: ImmutablePropTypes.contains({
+    signUpError: PropTypes.shape({
       message: PropTypes.string
     })
   })

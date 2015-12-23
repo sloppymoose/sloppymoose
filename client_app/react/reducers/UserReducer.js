@@ -65,15 +65,11 @@ function endSigningUp(state) {
 }
 
 function signInError(state, error) {
-  return state.merge({
-    signInError: error
-  });
+  return state.set('signInError', error);
 }
 
 function signUpError(state, error) {
-  return state.merge({
-    signUpError: error
-  });
+  return state.set('signUpError', error);
 }
 
 export function user(state = initialState(), action) {
