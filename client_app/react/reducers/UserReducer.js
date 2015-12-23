@@ -1,10 +1,10 @@
 import { camelizeKeys } from '../util/objectHelpers';
 import emptyObj from 'empty/object';
-import update from 'react-addons-update';
+import Immutable from 'immutable';
 import UserActions from '../actionTypes/UserActions';
 
 function initialState() {
-  return {
+  return Immutable.fromJS({
     accessToken: null,
     createdAt: null,
     signInError: emptyObj,
@@ -15,35 +15,33 @@ function initialState() {
     signedIn: false,
     signingIn: false,
     signingUp: false
-  };
+  });
 }
 
-function beginSigningIn(state, ) {
-  return update(state, {
-    signInError: { $set: emptyObj },
-    signingIn: { $set: true }
+function beginSigningIn(state) {
+  return state.merge({
+    signInError: emptyObj,
+    signingIn: false
   });
 }
 
 function beginSigningUp(state, ) {
-  return update(state, {
-    signUpError: { $set: emptyObj },
-    signingUp: { $set: true }
+  return state.merge({
+    signUpError: emptyObj,
+    signingUp: true
   });
 }
 
 function signedIn(state, payload) {
-  /* eslint-disable camelcase */
   const { accessToken, createdAt, email, expiresIn, refreshToken } = camelizeKeys(payload);
-  return update(state, {
-    accessToken: { $set: accessToken },
-    createdAt: { $set: createdAt },
-    email: { $set: email },
-    expiresIn: { $set: expiresIn },
-    refreshToken: { $set: refreshToken },
-    signedIn: { $set: true }
+  return state.merge({
+    accessToken,
+    createdAt,
+    email,
+    expiresIn,
+    refreshToken,
+    signedIn: true
   });
-  /* eslint-enable camelcase */
 }
 
 function signedOut(state, payload) {
@@ -55,26 +53,26 @@ function signedUp(state, payload) {
 }
 
 function endSigningIn(state) {
-  return update(state, {
-    signingIn: { $set: false }
+  return state.merge({
+    signingIn: false
   });
 }
 
 function endSigningUp(state) {
-  return update(state, {
-    signingUp: { $set: false }
+  return state.merge({
+    signingUp: false
   });
 }
 
 function signInError(state, error) {
-  return update(state, {
-    signInError: { $set: error }
+  return state.merge({
+    signInError: error
   });
 }
 
 function signUpError(state, error) {
-  return update(state, {
-    signUpError: { $set: error }
+  return state.merge({
+    signUpError: error
   });
 }
 

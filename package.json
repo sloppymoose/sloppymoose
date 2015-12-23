@@ -8,11 +8,13 @@
   "dependencies": {
     "empty": "0.10.1",
     "fetch-oauth2": "0.1.5",
+    "immutable": "3.7.6",
     "keymirror": "0.1.1",
     "lodash-es": "3.10.1",
     "querystring": "0.2.0",
     "react": "0.14.3",
     "react-addons-update": "0.14.3",
+    "react-immutable-proptypes": "1.5.0",
     "react-native": "0.15.0",
     "react-native-redux-router": "1.0.5",
     "react-native-storage": "0.0.9",

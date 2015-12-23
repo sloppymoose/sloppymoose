@@ -27,11 +27,8 @@ export class HomeContainer extends Component {
 }
 
 HomeContainer.propTypes = {
-  signOutUser: PropTypes.bool,
-  user: PropTypes.shape({
-    accessToken: PropTypes.string,
-    signedIn: PropTypes.bool
-  })
+  signOutUser: PropTypes.func,
+  user: PropTypes.any
 };
 
 export const HomeHandler = connect(getState, getActions)(HomeContainer);

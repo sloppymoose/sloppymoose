@@ -35,7 +35,7 @@ export class SignUpScreen extends Component {
 SignUpScreen.propTypes = {
   onBackPress: PropTypes.func,
   signUpUser: PropTypes.func,
-  user: PropTypes.object
+  user: PropTypes.any
 };
 SignUpScreen.defaultProps = {
   onBackPress: emptyFn

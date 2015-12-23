@@ -29,7 +29,7 @@ class SignInContainer extends Component {
 }
 SignInContainer.propTypes = {
   signInUser: PropTypes.func,
-  user: PropTypes.object
+  user: PropTypes.any
 };
 SignInContainer.defaultProps = {
   signInUser: emptyFn

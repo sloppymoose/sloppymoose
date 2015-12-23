@@ -14,9 +14,7 @@ import { initTokens } from '../../../react/actions/UserActions';
 import { Router, Route } from 'react-native-redux-router';
 
 function getState(state) {
-  return {
-    user: state.user
-  };
+  return emptyObj;
 }
 
 function getActions(dispatch) {
@@ -66,15 +64,11 @@ class NativeRouterContainer extends Component {
 }
 
 NativeRouterContainer.propTypes = {
-  initTokens: PropTypes.func,
-  user: PropTypes.shape({
-    signedIn: PropTypes.bool
-  })
+  initTokens: PropTypes.func
 };
 
 NativeRouterContainer.defaultProps = {
-  initTokens: emptyFn,
-  user: emptyObj
+  initTokens: emptyFn
 };
 
 export const NativeRouter = connect(getState, getActions)(NativeRouterContainer);

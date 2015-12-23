@@ -8,7 +8,8 @@ import {
   View
 } from 'react-native';
 import emptyFn from 'empty/function';
-import emptyObj from 'empty/object';
+import Immutable from 'immutable';
+import ImmutablePropTypes from 'react-immutable-proptypes';
 import { snakeCaseKeys } from '../../../react/util/objectHelpers';
 
 const baseStyles = StyleSheet.create({
@@ -71,10 +72,11 @@ export class SignUpForm extends Component {
   }
   render() {
     let signUpError = null;
-    if(this.props.user.signUpError.message) {
+    const errMsg = this.props.user.getIn(['signUpError','message']);
+    if(errMsg) {
       signUpError = (
         <Text>
-          Error: {this.props.user.signUpError.message}
+          Error: {errMsg}
         </Text>
       );
     }
@@ -140,13 +142,13 @@ export class SignUpForm extends Component {
 
 SignUpForm.propTypes = {
   signUpUser: PropTypes.func,
-  user: PropTypes.shape({
-    signUpError: PropTypes.object
+  user: ImmutablePropTypes.contains({
+    signUpError: ImmutablePropTypes.contains({
+      message: PropTypes.string
+    })
   })
 };
 SignUpForm.defaultProps = {
   signUpUser: emptyFn,
-  user: {
-    signUpError: emptyObj
-  }
+  user: Immutable.Map()
 };

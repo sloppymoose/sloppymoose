@@ -1,4 +1,3 @@
-import { Actions } from 'react-native-redux-router';
 import {
   Component,
   PropTypes,
@@ -10,6 +9,8 @@ import {
 } from 'react-native';
 import emptyFn from 'empty/function';
 import emptyObj from 'empty/object';
+import Immutable from 'immutable';
+import ImmutablePropTypes from 'react-immutable-proptypes';
 
 const baseStyles = StyleSheet.create({
   root: {
@@ -49,10 +50,11 @@ export class SignInForm extends Component {
   }
   render() {
     let signInError = null;
-    if(this.props.user.signInError.message) {
+    const errMsg = this.props.user.getIn(['signInError','message']);
+    if(errMsg) {
       signInError = (
         <Text>
-          Error: {this.props.user.signInError.message}
+          Error: {errMsg}
         </Text>
       );
     }
@@ -89,15 +91,15 @@ export class SignInForm extends Component {
 
 SignInForm.propTypes = {
   signInUser: PropTypes.func,
-  user: PropTypes.shape({
-    signInError: PropTypes.shape({
+  user: ImmutablePropTypes.contains({
+    signInError: ImmutablePropTypes.contains({
       message: PropTypes.string
     })
   })
 };
 SignInForm.defaultProps = {
   signInUser: emptyFn,
-  user: {
+  user: Immutable.fromJS({
     signInError: emptyObj
-  }
+  })
 };

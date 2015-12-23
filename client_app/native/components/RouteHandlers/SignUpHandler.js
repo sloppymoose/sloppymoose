@@ -28,7 +28,7 @@ export class SignUpContainer extends Component {
 }
 SignUpContainer.propTypes = {
   signUpUser: PropTypes.func,
-  user: PropTypes.object
+  user: PropTypes.any
 };
 
 export const SignUpHandler = connect(getState, getActions)(SignUpContainer);
