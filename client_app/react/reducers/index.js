@@ -1,2 +1,3 @@
+export { checkIns } from './CheckInsReducer';
 export { storage } from './StorageReducer';
 export { user } from './UserReducer';
