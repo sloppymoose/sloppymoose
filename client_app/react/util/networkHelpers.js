@@ -23,7 +23,7 @@ const signedFetch = fetchWithMiddleware(
 );
 
 function appendHost(uri) {
-  return 'http://localhost:5000' + uri;
+  return 'http://10.0.0.2:5000' + uri;
 }
 
 // fetch middleware that auto-appends the API host to all URLs

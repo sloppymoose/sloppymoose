@@ -1,4 +1,5 @@
-import { Component, PropTypes, StyleSheet, Text, View } from 'react-native';
+import { Actions } from 'react-native-redux-router';
+import { Component, PropTypes, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import Immutable from 'immutable';
 import ImmutablePropTypes from 'react-immutable-proptypes';
 import { SignOutButton } from '../Buttons';
@@ -37,10 +38,17 @@ export class HomeScreen extends Component {
         <Text>------Now: {Date.now()}</Text>
         <Text>TTL: T-{timeLeft / 1000}s</Text>
         <Text>--</Text>
-        <Text>{this.props.checkIns.get('loading').toString()}</Text>
         <Text>Check Ins ({items.size}):</Text>
         {items}
         <SignOutButton signOutUser={this.props.signOutUser}/>
+        <TouchableOpacity onPress={Actions.eventCheckIn}>
+          <View>
+            <Text>
+              Check In
+            </Text>
+          </View>
+        </TouchableOpacity>
+        <Text>...</Text>
       </View>
     );
   }
