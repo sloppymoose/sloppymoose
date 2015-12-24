@@ -32,10 +32,6 @@ export class HomeScreen extends Component {
       <View style={baseStyles.root}>
         <Text>Sloppy Moose</Text>
         <Text>Welcome {user.email}!</Text>
-        <Text>Expires In: {user.expiresIn}</Text>
-        <Text>Created At: {user.createdAt * 1000}</Text>
-        <Text>Expires At: {expiresAt}</Text>
-        <Text>------Now: {Date.now()}</Text>
         <Text>TTL: T-{timeLeft / 1000}s</Text>
         <Text>--</Text>
         <Text>Check Ins ({items.size}):</Text>
