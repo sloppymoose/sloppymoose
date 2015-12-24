@@ -4,6 +4,8 @@ import { DeviceEventEmitter } from 'react-native';
 import emptyObj from 'empty/object';
 import { store } from '../util/reduxStore';
 
+let AuthorizationChangePoller = null;
+const BluetoothAuthorizationPollInterval = 500;
 const Region = {
   identifier: '',
   uuid: null,
@@ -38,15 +40,20 @@ function regionDidExit(data) {
   });
 }
 
-function authorizationDidChange(data) {
+function authorizationDidChange(authorization) {
   // TODO: Determine why this does not fire
   store.dispatch({
     type: BeaconsActions.AUTHORIZATION_DID_CHANGE,
     payload: {
-      data
+      authorization
     }
   });
 }
+
+DeviceEventEmitter.addListener('beaconsDidRange', beaconDidRange);
+DeviceEventEmitter.addListener('regionDidEnter', regionDidEnter);
+DeviceEventEmitter.addListener('regionDidExit', regionDidExit);
+DeviceEventEmitter.addListener('authorizationDidChange', authorizationDidChange);
 
 Beacons.getAuthorizationStatus((authorization) => {
   store.dispatch({
@@ -57,14 +64,34 @@ Beacons.getAuthorizationStatus((authorization) => {
   });
 });
 
+// TODO: Remove polyfill for authorizationDidChange
+// See also: https://github.com/frostney/react-native-ibeacon/issues/22
+export function startListeningForAuthorization() {
+  return function(dispatch, getState) {
+    if(AuthorizationChangePoller) {
+      return;
+    }
+    const { beacons } = getState();
+    const currentState = beacons.get('authorizationState');
+    AuthorizationChangePoller = setInterval(() => {
+      Beacons.getAuthorizationStatus((authorization) => {
+        if(authorization !== currentState) {
+          authorizationDidChange(authorization);
+        }
+      });
+    }, BluetoothAuthorizationPollInterval);
+  };
+}
+
+export function stopListeningForAuthorization() {
+  return function(dispatch) {
+    clearInterval(AuthorizationChangePoller);
+    AuthorizationChangePoller = null;
+  };
+}
+
 export function requestBluetoothAccess() {
   Beacons.requestWhenInUseAuthorization();
-
-  DeviceEventEmitter.addListener('beaconsDidRange', beaconDidRange);
-  DeviceEventEmitter.addListener('regionDidEnter', regionDidEnter);
-  DeviceEventEmitter.addListener('regionDidExit', regionDidExit);
-  DeviceEventEmitter.addListener('authorizationDidChange', authorizationDidChange);
-
   return {
     type: BeaconsActions.BLUETOOTH_REQUEST_ACCESS,
     payload: emptyObj

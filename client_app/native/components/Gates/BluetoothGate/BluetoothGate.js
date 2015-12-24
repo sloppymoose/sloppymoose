@@ -6,9 +6,9 @@ import { Component, PropTypes } from 'react-native';
 import { connect } from 'react-redux/native';
 import ImmutablePropTypes from 'react-immutable-proptypes';
 import {
-  requestBluetoothAccess,
-  startMonitoring,
-  stopMonitoring
+  startListeningForAuthorization,
+  stopListeningForAuthorization,
+  requestBluetoothAccess
 } from '../../../../react/actions/BeaconsActions';
 
 function getState(state) {
@@ -18,29 +18,32 @@ function getState(state) {
 }
 
 function getActions(dispatch) {
-  return bindActionCreators({ requestBluetoothAccess, startMonitoring, stopMonitoring }, dispatch);
+  return bindActionCreators({ requestBluetoothAccess, startListeningForAuthorization, stopListeningForAuthorization }, dispatch);
 }
 
 export class BluetoothGateContainer extends Component {
-  componentDidMount() {
-    if(this.props.beacons.get('enabled')) {
-      this.props.requestBluetoothAccess();
-      this.props.startMonitoring();
-    }
+  componentWillMount() {
+    this.props.startListeningForAuthorization();
   }
   componentWillUnmount() {
-    this.props.stopMonitoring();
+    this.props.stopListeningForAuthorization();
   }
   render() {
     if(this.props.beacons.get('enabled')) {
       return this.props.children;
     }
     if(this.props.beacons.get('denied')) {
-      return <BluetoothDenied/>;
+      return (
+        <BluetoothDenied
+          onCancel={this.props.onCancel}
+          onManualChange={this.props.onManualChange}
+        />
+      );
     }
     return (
       <EnableBluetoothPrompt
         beacons={this.props.beacons}
+        onCancel={this.props.onCancel}
         requestBluetoothAccess={this.props.requestBluetoothAccess}
       />
     );
@@ -53,14 +56,16 @@ BluetoothGateContainer.propTypes = {
     enabled: PropTypes.bool
   }),
   children: PropTypes.node,
+  onCancel: PropTypes.func,
+  onManualChange: PropTypes.func,
   requestBluetoothAccess: PropTypes.func,
-  startMonitoring: PropTypes.func,
-  stopMonitoring: PropTypes.func
+  startListeningForAuthorization: PropTypes.func,
+  stopListeningForAuthorization: PropTypes.func
 };
 BluetoothGateContainer.defaultProps = {
   requestBluetoothAccess: emptyFn,
-  startMonitoring: emptyFn,
-  stopMonitoring: emptyFn
+  startListeningForAuthorization: emptyFn,
+  stopListeningForAuthorization: emptyFn
 };
 
 export const BluetoothGate = connect(getState, getActions)(BluetoothGateContainer);

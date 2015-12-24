@@ -22,9 +22,13 @@ const baseStyles = StyleSheet.create({
 export class EnableBluetoothPrompt extends Component {
   constructor(props) {
     super(props);
-    this.handleClick = this.handleClick.bind(this);
+    this.handleClickCancel = this.handleClickCancel.bind(this);
+    this.handleClickEnable = this.handleClickEnable.bind(this);
   }
-  handleClick() {
+  handleClickCancel() {
+    this.props.onCancel();
+  }
+  handleClickEnable() {
     this.props.requestBluetoothAccess();
   }
   render() {
@@ -34,10 +38,17 @@ export class EnableBluetoothPrompt extends Component {
         <Text>{this.props.beacons.get('authorizationState')}</Text>
         <Text>{this.props.beacons.get('enabled').toString()}</Text>
         <Text>Bluetooth is required</Text>
-        <TouchableOpacity onPress={this.handleClick}>
+        <TouchableOpacity onPress={this.handleClickEnable}>
           <View>
             <Text>
               Enable Bluetooth Access
+            </Text>
+          </View>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={this.handleClickCancel}>
+          <View>
+            <Text>
+              Cancel
             </Text>
           </View>
         </TouchableOpacity>
@@ -50,9 +61,11 @@ EnableBluetoothPrompt.propTypes = {
   beacons: ImmutablePropTypes.contains({
     enabled: PropTypes.bool
   }),
-  requestBluetoothAccess: PropTypes.func,
+  onCancel: PropTypes.func,
+  requestBluetoothAccess: PropTypes.func
 };
 EnableBluetoothPrompt.defaultProps = {
   beacons: Immutable.Map(),
+  onCancel: emptyFn,
   requestBluetoothAccess: emptyFn
 };

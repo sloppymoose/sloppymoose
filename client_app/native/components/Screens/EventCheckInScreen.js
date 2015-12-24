@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   View
 } from 'react-native';
+import emptyFn from 'empty/function';
 import { EventCheckInButton } from '../Buttons';
 import Immutable from 'immutable';
 import ImmutablePropTypes from 'react-immutable-proptypes';
@@ -25,6 +26,11 @@ export class EventCheckInScreen extends Component {
     super(props);
     this.state = { allowCheckIn: false, inRegion: false };
   }
+  componentDidMount() {
+    if(this.props.beacons.get('enabled')) {
+      this.props.startMonitoring();
+    }
+  }
   componentWillUpdate(nextProps, nextState) {
     const accuracy = nextProps.beacons.getIn(['nearest','accuracy']);
     nextState.inRegion = !!accuracy;
@@ -35,6 +41,14 @@ export class EventCheckInScreen extends Component {
     } else if(accuracy > 2) {
       nextState.allowCheckIn = false;
     }
+  }
+  componentDidUpdate(prevProps) {
+    if(!prevProps.beacons.get('enabled') && this.props.beacons.get('enabled')) {
+      this.props.startMonitoring();
+    }
+  }
+  componentWillUnmount() {
+    this.props.stopMonitoring();
   }
   render() {
     const beacon = this.props.beacons.get('nearest');
@@ -70,8 +84,12 @@ EventCheckInScreen.propTypes = {
     accuracy: PropTypes.number,
     nearest: ImmutablePropTypes.map,
     proximity: PropTypes.string
-  })
+  }),
+  startMonitoring: PropTypes.func,
+  stopMonitoring: PropTypes.func,
 };
 EventCheckInScreen.defaultProps = {
-  beacons: Immutable.Map()
+  beacons: Immutable.Map(),
+  startMonitoring: emptyFn,
+  stopMonitoring: emptyFn
 };

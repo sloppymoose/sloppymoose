@@ -40,6 +40,8 @@ export function beacons(state = initialState(), action) {
   switch(action.type) {
     case BeaconsActions.AUTHORIZATION_STATUS_RETRIEVED:
       return setAuthorizationStatus(state, payload.authorization);
+    case BeaconsActions.AUTHORIZATION_DID_CHANGE:
+      return setAuthorizationStatus(state, payload.authorization);
     case BeaconsActions.REGION_DID_RANGE:
       return didRange(state, payload.data);
     default:
