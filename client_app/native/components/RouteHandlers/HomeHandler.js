@@ -2,9 +2,8 @@ import { bindActionCreators } from 'redux';
 import { Component, PropTypes } from 'react-native';
 import { connect } from 'react-redux/native';
 import { fetchCheckIns } from '../../../react/actions/CheckInActions';
-import { signOutUser } from '../../../react/actions/UserActions';
-
 import { HomeScreen } from '../Screens';
+import { signOutUser } from '../../../react/actions/UserActions';
 
 function getState(state) {
   return {
