@@ -7,7 +7,7 @@ import {
   TouchableOpacity,
   View
 } from 'react-native';
-import emptyFn from 'empty/function';
+import { EventCheckInButton } from '../Buttons';
 import Immutable from 'immutable';
 import ImmutablePropTypes from 'react-immutable-proptypes';
 
@@ -21,20 +21,38 @@ const baseStyles = StyleSheet.create({
 });
 
 export class EventCheckInScreen extends Component {
+  constructor(props) {
+    super(props);
+    this.state = { allowCheckIn: false, inRegion: false };
+  }
+  componentWillUpdate(nextProps, nextState) {
+    const accuracy = nextProps.beacons.getIn(['nearest','accuracy']);
+    nextState.inRegion = !!accuracy;
+    if(!accuracy) {
+      nextState.allowCheckIn = false;
+    } else if(accuracy < 1.5) {
+      nextState.allowCheckIn = true;
+    } else if(accuracy > 2) {
+      nextState.allowCheckIn = false;
+    }
+  }
   render() {
     const beacon = this.props.beacons.get('nearest');
+    let checkInAction;
+    if(!this.state.inRegion) {
+      checkInAction = <Text>Find Moose!</Text>;
+    } else if(this.state.allowCheckIn) {
+      checkInAction = <EventCheckInButton beacon={beacon}/>;
+    } else {
+      checkInAction = <Text>Get closer to Moose!</Text>;
+    }
     return (
       <View style={baseStyles.root}>
         <Text>Event Check In</Text>
         <Text>{beacon.get('proximity')}</Text>
         <Text>{beacon.get('accuracy')}</Text>
-        <TouchableOpacity onPress={this.props.onSignUpPress}>
-          <View>
-            <Text>
-              Check In!
-            </Text>
-          </View>
-        </TouchableOpacity>
+        <Text>{JSON.stringify(this.state)}</Text>
+        {checkInAction}
         <TouchableOpacity onPress={Actions.home}>
           <View>
             <Text>
