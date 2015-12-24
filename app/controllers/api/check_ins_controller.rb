@@ -1,7 +1,7 @@
 class Api::CheckInsController < ApiController
   def index
     @check_ins = current_user.check_ins
-    respond_with(@check_in)
+    respond_with(@check_ins)
   end
 
   def create
