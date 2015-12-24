@@ -39,6 +39,7 @@ export class SignInForm extends Component {
     };
   }
   handleEmailChangeText(email) {
+    email = (email || '').trim();
     this.setState({ email });
   }
   handlePasswordChangeText(password) {
