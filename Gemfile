@@ -7,6 +7,7 @@ gem 'devise-doorkeeper', '1.1.1'
 gem 'doorkeeper', '3.0.1'
 gem 'dotenv-rails', '2.0.2'
 gem 'rails',      '4.2.1'
+gem 'rounding',   '1.0.1'
 gem 'pg',         '0.18.2'
 gem 'puma',       '2.15.3'
 

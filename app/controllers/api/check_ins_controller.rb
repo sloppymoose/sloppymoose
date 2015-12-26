@@ -5,8 +5,13 @@ class Api::CheckInsController < ApiController
   end
 
   def create
-    @check_in = current_user.check_ins.build(created_at: DateTime.now)
-    @check_in.save
+    @check_in = current_user.check_ins.create(creation_params)
     respond_with(@check_in, location: nil)
+  end
+
+private
+
+  def creation_params
+    params.require(:check_in).permit(:event_id)
   end
 end

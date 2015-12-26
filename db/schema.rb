@@ -11,19 +11,29 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151201054016) do
+ActiveRecord::Schema.define(version: 20151225083735) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "check_ins", force: :cascade do |t|
     t.integer  "user_id",    null: false
-    t.date     "created_on", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer  "event_id"
   end
 
-  add_index "check_ins", ["user_id", "created_on"], name: "index_check_ins_on_user_id_and_created_on", unique: true, using: :btree
+  add_index "check_ins", ["event_id"], name: "index_check_ins_on_event_id", using: :btree
+  add_index "check_ins", ["user_id", "event_id"], name: "index_check_ins_on_user_id_and_event_id", unique: true, using: :btree
+
+  create_table "events", force: :cascade do |t|
+    t.string   "name",                         null: false
+    t.boolean  "public",       default: true,  null: false
+    t.boolean  "auto_created", default: false, null: false
+    t.datetime "starts_at",                    null: false
+    t.datetime "created_at",                   null: false
+    t.datetime "updated_at",                   null: false
+  end
 
   create_table "oauth_access_grants", force: :cascade do |t|
     t.integer  "resource_owner_id", null: false

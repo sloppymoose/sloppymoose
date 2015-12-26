@@ -1,0 +1,35 @@
+old_sloppy_moose:
+  id: 1
+  name: Sloppy Moose 01/01/2014
+  auto_created: false
+  public: true
+  starts_at: 2014-01-02 02:30:00
+  created_at: 2014-01-02 02:30:00
+  updated_at: 2014-01-02 02:30:00
+
+current_sloppy_moose:
+  id: 2
+  name: Sloppy Moose <%= 30.minutes.ago.strftime('%m/%d/%Y') %>
+  auto_created: false
+  public: true
+  starts_at: <%= 30.minutes.ago %>
+  created_at: <%= 30.minutes.ago %>
+  updated_at: <%= 30.minutes.ago %>
+
+future_sloppy_moose:
+  id: 3
+  name: Sloppy Moose <%= 30.minutes.from_now.strftime('%m/%d/%Y') %>
+  auto_created: false
+  public: true
+  starts_at: <%= 30.minutes.from_now %>
+  created_at: <%= 30.minutes.from_now %>
+  updated_at: <%= 30.minutes.from_now %>
+
+planning_5k:
+  id: 4
+  name: Beer Week 5k <%= 3.months.from_now.year %>
+  auto_created: false
+  public: false
+  starts_at: <%= 3.months.from_now %>
+  created_at: <%= 3.months.from_now %>
+  updated_at: <%= 3.months.from_now %>

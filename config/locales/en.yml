@@ -23,10 +23,10 @@ en:
   activerecord:
     attributes:
       check_in:
-        created_on: 'Check in'
+        event_id: Event
     errors:
       models:
         check_in:
           attributes:
-            created_on:
-              taken: has already been recorded
+            event_id:
+              taken: has already been checked in

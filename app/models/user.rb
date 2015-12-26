@@ -3,6 +3,7 @@ class User < ActiveRecord::Base
   include Authority::Abilities
 
   has_many :check_ins
+  has_many :events, through: :check_ins
 
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable

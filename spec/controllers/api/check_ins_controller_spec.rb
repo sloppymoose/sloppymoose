@@ -1,8 +1,9 @@
 require 'rails_helper'
 
 describe Api::CheckInsController do
-  fixtures :users
+  fixtures :events, :users
 
+  let(:event) { events(:current_sloppy_moose) }
   let(:user) { users(:izzie) }
 
   before { sign_in user }
@@ -19,6 +20,9 @@ describe Api::CheckInsController do
   describe '#create' do
     let(:params) do
       {
+        check_in: {
+          event_id: event.id
+        },
         format: :json
       }
     end
