@@ -1,8 +1,9 @@
 require 'rails_helper'
 
 describe Api::CheckInsController do
-  fixtures :events, :users
+  fixtures :beacons, :events, :users
 
+  let(:beacon) { beacons(:roaming_beacon) }
   let(:event) { events(:current_sloppy_moose) }
   let(:user) { users(:izzie) }
 
@@ -21,6 +22,7 @@ describe Api::CheckInsController do
     let(:params) do
       {
         check_in: {
+          beacon_id: beacon.id,
           event_id: event.id
         },
         format: :json

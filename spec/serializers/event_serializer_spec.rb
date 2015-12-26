@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 describe EventSerializer do
-  fixtures :events, :users
+  fixtures :events, :event_beacons, :users
 
   let(:event) { events(:current_sloppy_moose) }
 
@@ -11,5 +11,6 @@ describe EventSerializer do
 
   it 'serializes the resource' do
     expect(subject[:data]).to include :attributes
+    expect(subject[:data]).to include :relationships
   end
 end

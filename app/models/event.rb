@@ -1,5 +1,7 @@
 class Event < ActiveRecord::Base
+  has_many :beacons, through: :event_beacons
   has_many :check_ins
+  has_many :event_beacons
   has_many :users, through: :check_ins
 
   validates :starts_at,
@@ -13,7 +15,8 @@ class Event < ActiveRecord::Base
 
   def self.auto_create!
     starts_at = Time.now.floor_to(15.minutes)
-    create!(
+    beacon = Beacon.where(default: true).first!
+    beacon.events.create!(
       auto_created: true,
       name: "Sloppy Moose #{starts_at.strftime('%m/%d/%Y')}",
       public: true,

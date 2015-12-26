@@ -1,5 +1,5 @@
 describe Event do
-  fixtures :events
+  fixtures :beacons, :events
 
   it 'exists' do
     expect(subject).to_not be_nil
@@ -18,6 +18,7 @@ describe Event do
 
     it 'generates a valid event' do
       expect(subject).to be_persisted
+      expect(subject.beacons).to_not be_empty
       expect(subject.auto_created).to eq true
       expect(subject.starts_at).to be <= Time.now
     end

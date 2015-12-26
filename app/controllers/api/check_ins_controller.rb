@@ -12,6 +12,6 @@ class Api::CheckInsController < ApiController
 private
 
   def creation_params
-    params.require(:check_in).permit(:event_id)
+    params.require(:check_in).permit(:beacon_id, :event_id)
   end
 end
