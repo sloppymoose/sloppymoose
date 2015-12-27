@@ -13,9 +13,11 @@ const baseStyles = StyleSheet.create({
   }
 });
 
-function componentize(item, i) {
+function componentize(item) {
   return (
-    <Text key={i}>CHECKIN</Text>
+    <Text key={item.get('id')}>
+      {item.getIn(['attributes', 'event_name'])}
+    </Text>
   );
 }
 

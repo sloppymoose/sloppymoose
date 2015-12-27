@@ -6,7 +6,7 @@ class Api::CheckInsController < ApiController
 
   def create
     @check_in = current_user.check_ins.create(creation_params)
-    respond_with(@check_in, location: nil)
+    respond_with(@check_in, include: :event, location: nil)
   end
 
 private
