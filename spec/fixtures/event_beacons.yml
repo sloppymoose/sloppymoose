@@ -1,0 +1,9 @@
+old_moose_beacon:
+  id: 1
+  beacon_id: 1
+  event_id: 1
+
+current_moose_beacon:
+  id: 2
+  beacon_id: 1
+  event_id: 2

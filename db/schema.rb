@@ -11,19 +11,54 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151201054016) do
+ActiveRecord::Schema.define(version: 20151227203611) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "check_ins", force: :cascade do |t|
-    t.integer  "user_id",    null: false
-    t.date     "created_on", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+  create_table "beacons", force: :cascade do |t|
+    t.string   "name",                                  null: false
+    t.string   "identifier",                            null: false
+    t.string   "uuid",       limit: 36,                 null: false
+    t.integer  "major",                 default: 1,     null: false
+    t.integer  "minor",                 default: 1,     null: false
+    t.boolean  "default",               default: false, null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
-  add_index "check_ins", ["user_id", "created_on"], name: "index_check_ins_on_user_id_and_created_on", unique: true, using: :btree
+  create_table "check_ins", force: :cascade do |t|
+    t.integer  "user_id",    null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer  "event_id"
+    t.integer  "beacon_id",  null: false
+    t.decimal  "accuracy",   null: false
+    t.string   "proximity",  null: false
+    t.integer  "rssi",       null: false
+  end
+
+  add_index "check_ins", ["event_id"], name: "index_check_ins_on_event_id", using: :btree
+  add_index "check_ins", ["user_id", "event_id"], name: "index_check_ins_on_user_id_and_event_id", unique: true, using: :btree
+
+  create_table "event_beacons", force: :cascade do |t|
+    t.integer  "beacon_id",  null: false
+    t.integer  "event_id",   null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "event_beacons", ["beacon_id"], name: "index_event_beacons_on_beacon_id", using: :btree
+  add_index "event_beacons", ["event_id"], name: "index_event_beacons_on_event_id", using: :btree
+
+  create_table "events", force: :cascade do |t|
+    t.string   "name",                         null: false
+    t.boolean  "public",       default: true,  null: false
+    t.boolean  "auto_created", default: false, null: false
+    t.datetime "starts_at",                    null: false
+    t.datetime "created_at",                   null: false
+    t.datetime "updated_at",                   null: false
+  end
 
   create_table "oauth_access_grants", force: :cascade do |t|
     t.integer  "resource_owner_id", null: false

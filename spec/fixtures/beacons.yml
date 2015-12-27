@@ -1,0 +1,17 @@
+roaming_beacon:
+  id: 1
+  name: Roaming Moosse Beacon
+  identifier: SM Networks
+  uuid: 12345678-abcd-abcd-abcd-1234567890ab
+  major: 1
+  minor: 1
+  default: true
+
+alternate_roaming_beacon:
+  id: 2
+  name: Roaming Moosse Beacon (2)
+  identifier: SM Networks
+  uuid: 12345678-abcd-abcd-abcd-1234567890ab
+  major: 1
+  minor: 2
+  default: false

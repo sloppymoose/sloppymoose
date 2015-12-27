@@ -41,11 +41,12 @@ function receiveEventCheckInData(response) {
 }
 
 function receiveCheckInData(response) {
-  const items = response.data;
+  const { data, included } = response;
   return {
     type: CheckInActions.CHECK_INS_LOADED,
     payload: {
-      items
+      data,
+      included
     }
   };
 }
@@ -82,10 +83,15 @@ export function fetchCheckIns() {
   };
 }
 
-export function checkInToEvent() {
+export function checkInToEvent(checkIn) {
+  const body = {
+    /* eslint-disable camelcase */
+    check_in: checkIn
+    /* eslint-enable camelcase */
+  };
   return function(dispatch, getState) {
     dispatch(beginEventCheckIn());
-    return signedRequest('/api/check_ins', {}, 'POST')
+    return signedRequest('/api/check_ins', body, 'POST')
       .then(response => dispatch(receiveEventCheckInData(response)))
       .then(() => dispatch(endEventCheckIn()))
       .catch(error => {

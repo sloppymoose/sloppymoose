@@ -1,8 +1,10 @@
 require 'rails_helper'
 
 describe Api::CheckInsController do
-  fixtures :users
+  fixtures :beacons, :events, :users
 
+  let(:beacon) { beacons(:roaming_beacon) }
+  let(:event) { events(:unchecked_into_current_sloppy_moose) }
   let(:user) { users(:izzie) }
 
   before { sign_in user }
@@ -19,6 +21,13 @@ describe Api::CheckInsController do
   describe '#create' do
     let(:params) do
       {
+        check_in: {
+          accuracy: 0.01,
+          beacon_id: beacon.id,
+          event_id: event.id,
+          proximity: 'near',
+          rssi: -20
+        },
         format: :json
       }
     end
@@ -28,6 +37,11 @@ describe Api::CheckInsController do
     it 'returns the new resource' do
       subject
       expect(response).to have_http_status(:created)
+    end
+
+    it 'includes the :event association' do
+      subject
+      expect(JSON.parse(response.body)['included'][0]['type']).to eq 'events'
     end
   end
 end

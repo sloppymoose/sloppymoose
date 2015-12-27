@@ -5,8 +5,9 @@ Rails.application.routes.draw do
   root 'welcome#index'
 
   authenticate :user do
-    resources :check_ins, only: %i{index new create}
+    resources :check_ins, only: %i{index}
     namespace :api do
+      resources :active_events, only: %i{index}
       resources :check_ins, only: %i{index create}
     end
   end

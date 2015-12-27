@@ -27,12 +27,12 @@ describe 'check-ins routing' do
       expect(get: '/check_ins').to route_to(controller: 'check_ins', action: 'index')
     end
 
-    it 'routes GET /check_ins/new to /check_ins#new' do
-      expect(get: '/check_ins/new').to route_to(controller: 'check_ins', action: 'new')
+    it 'does not route GET /check_ins/new' do
+      expect(get: '/check_ins/new').to_not be_routable
     end
 
-    it 'routes POST /check_ins to /check_ins#create' do
-      expect(post: '/check_ins').to route_to(controller: 'check_ins', action: 'create')
+    it 'does route POST /check_ins' do
+      expect(post: '/check_ins').to_not be_routable
     end
 
     it 'does not route GET /check_ins/1' do

@@ -1,28 +1,38 @@
 import BeaconsActions from '../actionTypes/BeaconsActions';
 import emptyAry from 'empty/array';
 import emptyObj from 'empty/object';
+import EventActions from '../actionTypes/EventActions';
 import Immutable from 'immutable';
 import { isBeaconEnabled, isBeaconDenied } from '../util/beaconHelpers';
 import { first, sortBy } from 'lodash';
 
 function initialState() {
   return Immutable.fromJS({
+    activeEventBeacons: emptyAry,
     activeRegion: emptyObj,
     authorizationState: 'notDetermined',
     denied: false,
     enabled: false,
     error: null,
-    items: emptyAry,
     loading: false,
-    nearest: emptyObj
+    nearest: emptyObj,
+    rangedBeacons: emptyAry
   });
+}
+
+import { flatten, map, uniq } from 'lodash';
+
+function loadActiveEventBeacons(state, items) {
+  let beacons = map(items, (item) => item.relationships.beacons.data);
+  beacons = uniq(flatten(beacons));
+  return state.set('activeEventBeacons', Immutable.fromJS(beacons));
 }
 
 function didRange(state, payload) {
   const nearest = first(sortBy(payload.beacons, 'accuracy')) || emptyObj;
   return state.merge({
     activeRegion: payload.region,
-    items: payload.beacons,
+    rangedBeacons: payload.beacons,
     nearest
   });
 }
@@ -44,6 +54,8 @@ export function beacons(state = initialState(), action) {
       return setAuthorizationStatus(state, payload.authorization);
     case BeaconsActions.REGION_DID_RANGE:
       return didRange(state, payload.data);
+    case EventActions.ACTIVE_EVENTS_LOADED:
+      return loadActiveEventBeacons(state, payload.items);
     default:
       return state;
   }

@@ -1,3 +1,9 @@
 class CheckInSerializer < ActiveModel::Serializer
-  attributes :id, :user_id, :created_at, :created_on, :updated_at
+  attributes :id, :created_at, :event_name, :updated_at
+
+  def event_name
+    object.event.name
+  end
+
+  belongs_to :event
 end

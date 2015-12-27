@@ -1,25 +1,22 @@
 require 'rails_helper'
 
 describe CheckIn do
-  fixtures :users
+  fixtures :beacons, :events, :users
 
+  let(:beacon) { beacons(:roaming_beacon) }
+  let(:event) { events(:unchecked_into_current_sloppy_moose) }
   let(:user) { users(:izzie) }
-  let(:today) { DateTime.now }
-  let(:yesterday) { today.beginning_of_day - 1.second }
-
-  it 'exists' do
-    expect(subject).to_not be_nil
+  let(:beacon_metrics) do
+    {
+      accuracy: 0.1,
+      proximity: 'near',
+      rssi: -20
+    }
   end
 
-  it 'allows one check in per day' do
-    user.check_ins.create!(created_at: yesterday)
-    check_in = user.check_ins.create(created_at: today)
-    expect(check_in.errors[:created_on]).to be_empty
-  end
-
-  it 'does not allow multiple check ins per day' do
-    user.check_ins.create!(created_at: today)
-    check_in = user.check_ins.create(created_at: today)
-    expect(check_in.errors[:created_on]).to include 'has already been recorded'
+  it 'does not allow multiple check ins per event' do
+    event.check_ins.create!(beacon_metrics.merge(beacon: beacon, user: user))
+    check_in = event.check_ins.create(beacon_metrics.merge(beacon: beacon, user: user))
+    expect(check_in.errors.full_messages).to include 'Event has already been checked in'
   end
 end

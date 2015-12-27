@@ -21,52 +21,50 @@ const baseStyles = StyleSheet.create({
   }
 });
 
+function componentize(inRangeEvent, i) {
+  return <EventCheckInButton event={inRangeEvent} key={inRangeEvent.get('id')}/>;
+}
+
 export class EventCheckInScreen extends Component {
-  constructor(props) {
-    super(props);
-    this.state = { allowCheckIn: false, inRegion: false };
-  }
   componentDidMount() {
     if(this.props.beacons.get('enabled')) {
-      this.props.startMonitoring();
-    }
-  }
-  componentWillUpdate(nextProps, nextState) {
-    const accuracy = nextProps.beacons.getIn(['nearest','accuracy']);
-    nextState.inRegion = !!accuracy;
-    if(!accuracy) {
-      nextState.allowCheckIn = false;
-    } else if(accuracy < 1.5) {
-      nextState.allowCheckIn = true;
-    } else if(accuracy > 2) {
-      nextState.allowCheckIn = false;
+      this.props.fetchActiveEvents();
     }
   }
   componentDidUpdate(prevProps) {
-    if(!prevProps.beacons.get('enabled') && this.props.beacons.get('enabled')) {
-      this.props.startMonitoring();
+    const wasEnabled = prevProps.beacons.get('enabled');
+    const nowEnabled = this.props.beacons.get('enabled');
+    const prevActiveEventBeacons = prevProps.beacons.get('activeEventBeacons');
+    const activeEventBeacons = this.props.beacons.get('activeEventBeacons');
+
+    if(!wasEnabled && nowEnabled) {
+      this.startMonitoring(activeEventBeacons);
+      this.props.fetchActiveEvents();
+    } else if(wasEnabled && !nowEnabled) {
+      this.props.stopMonitoring(activeEventBeacons);
+    } else if(nowEnabled && prevActiveEventBeacons !== activeEventBeacons) {
+      this.props.stopMonitoring(prevActiveEventBeacons);
+      this.props.startMonitoring(activeEventBeacons);
     }
   }
   componentWillUnmount() {
     this.props.stopMonitoring();
   }
   render() {
-    const beacon = this.props.beacons.get('nearest');
-    let checkInAction;
-    if(!this.state.inRegion) {
-      checkInAction = <Text>Find Moose!</Text>;
-    } else if(this.state.allowCheckIn) {
-      checkInAction = <EventCheckInButton beacon={beacon}/>;
+    let checkInActions;
+    const inRangeEvents = this.props.activeEvents.get('inRange');
+    if(inRangeEvents.size > 0) {
+      checkInActions = inRangeEvents.map(componentize);
     } else {
-      checkInAction = <Text>Get closer to Moose!</Text>;
+      checkInActions = <Text>Find Moose!</Text>;
     }
+    const beacon = this.props.beacons.get('nearest');
     return (
       <View style={baseStyles.root}>
         <Text>Event Check In</Text>
         <Text>{beacon.get('proximity')}</Text>
         <Text>{beacon.get('accuracy')}</Text>
-        <Text>{JSON.stringify(this.state)}</Text>
-        {checkInAction}
+        {checkInActions}
         <TouchableOpacity onPress={Actions.home}>
           <View>
             <Text>
@@ -80,16 +78,35 @@ export class EventCheckInScreen extends Component {
 }
 
 EventCheckInScreen.propTypes = {
+  activeEvents: ImmutablePropTypes.contains({
+    inRange: ImmutablePropTypes.list,
+    items: ImmutablePropTypes.listOf(
+      ImmutablePropTypes.contains({
+
+      })
+    )
+  }),
   beacons: ImmutablePropTypes.contains({
     accuracy: PropTypes.number,
+    activeEventBeacons: ImmutablePropTypes.listOf(
+      ImmutablePropTypes.contains({
+        identifier: PropTypes.string,
+        uuid: PropTypes.string,
+        major: PropTypes.number,
+        minor: PropTypes.number
+      })
+    ),
     nearest: ImmutablePropTypes.map,
     proximity: PropTypes.string
   }),
+  fetchActiveEvents: PropTypes.func,
   startMonitoring: PropTypes.func,
   stopMonitoring: PropTypes.func,
 };
 EventCheckInScreen.defaultProps = {
+  activeEvents: Immutable.List(),
   beacons: Immutable.Map(),
+  fetchActiveEvents: emptyFn,
   startMonitoring: emptyFn,
   stopMonitoring: emptyFn
 };
