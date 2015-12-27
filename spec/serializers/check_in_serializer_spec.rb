@@ -1,12 +1,12 @@
 require 'rails_helper'
 
 describe CheckInSerializer do
-  fixtures :beacons, :events, :users
+  fixtures :beacons, :check_ins, :events, :users
 
   let(:beacon) { beacons(:roaming_beacon) }
   let(:event) { events(:current_sloppy_moose) }
   let(:user) { users(:izzie) }
-  let(:check_in) { user.check_ins.create!(beacon: beacon, event: event) }
+  let(:check_in) { check_ins(:current_sloppy_moose_check_in) }
 
   subject do
     ActiveModel::SerializableResource.new(check_in).serializable_hash

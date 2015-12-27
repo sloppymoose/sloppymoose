@@ -9,7 +9,7 @@ describe Event do
     subject { described_class.active }
 
     it 'returns all active events' do
-      expect(subject.size).to eql 1
+      expect(subject.size).to eql 2
     end
   end
 

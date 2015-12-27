@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151226081220) do
+ActiveRecord::Schema.define(version: 20151227203611) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -33,6 +33,9 @@ ActiveRecord::Schema.define(version: 20151226081220) do
     t.datetime "updated_at", null: false
     t.integer  "event_id"
     t.integer  "beacon_id",  null: false
+    t.decimal  "accuracy",   null: false
+    t.string   "proximity",  null: false
+    t.integer  "rssi",       null: false
   end
 
   add_index "check_ins", ["event_id"], name: "index_check_ins_on_event_id", using: :btree

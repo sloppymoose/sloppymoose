@@ -26,8 +26,11 @@ export class EventCheckInAction extends Component {
     const eventId = this.props.event.get('id');
     this.props.checkInToEvent({
       /* eslint-disable camelcase */
+      accuracy: beacon.get('accuracy'),
       beacon_id: beacon.get('id'),
-      event_id: eventId
+      event_id: eventId,
+      proximity: beacon.get('proximity'),
+      rssi: beacon.get('rssi')
       /* eslint-enable camelcase */
     }).then(() => Actions.home());
   }

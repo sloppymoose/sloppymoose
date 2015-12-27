@@ -1,0 +1,8 @@
+current_sloppy_moose_check_in:
+  id: 1
+  accuracy: 0.01
+  beacon_id: 1
+  event_id: 2
+  proximity: near
+  rssi: -20
+  user_id: 30

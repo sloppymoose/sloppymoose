@@ -4,7 +4,7 @@ describe Api::CheckInsController do
   fixtures :beacons, :events, :users
 
   let(:beacon) { beacons(:roaming_beacon) }
-  let(:event) { events(:current_sloppy_moose) }
+  let(:event) { events(:unchecked_into_current_sloppy_moose) }
   let(:user) { users(:izzie) }
 
   before { sign_in user }
@@ -22,8 +22,11 @@ describe Api::CheckInsController do
     let(:params) do
       {
         check_in: {
+          accuracy: 0.01,
           beacon_id: beacon.id,
-          event_id: event.id
+          event_id: event.id,
+          proximity: 'near',
+          rssi: -20
         },
         format: :json
       }
