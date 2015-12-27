@@ -6,12 +6,6 @@ import { store } from '../util/reduxStore';
 
 let AuthorizationChangePoller = null;
 const BluetoothAuthorizationPollInterval = 500;
-const Region = {
-  identifier: '',
-  uuid: null,
-  major: 1,
-  minor: 1
-};
 
 function beaconDidRange(data) {
   store.dispatch({
@@ -98,19 +92,28 @@ export function requestBluetoothAccess() {
   };
 }
 
-export function startMonitoring() {
-  Beacons.startMonitoringForRegion(Region);
-  Beacons.startRangingBeaconsInRegion(Region);
-  Beacons.startUpdatingLocation();
+export function startMonitoring(regions) {
+  if(regions && regions.size > 0) {
+    regions.map((region) => {
+      region = region.toJS();
+      Beacons.startMonitoringForRegion(region);
+      Beacons.startRangingBeaconsInRegion(region);
+    });
+    Beacons.startUpdatingLocation();
+  }
   return {
     type: BeaconsActions.BEACON_START_MONITORING,
     payload: emptyObj
   };
 }
 
-export function stopMonitoring() {
-  Beacons.stopMonitoringForRegion(Region);
-  Beacons.stopRangingBeaconsInRegion(Region);
+export function stopMonitoring(regions) {
+  if(regions && regions.map) {
+    regions.map((region) => {
+      Beacons.stopMonitoringForRegion(region);
+      Beacons.stopRangingBeaconsInRegion(region);
+    });
+  }
   Beacons.stopUpdatingLocation();
   return {
     type: BeaconsActions.BEACON_STOP_MONITORING,

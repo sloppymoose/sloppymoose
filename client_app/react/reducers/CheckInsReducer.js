@@ -57,7 +57,7 @@ export function checkIns(state = initialState(), action) {
     case CheckInActions.CHECK_INS_LOAD_BEGIN:
       return beginLoading(state, payload);
     case CheckInActions.CHECK_INS_LOADED:
-      return loadData(state, payload.items);
+      return loadData(state, payload.data);
     case CheckInActions.CHECK_INS_LOAD_END:
       return endLoading(state, payload);
     case CheckInActions.CHECK_INS_LOAD_ERROR:

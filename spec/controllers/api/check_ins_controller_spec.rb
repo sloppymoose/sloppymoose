@@ -35,5 +35,10 @@ describe Api::CheckInsController do
       subject
       expect(response).to have_http_status(:created)
     end
+
+    it 'includes the :event association' do
+      subject
+      expect(JSON.parse(response.body)['included'][0]['type']).to eq 'events'
+    end
   end
 end
