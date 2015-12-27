@@ -8,13 +8,14 @@ class Event < ActiveRecord::Base
     presence: true
 
   scope :active, -> {
+    now = Time.now.in_time_zone('Pacific Time (US & Canada)')
     where(public: true)
-      .where('starts_at >= ?', Time.zone.now.beginning_of_day)
-      .where('starts_at <= ?', Time.zone.now)
+      .where('starts_at >= ?', now.beginning_of_day)
+      .where('starts_at <= ?', now)
   }
 
   def self.auto_create!
-    starts_at = Time.now.floor_to(15.minutes)
+    starts_at = Time.current.floor_to(15.minutes)
     beacon = Beacon.where(default: true).first!
     beacon.events.create!(
       auto_created: true,
