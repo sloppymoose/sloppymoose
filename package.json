@@ -16,7 +16,7 @@
     "react": "0.14.3",
     "react-addons-update": "0.14.3",
     "react-immutable-proptypes": "1.5.0",
-    "react-native": "0.15.0",
+    "react-native": "0.17.0",
     "react-native-redux-router": "1.0.5",
     "react-native-storage": "0.0.9",
     "react-redux": "3.1.2",

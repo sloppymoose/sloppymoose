@@ -1,6 +1,2 @@
-const beacon = {
-  BTDeniedStates: ['denied'],
-  BTEnabledStates: ['authorizedAlways', 'authorizedWhenInUse']
-};
-
-export { beacon as default };
+export const BTDeniedStates = ['denied'];
+export const BTEnabledStates = ['authorizedAlways', 'authorizedWhenInUse'];
