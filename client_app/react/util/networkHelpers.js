@@ -94,6 +94,9 @@ function handleResponse(response) {
       const message = json.message || json.error_description;
       const statusCode = json.statusCode || response.status;
       const error = new Error(`${json.error}: ${message} (${statusCode})`);
+      error.origError = json.error;
+      error.origMessage = message;
+      error.origStatusCode = statusCode;
       throw error;
     }, function(err) {
       throw err;
