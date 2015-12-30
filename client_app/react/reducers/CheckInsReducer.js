@@ -66,7 +66,7 @@ export function checkIns(state = initialState(), action) {
     case CheckInActions.EVENT_CHECK_IN_BEGIN:
       return beginEventCheckIn(state, payload);
     case CheckInActions.EVENT_CHECKED_IN:
-      return loadEventCheckIn(state, payload.items);
+      return loadEventCheckIn(state, payload.checkIn);
     case CheckInActions.EVENT_CHECK_IN_END:
       return endEventCheckIn(state, payload);
     case CheckInActions.EVENT_CHECK_IN_ERROR:
