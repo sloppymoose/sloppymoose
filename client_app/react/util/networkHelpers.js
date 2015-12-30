@@ -22,6 +22,21 @@ const signedFetch = fetchWithMiddleware(
   middleware.setOAuth2Authorization(storage)
 );
 
+class NetworkError {
+  constructor(json, response) {
+    const errorMessage = json.message || json.error_description;
+    const statusCode = json.statusCode || response.status;
+    this.origError = json.error;
+    this.origMessage = errorMessage;
+    this.origStatusCode = statusCode;
+    this.name = 'NetworkError';
+    this.message = `${json.error}: ${errorMessage} (${statusCode})`;
+    this.stack = (new Error()).stack;
+  }
+}
+NetworkError.prototype = Object.create(Error.prototype);
+NetworkError.prototype.constructor = NetworkError;
+
 function appendHost(uri) {
   return 'http://10.0.0.2:5000' + uri;
 }
@@ -91,13 +106,7 @@ function handleResponse(response) {
     }
   } else {
     return response.json().then(json => {
-      const message = json.message || json.error_description;
-      const statusCode = json.statusCode || response.status;
-      const error = new Error(`${json.error}: ${message} (${statusCode})`);
-      error.origError = json.error;
-      error.origMessage = message;
-      error.origStatusCode = statusCode;
-      throw error;
+      throw new NetworkError(json, response);
     }, function(err) {
       throw err;
     });
