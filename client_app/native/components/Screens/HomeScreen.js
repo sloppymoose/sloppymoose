@@ -1,17 +1,25 @@
 import { Actions } from 'react-native-redux-router';
-import { Component, PropTypes, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import Button from 'apsl-react-native-button';
+import { Component, PropTypes, StyleSheet, Text, View } from 'react-native';
 import Immutable from 'immutable';
 import ImmutablePropTypes from 'react-immutable-proptypes';
-import { SignOutButton } from '../Buttons';
+import NavigationBar from 'react-native-navbar';
 
 const baseStyles = StyleSheet.create({
+  appNav: {
+    marginLeft: 10,
+    marginRight: 10
+  },
+  content: {
+    flex: 1
+  },
   root: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF',
+    flex: 1
   }
 });
+const NavTitle = {
+  title: 'Sloppy Moose'
+};
 
 function componentize(item) {
   return (
@@ -22,31 +30,39 @@ function componentize(item) {
 }
 
 export class HomeScreen extends Component {
+  constructor(props) {
+    super(props);
+    this.handleSignOut = this.handleSignOut.bind(this);
+  }
+  handleSignOut() {
+    this.props.signOutUser();
+  }
   render() {
     const user = this.props.user.toJS();
     if(!user.signedIn) {
       return null;
     }
     const items = (this.props.checkIns.get('items') || Immutable.List()).map(componentize);
-    const expiresAt = ((user.createdAt * 1000) + user.expiresIn);
-    const timeLeft = user.expiresIn * 1000 - (Date.now() - expiresAt);
+    const rightNavButton = {
+      title: 'Sign Out',
+      handler: this.handleSignOut
+    };
     return (
       <View style={baseStyles.root}>
-        <Text>Sloppy Moose</Text>
-        <Text>Welcome {user.email}!</Text>
-        <Text>TTL: T-{timeLeft / 1000}s</Text>
-        <Text>--</Text>
-        <Text>Check Ins ({items.size}):</Text>
-        {items}
-        <SignOutButton signOutUser={this.props.signOutUser}/>
-        <TouchableOpacity onPress={Actions.eventCheckIn}>
-          <View>
-            <Text>
-              Check In
-            </Text>
-          </View>
-        </TouchableOpacity>
-        <Text>...</Text>
+        <NavigationBar
+          rightButton={rightNavButton}
+          title={NavTitle}
+        />
+        <View style={baseStyles.content}>
+          <Text>Welcome {user.email}!</Text>
+          <Text>Recent Check Ins</Text>
+          {items}
+        </View>
+        <View style={baseStyles.appNav}>
+          <Button onPress={Actions.eventCheckIn}>
+            Check In
+          </Button>
+        </View>
       </View>
     );
   }

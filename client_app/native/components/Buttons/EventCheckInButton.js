@@ -1,6 +1,7 @@
 import { Actions } from 'react-native-redux-router';
+import Button from 'apsl-react-native-button';
 import { bindActionCreators } from 'redux';
-import { Component, PropTypes, Text, TouchableOpacity, View } from 'react-native';
+import { Component, PropTypes } from 'react-native';
 import { checkInToEvent } from '../../../react/actions/CheckInActions';
 import { connect } from 'react-redux/native';
 import emptyFn from 'empty/function';
@@ -32,18 +33,18 @@ export class EventCheckInAction extends Component {
       proximity: beacon.get('proximity'),
       rssi: beacon.get('rssi')
       /* eslint-enable camelcase */
-    }).then(() => Actions.home());
+    })
+    .then(() => Actions.home())
+    .catch((err) => {
+      console.error(err);
+    });
   }
   render() {
     const name = this.props.event.getIn(['attributes', 'name']);
     return (
-      <TouchableOpacity onPress={this.handlePress}>
-        <View>
-          <Text>
-            Check In to {name}
-          </Text>
-        </View>
-      </TouchableOpacity>
+      <Button onPress={this.handlePress}>
+        {`Check in to ${name}`}
+      </Button>
     );
   }
 }

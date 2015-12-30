@@ -19,7 +19,8 @@ export class SignUpContainer extends Component {
   render() {
     return (
       <SignUpScreen
-        onBackPress={Actions.signedOut}
+        onBackPress={Actions.signIn}
+        onSignInPress={Actions.signIn}
         signUpUser={this.props.signUpUser}
         user={this.props.user}
       />

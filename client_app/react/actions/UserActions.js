@@ -108,7 +108,7 @@ export function initTokens() {
   return function(dispatch) {
     return storage.getToken()
       .then(() => Actions.home())
-      .catch(() => Actions.signedOut());
+      .catch(() => Actions.signIn());
   };
 }
 
@@ -159,7 +159,7 @@ export function signOutUser() {
       .then(() => {
         dispatch(userSignedOut());
         dispatch(endSignOutUser());
-        Actions.signedOut();
+        Actions.signIn();
       })
       .catch(error => {
         dispatch(reportSignOutError(error));

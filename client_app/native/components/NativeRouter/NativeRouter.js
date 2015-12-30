@@ -5,8 +5,8 @@ import emptyFn from 'empty/function';
 import emptyObj from 'empty/object';
 import {
   EventCheckInHandler,
+  ForgotPasswordHandler,
   HomeHandler,
-  SignedOutHandler,
   SignInHandler,
   SignUpHandler,
   SplashHandler
@@ -54,15 +54,15 @@ class NativeRouterContainer extends Component {
           type="replace"
         />
         <Route
-          component={SignedOutHandler}
-          name="signedOut"
-          title="Signed out"
-          type="replace"
-        />
-        <Route
           component={SignUpHandler}
           name="signUp"
           title="Sign Up"
+          type="replace"
+        />
+        <Route
+          component={ForgotPasswordHandler}
+          name="forgotPassword"
+          title="Forgot Password"
           type="replace"
         />
       </Router>

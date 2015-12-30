@@ -1,32 +1,72 @@
-import { Component, PropTypes, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import {
+  Component,
+  PropTypes,
+  StyleSheet,
+  Text,
+  View
+} from 'react-native';
 import emptyFn from 'empty/function';
+import NavigationBar from 'react-native-navbar';
 import { SignUpForm } from '../Forms';
 
 const baseStyles = StyleSheet.create({
-  root: {
+  content: {
     flex: 1,
-    justifyContent: 'center',
+    marginBottom: 10
+  },
+  footer: {
     alignItems: 'center',
-    backgroundColor: '#F5FCFF',
+    marginBottom: 10
+  },
+  link: {
+    fontWeight: 'bold'
+  },
+  root: {
+    flex: 1
   }
 });
 
+const NavTitle = {
+  title: 'Sign Up'
+};
+
 export class SignUpScreen extends Component {
+  constructor(props) {
+    super(props);
+    this.handleBack = this.handleBack.bind(this);
+    this.handleSignIn = this.handleSignIn.bind(this);
+  }
+  handleBack() {
+    this.props.onBackPress();
+  }
+  handleSignIn() {
+    this.props.onSignInPress();
+  }
   render() {
+    const leftNavButton = {
+      title: 'Back',
+      handler: this.handleBack
+    };
     return (
       <View style={baseStyles.root}>
-        <Text>Sign Up</Text>
-        <TouchableOpacity onPress={this.props.onBackPress}>
-          <View>
-            <Text>
-              Go Back?
-            </Text>
-          </View>
-        </TouchableOpacity>
-        <SignUpForm
-          signUpUser={this.props.signUpUser}
-          user={this.props.user}
+        <NavigationBar
+          leftButton={leftNavButton}
+          title={NavTitle}
         />
+        <View style={baseStyles.content}>
+          <SignUpForm
+            signUpUser={this.props.signUpUser}
+            user={this.props.user}
+          />
+        </View>
+        <View style={baseStyles.footer}>
+          <Text>
+            Already have an
+            account? <Text onPress={this.handleSignIn} style={baseStyles.link}>
+              Sign In.
+            </Text>
+          </Text>
+        </View>
       </View>
     );
   }
@@ -34,9 +74,11 @@ export class SignUpScreen extends Component {
 
 SignUpScreen.propTypes = {
   onBackPress: PropTypes.func,
+  onSignInPress: PropTypes.func,
   signUpUser: PropTypes.func,
   user: PropTypes.any
 };
 SignUpScreen.defaultProps = {
-  onBackPress: emptyFn
+  onBackPress: emptyFn,
+  onSignInPress: emptyFn
 };

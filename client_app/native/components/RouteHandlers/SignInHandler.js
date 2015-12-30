@@ -20,7 +20,8 @@ class SignInContainer extends Component {
   render() {
     return (
       <SignInScreen
-        onBackPress={Actions.signedOut}
+        onCreateAccount={Actions.signUp}
+        onForgotPassword={Actions.forgotPassword}
         signInUser={this.props.signInUser}
         user={this.props.user}
       />
