@@ -27,14 +27,14 @@ const baseStyles = StyleSheet.create({
     color: 'white'
   },
   error: {
-    backgroundColor: 'red',
+    flex: 1,
     padding: 10
   },
   errorText: {
-    color: 'white'
+    color: 'red'
   },
   form: {
-    flex: 1
+
   },
   root: {
     flex: 1
@@ -52,39 +52,33 @@ const baseStyles = StyleSheet.create({
 export class SignUpForm extends Component {
   constructor(props) {
     super(props);
+    this.goToNext = this.goToNext.bind(this);
     this.handleEmailChangeText = this.handleEmailChangeText.bind(this);
-    this.handleFirstNameChangeText = this.handleFirstNameChangeText.bind(this);
-    this.handleLastNameChangeText = this.handleLastNameChangeText.bind(this);
+    this.handleNameChangeText = this.handleNameChangeText.bind(this);
     this.handlePasswordChangeText = this.handlePasswordChangeText.bind(this);
     this.handlePasswordConfirmationChangeText = this.handlePasswordConfirmationChangeText.bind(this);
     this.handleSignUp = this.handleSignUp.bind(this);
-    this.handleUsernameChangeText = this.handleUsernameChangeText.bind(this);
     this.state = {
       email: '',
-      firstName: '',
-      lastName: '',
+      name: '',
       password: '',
-      passwordConfirmation: '',
-      username: ''
+      passwordConfirmation: ''
     };
+  }
+  goToNext(ref) {
+    return () => this.refs[ref].focus();
   }
   handleEmailChangeText(email) {
     this.setState({ email });
   }
-  handleFirstNameChangeText(firstName) {
-    this.setState({ firstName });
-  }
-  handleLastNameChangeText(lastName) {
-    this.setState({ lastName });
+  handleNameChangeText(name) {
+    this.setState({ name });
   }
   handlePasswordChangeText(password) {
     this.setState({ password });
   }
   handlePasswordConfirmationChangeText(passwordConfirmation) {
     this.setState({ passwordConfirmation });
-  }
-  handleUsernameChangeText(username) {
-    this.setState({ username });
   }
   handleSignUp() {
     this.props.signUpUser(snakeCaseKeys(this.state))
@@ -93,53 +87,39 @@ export class SignUpForm extends Component {
       });
   }
   render() {
-    let signUpError = null;
     const errMsg = this.props.user.get('signUpError').message;
-    if(errMsg) {
-      signUpError = (
-        <View style={baseStyles.error}>
-          <Text style={baseStyles.errorText}>
-            Error: {errMsg}
-          </Text>
-        </View>
-      );
-    }
+    const reactiveRootStyles = {
+      flex: this.props.keyboardVisible ? null : 1
+    };
+    const reactiveSpacerStyles = {
+      flex: this.props.keyboardVisible ? null : 1
+    };
     return (
-      <View style={baseStyles.root}>
+      <View style={[baseStyles.root, reactiveRootStyles]}>
         <View style={baseStyles.form}>
           <View style={baseStyles.field}>
             <TextInput
               autoCapitalize="words"
-              onChangeText={this.handleFirstNameChangeText}
-              placeholder="First Name"
+              autoCorrect={false}
+              onChangeText={this.handleNameChangeText}
+              onSubmitEditing={this.goToNext('email')}
+              placeholder="Name"
+              ref="name"
+              returnKeyType="next"
               style={baseStyles.input}
-              value={this.state.firstName}
-            />
-          </View>
-          <View style={baseStyles.field}>
-            <TextInput
-              autoCapitalize="words"
-              onChangeText={this.handleLastNameChangeText}
-              placeholder="Last Name"
-              style={baseStyles.input}
-              value={this.state.lastName}
+              value={this.state.name}
             />
           </View>
           <View style={baseStyles.field}>
             <TextInput
               autoCapitalize="none"
-              onChangeText={this.handleUsernameChangeText}
-              placeholder="Username"
-              style={baseStyles.input}
-              value={this.state.username}
-            />
-          </View>
-          <View style={baseStyles.field}>
-            <TextInput
-              autoCapitalize="none"
+              autoCorrect={false}
               keyboardType="email-address"
               onChangeText={this.handleEmailChangeText}
+              onSubmitEditing={this.goToNext('password')}
               placeholder="Email"
+              ref="email"
+              returnKeyType="next"
               style={baseStyles.input}
               value={this.state.email}
             />
@@ -147,8 +127,12 @@ export class SignUpForm extends Component {
           <View style={baseStyles.field}>
             <TextInput
               autoCapitalize="none"
+              autoCorrect={false}
               onChangeText={this.handlePasswordChangeText}
+              onSubmitEditing={this.goToNext('passwordConfirmation')}
               placeholder="Password"
+              ref="password"
+              returnKeyType="next"
               secureTextEntry
               style={baseStyles.input}
               value={this.state.password}
@@ -157,14 +141,22 @@ export class SignUpForm extends Component {
           <View style={baseStyles.field}>
             <TextInput
               autoCapitalize="none"
+              autoCorrect={false}
               onChangeText={this.handlePasswordConfirmationChangeText}
+              onSubmitEditing={this.handleSignUp}
               placeholder="Password Confirmation"
+              ref="passwordConfirmation"
+              returnKeyType="go"
               secureTextEntry
               style={baseStyles.input}
               value={this.state.passwordConfirmation}
             />
           </View>
-          {signUpError}
+        </View>
+        <View style={[baseStyles.error, reactiveSpacerStyles]}>
+          <Text style={baseStyles.errorText}>
+            {errMsg}
+          </Text>
         </View>
         <View style={baseStyles.actions}>
           <Button
@@ -182,6 +174,7 @@ export class SignUpForm extends Component {
 }
 
 SignUpForm.propTypes = {
+  keyboardVisible: PropTypes.bool,
   signUpUser: PropTypes.func,
   user: ImmutablePropTypes.contains({
     signingUp: PropTypes.bool,
@@ -191,6 +184,7 @@ SignUpForm.propTypes = {
   })
 };
 SignUpForm.defaultProps = {
+  keyboardVisible: false,
   signUpUser: emptyFn,
   user: Immutable.Map()
 };

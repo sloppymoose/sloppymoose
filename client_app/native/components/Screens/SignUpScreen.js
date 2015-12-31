@@ -1,72 +1,124 @@
 import {
   Component,
+  DeviceEventEmitter,
   PropTypes,
+  ScrollView,
   StyleSheet,
   Text,
+  TouchableWithoutFeedback,
   View
 } from 'react-native';
+import Dimensions from 'Dimensions';
+import dismissKeyboard from 'react-native/Libraries/Utilities/dismissKeyboard';
 import emptyFn from 'empty/function';
 import NavigationBar from 'react-native-navbar';
 import { SignUpForm } from '../Forms';
 
+const NavbarHeight = 64;
 const baseStyles = StyleSheet.create({
   content: {
-    flex: 1,
-    marginBottom: 10
+    flex: 1
   },
   footer: {
     alignItems: 'center',
-    marginBottom: 10
+    marginTop: 10,
+    marginBottom: 20
   },
   link: {
     fontWeight: 'bold'
   },
   root: {
     flex: 1
+  },
+  screen: {
+    flex: 1
+  },
+  scrollView: {
+    flex: 1
   }
 });
-
-const NavTitle = {
-  title: 'Sign Up'
-};
 
 export class SignUpScreen extends Component {
   constructor(props) {
     super(props);
     this.handleBack = this.handleBack.bind(this);
+    this.handleKeyboardWillHide = this.handleKeyboardWillHide.bind(this);
+    this.handleKeyboardWillShow = this.handleKeyboardWillShow.bind(this);
+    this.handleRootPress = this.handleRootPress.bind(this);
     this.handleSignIn = this.handleSignIn.bind(this);
+    this.state = {
+      keyboardHeight: 0,
+      keyboardVisible: false
+    };
+  }
+  componentWillMount() {
+    this._listeners = [
+      DeviceEventEmitter.addListener('keyboardWillHide', this.handleKeyboardWillHide),
+      DeviceEventEmitter.addListener('keyboardWillShow', this.handleKeyboardWillShow)
+    ];
+  }
+  componentWillUnmount() {
+    this._listeners.forEach(listener => listener.remove());
   }
   handleBack() {
     this.props.onBackPress();
+  }
+  handleKeyboardWillHide() {
+    this.setState({
+      keyboardHeight: 0,
+      keyboardVisible: false
+    });
+  }
+  handleKeyboardWillShow(e) {
+    this.setState({
+      keyboardHeight: e.endCoordinates.height,
+      keyboardVisible: true
+    });
+  }
+  handleRootPress() {
+    dismissKeyboard();
   }
   handleSignIn() {
     this.props.onSignInPress();
   }
   render() {
-    const leftNavButton = {
-      title: 'Back',
-      handler: this.handleBack
+    const { height } = Dimensions.get('window');
+    const reactiveRootStyles = {
+      height: height - NavbarHeight
     };
     return (
-      <View style={baseStyles.root}>
+      <View style={baseStyles.screen}>
         <NavigationBar
-          leftButton={leftNavButton}
-          title={NavTitle}
+          leftButton={{ handler: this.handleBack, title: 'Back' }}
+          title={{ title: 'Sign Up' }}
         />
-        <View style={baseStyles.content}>
-          <SignUpForm
-            signUpUser={this.props.signUpUser}
-            user={this.props.user}
-          />
-        </View>
-        <View style={baseStyles.footer}>
-          <Text>
-            Already have an
-            account? <Text onPress={this.handleSignIn} style={baseStyles.link}>
-              Sign In.
-            </Text>
-          </Text>
-        </View>
+        <ScrollView
+          keyboardShouldPersistTaps
+          ref="scrollView"
+          scrollEnabled={false}
+          style={baseStyles.scrollView}
+        >
+          <TouchableWithoutFeedback onPress={this.handleRootPress}>
+            <View style={reactiveRootStyles}>
+              <View style={baseStyles.content}>
+                <SignUpForm
+                  keyboardVisible={this.state.keyboardVisible}
+                  signUpUser={this.props.signUpUser}
+                  spacerHeight={this.state.keyboardHeight}
+                  user={this.props.user}
+                />
+                <View style={baseStyles.footer}>
+                  <Text>
+                    Already have an
+                    account? <Text onPress={this.handleSignIn} style={baseStyles.link}>
+                      Sign In.
+                    </Text>
+                  </Text>
+                </View>
+              </View>
+            </View>
+          </TouchableWithoutFeedback>
+        </ScrollView>
       </View>
     );
   }

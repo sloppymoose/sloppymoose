@@ -9,9 +9,7 @@
 if Rails.env.development?
   User.where(id: 1).first_or_create!(
     admin: true,
-    first_name: 'Derek',
-    last_name: 'Lindahl',
-    username: 'oif_vet',
+    name: 'Derek Lindahl',
     email: 'derek.lindahl@gmail.com',
     password: 'test password',
     password_confirmation: 'test password',
@@ -22,9 +20,7 @@ if Rails.env.development?
 
   User.where(id: 2).first_or_create!(
     admin: false,
-    first_name: 'Nick',
-    last_name: 'F',
-    username: 'sactown_nick',
+    name: 'Nick Faragasso',
     email: 'nick@example.org',
     password: 'password password password',
     password_confirmation: 'password password password',

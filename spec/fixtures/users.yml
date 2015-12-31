@@ -1,9 +1,7 @@
 kyle:
   id: 1
   admin: true
-  first_name: Kyle
-  last_name: Blakie
-  username: kblakie
+  name: Kyle Blakie
   email: kblakie@example.org
   confirmation_token: abc123
   confirmed_at: <%= 1.hour.ago %>
@@ -12,9 +10,7 @@ kyle:
 
 nancy:
   id: 10
-  first_name: Nancy
-  last_name: Smith
-  username: nsmith
+  name: Nancy Smith
   email: nsmith@example.org
   confirmation_token: def456
   confirmed_at: <%= 1.hour.ago %>
@@ -23,9 +19,7 @@ nancy:
 
 unconfirmed:
   id: 20
-  first_name: Temp
-  last_name: Person
-  username: rando
+  name: Rando Person
   email: rando@example.org
   confirmation_token:
   confirmed_at:
@@ -34,9 +28,7 @@ unconfirmed:
 
 izzie:
   id: 30
-  first_name: Julia
-  last_name: Gaillard
-  username: izzie
+  name: Julia Gaillard
   email: jgaillard@example.org
   confirmation_token: ghi789
   confirmed_at: <%= 1.hour.ago %>

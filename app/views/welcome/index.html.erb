@@ -3,7 +3,7 @@
 <h2>Welcome</h2>
 
 <% if user_signed_in? %>
-  Hello <%= current_user.first_name %>!<br/>
+  Hello <%= current_user.name %>!<br/>
   <p>
     <%= link_to 'View All Check Ins', check_ins_path %> |
     <%= link_to 'Check In', new_check_in_path %>

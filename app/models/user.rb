@@ -13,14 +13,7 @@ class User < ActiveRecord::Base
 
   validates :email,
     uniqueness: true
-  validates :first_name,
+  validates :name,
     length: { minimum: 1 },
     presence: true
-  validates :last_name,
-    length: { minimum: 1 },
-    presence: true
-  validates :username,
-    length: { minimum: 3, maximum: 20 },
-    presence: true,
-    uniqueness: true
 end

@@ -7,9 +7,7 @@ describe Api::RegistrationsController do
         format: :json,
         user: {
           email: 'testuser@example.org',
-          first_name: 'FIRST',
-          last_name: 'LAST',
-          username: 'testuser',
+          name: 'FIRST LAST',
           password: 'TESTPASSWORD',
           password_confirmation: 'TESTPASSWORD'
         }

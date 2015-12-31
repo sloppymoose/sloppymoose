@@ -6,19 +6,8 @@
   <%= devise_error_messages! %>
 
   <div class="field">
-    <%= f.label :first_name %><br />
-    <%= f.text_field :first_name, value: user_params['first_name'], autofocus: true %>
-  </div>
-
-  <div class="field">
-    <%= f.label :last_name %><br />
-    <%= f.text_field :last_name, value: user_params['last_name'] %>
-  </div>
-
-  <div class="field">
-    <%= f.label :username %><br />
-    <em>(3 characters minimum, 20 characters maximum)</em>
-    <%= f.text_field :username, value: user_params['username'], autocomplete: "off" %>
+    <%= f.label :name %><br />
+    <%= f.text_field :name, value: user_params['name'], autofocus: true %>
   </div>
 
   <div class="field">
