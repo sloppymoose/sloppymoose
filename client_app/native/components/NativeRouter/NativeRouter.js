@@ -24,7 +24,8 @@ function getActions(dispatch) {
 
 class NativeRouterContainer extends Component {
   componentWillMount() {
-    this.props.initTokens();
+    this.props.initTokens()
+      .catch(console.error);
   }
   render() {
     return (
