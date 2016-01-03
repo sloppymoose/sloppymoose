@@ -1,5 +1,5 @@
-import Button from 'apsl-react-native-button';
 import {
+  Alert,
   Component,
   PropTypes,
   StyleSheet,
@@ -7,11 +7,15 @@ import {
   TextInput,
   View
 } from 'react-native';
+import Button from 'apsl-react-native-button';
 import emptyFn from 'empty/function';
 import Immutable from 'immutable';
 import ImmutablePropTypes from 'react-immutable-proptypes';
+import { omit } from 'lodash';
+import { SafetyWaiverModal } from '../Modals';
 import { snakeCaseKeys } from '../../../react/util/objectHelpers';
 
+const Accepted = '1';
 const baseStyles = StyleSheet.create({
   actions: {
 
@@ -57,12 +61,18 @@ export class SignUpForm extends Component {
     this.handleNameChangeText = this.handleNameChangeText.bind(this);
     this.handlePasswordChangeText = this.handlePasswordChangeText.bind(this);
     this.handlePasswordConfirmationChangeText = this.handlePasswordConfirmationChangeText.bind(this);
+    this.handlePromptWaiver = this.handlePromptWaiver.bind(this);
+    this.handlePromptWaiverAcceptance = this.handlePromptWaiverAcceptance.bind(this);
+    this.handleHideWaiver = this.handleHideWaiver.bind(this);
+    this.handleShowWaiver = this.handleShowWaiver.bind(this);
     this.handleSignUp = this.handleSignUp.bind(this);
     this.state = {
       email: '',
       name: '',
       password: '',
-      passwordConfirmation: ''
+      passwordConfirmation: '',
+      safetyWaiverAccepted: null,
+      showWaiver: false
     };
   }
   goToNext(ref) {
@@ -80,8 +90,51 @@ export class SignUpForm extends Component {
   handlePasswordConfirmationChangeText(passwordConfirmation) {
     this.setState({ passwordConfirmation });
   }
+  handleHideWaiver() {
+    this.setState({ showWaiver: false });
+  }
+  handlePromptWaiver() {
+    if(this.state.safetyWaiverAccepted === Accepted) {
+      return this.handleSignUp();
+    }
+    Alert.alert(
+      'Safety Waiver',
+      'Before you may proceed, you must read & accept our Safety Waiver',
+      [
+        {
+          text: 'Cancel',
+          onPress: this.handleHideWaiver
+        },
+        {
+          text: 'OK',
+          onPress: this.handleShowWaiver
+        }
+      ]
+    );
+  }
+  handlePromptWaiverAcceptance() {
+    Alert.alert(
+      'Safety Waiver',
+      'I agree to the Safety Waiver',
+      [
+        {
+          text: 'Cancel',
+          onPress: this.handleHideWaiver
+        },
+        {
+          text: 'OK',
+          onPress: this.handleSignUp
+        }
+      ]
+    );
+  }
+  handleShowWaiver() {
+    this.setState({ showWaiver: true });
+  }
   handleSignUp() {
-    this.props.signUpUser(snakeCaseKeys(this.state))
+    this.setState({ safetyWaiverAccepted: Accepted });
+    this.handleHideWaiver();
+    this.props.signUpUser(snakeCaseKeys(omit(this.state, 'showWaiver')))
       .catch(err => {
         console.info('TODO: RENDER ERROR?', err);
       });
@@ -161,13 +214,17 @@ export class SignUpForm extends Component {
         <View style={baseStyles.actions}>
           <Button
             isLoading={this.props.user.get('signingUp')}
-            onPress={this.handleSignUp}
+            onPress={this.handlePromptWaiver}
             style={[baseStyles.button, baseStyles.createButton]}
             textStyle={baseStyles.createButtonLabel}
           >
             Create
           </Button>
         </View>
+        <SafetyWaiverModal
+          onDone={this.handlePromptWaiverAcceptance}
+          visible={this.state.showWaiver}
+        />
       </View>
     );
   }

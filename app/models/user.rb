@@ -16,4 +16,6 @@ class User < ActiveRecord::Base
   validates :name,
     length: { minimum: 1 },
     presence: true
+  validates :safety_waiver_acceptance,
+    acceptance: true
 end

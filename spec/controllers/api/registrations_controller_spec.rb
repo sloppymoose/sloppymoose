@@ -9,7 +9,8 @@ describe Api::RegistrationsController do
           email: 'testuser@example.org',
           name: 'FIRST LAST',
           password: 'TESTPASSWORD',
-          password_confirmation: 'TESTPASSWORD'
+          password_confirmation: 'TESTPASSWORD',
+          safety_waiver_accepted: '1'
         }
       }
     end

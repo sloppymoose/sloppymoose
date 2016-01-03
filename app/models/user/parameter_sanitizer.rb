@@ -4,6 +4,6 @@ class User::ParameterSanitizer < Devise::ParameterSanitizer
   end
 
   def sign_up
-    default_params.permit(:name, :email, :password, :password_confirmation)
+    default_params.permit(:name, :email, :password, :password_confirmation, :safety_waiver_accepted)
   end
 end
