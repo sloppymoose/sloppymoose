@@ -14,9 +14,9 @@ Rails.application.routes.draw do
 
   unauthenticated do
     as :user do
-    namespace :api do
-      post 'users', to: 'registrations#create', as: :user_registration
-    end
+      namespace :api do
+        post 'users', to: 'registrations#create', as: :user_registration
+      end
     end
   end
 
