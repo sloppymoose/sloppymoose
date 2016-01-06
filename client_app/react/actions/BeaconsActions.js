@@ -110,6 +110,7 @@ export function startMonitoring(regions) {
 export function stopMonitoring(regions) {
   if(regions && regions.map) {
     regions.map((region) => {
+      region = region.toJS();
       Beacons.stopMonitoringForRegion(region);
       Beacons.stopRangingBeaconsInRegion(region);
     });

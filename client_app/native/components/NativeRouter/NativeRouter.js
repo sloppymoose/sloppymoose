@@ -4,7 +4,6 @@ import { connect } from 'react-redux/native';
 import emptyFn from 'empty/function';
 import emptyObj from 'empty/object';
 import {
-  EventCheckInHandler,
   ForgotPasswordHandler,
   HomeHandler,
   SignInHandler,
@@ -40,12 +39,6 @@ class NativeRouterContainer extends Component {
           component={HomeHandler}
           name="home"
           title="Home"
-          type="replace"
-        />
-        <Route
-          component={EventCheckInHandler}
-          name="eventCheckIn"
-          title="Event Check In"
           type="replace"
         />
         <Route

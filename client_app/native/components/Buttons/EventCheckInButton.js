@@ -1,13 +1,24 @@
 import { Actions } from 'react-native-redux-router';
 import Button from 'apsl-react-native-button';
 import { bindActionCreators } from 'redux';
-import { Component, PropTypes } from 'react-native';
+import { Component, PropTypes, StyleSheet } from 'react-native';
 import { checkInToEvent } from '../../../react/actions/CheckInActions';
 import { connect } from 'react-redux/native';
 import emptyFn from 'empty/function';
 import emptyObj from 'empty/object';
 import Immutable from 'immutable';
 import ImmutablePropTypes from 'react-immutable-proptypes';
+
+const baseStyles = StyleSheet.create({
+  button: {
+    flex: 1,
+    backgroundColor: 'blue',
+    borderWidth: 0
+  },
+  buttonLabel: {
+    color: 'white'
+  }
+});
 
 function getState() {
   return emptyObj;
@@ -34,16 +45,17 @@ export class EventCheckInAction extends Component {
       rssi: beacon.get('rssi')
       /* eslint-enable camelcase */
     })
-    .then(() => Actions.home())
-    .catch((err) => {
-      console.error(err);
-    });
+    .then(() => Actions.home({ activeTabIndex: 0 }))
+    .catch(console.error);
   }
   render() {
-    const name = this.props.event.getIn(['attributes', 'name']);
     return (
-      <Button onPress={this.handlePress}>
-        {`Check in to ${name}`}
+      <Button
+        onPress={this.handlePress}
+        style={baseStyles.button}
+        textStyle={baseStyles.buttonLabel}
+      >
+        Check In
       </Button>
     );
   }
@@ -52,12 +64,16 @@ export class EventCheckInAction extends Component {
 EventCheckInAction.propTypes = {
   checkInToEvent: PropTypes.func,
   event: ImmutablePropTypes.contains({
-    attributes: ImmutablePropTypes.contains({
-      name: PropTypes.string
-    }),
     relationships: ImmutablePropTypes.contains({
       beacons: ImmutablePropTypes.contains({
-        id: PropTypes.number
+        data: ImmutablePropTypes.listOf(
+          ImmutablePropTypes.contains({
+            accuracy: PropTypes.number,
+            id: PropTypes.number,
+            proximity: PropTypes.string,
+            rssi: PropTypes.number
+          })
+        )
       })
     })
   })

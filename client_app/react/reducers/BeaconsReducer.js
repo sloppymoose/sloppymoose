@@ -2,6 +2,7 @@ import BeaconsActions from '../actionTypes/BeaconsActions';
 import emptyAry from 'empty/array';
 import emptyObj from 'empty/object';
 import EventActions from '../actionTypes/EventActions';
+import { flatten, map, uniq } from 'lodash';
 import Immutable from 'immutable';
 import { isBeaconEnabled, isBeaconDenied } from '../util/beaconHelpers';
 import { first, sortBy } from 'lodash';
@@ -19,8 +20,6 @@ function initialState() {
     rangedBeacons: emptyAry
   });
 }
-
-import { flatten, map, uniq } from 'lodash';
 
 function loadActiveEventBeacons(state, items) {
   let beacons = map(items, (item) => item.relationships.beacons.data);

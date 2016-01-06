@@ -38,6 +38,10 @@ function loadingError(state, error) {
   return state.set('error', error);
 }
 
+function unknownBeacons(beacon) {
+  return beacon.accuracy === -1;
+}
+
 function toBeaconKey(beacon) {
   if(beacon instanceof Immutable.Map) {
     beacon = beacon.toJS();
@@ -46,22 +50,28 @@ function toBeaconKey(beacon) {
 }
 
 function filterRangedEvents(state, data) {
-  const rangedBeaconsIds = Immutable.Set(map(data.beacons, toBeaconKey));
-  const inRange = state.get('items').filter((item) => {
-    const activeBeaconsIds = item.getIn(['relationships', 'beacons', 'data']).map(toBeaconKey).toSet();
-    const matchingBeaconIds = rangedBeaconsIds.intersect(activeBeaconsIds).toList();
-    return matchingBeaconIds.size > 0;
-  }).map((item) => {
-    return item.updateIn(['relationships', 'beacons', 'data'], (beacons) => {
-      // Merge in proximity data
-      return beacons.map((beacon) => {
-        const rangedBeacon = find(data.beacons, { uuid: beacon.get('uuid') });
-        return beacon.merge(rangedBeacon);
+  const rangedBeaconsIds = Immutable.Set(data.beacons).filterNot(unknownBeacons).map(toBeaconKey);
+  const inRange =
+    state
+      .get('items')
+      .filter((item) => {
+        const activeBeaconsIds = item.getIn(['relationships', 'beacons', 'data']).map(toBeaconKey).toSet();
+        const matchingBeaconIds = rangedBeaconsIds.intersect(activeBeaconsIds).toList();
+        return matchingBeaconIds.size > 0;
       })
-      // Sort by proximity
-      .sortBy((beacon) => ProximityOrder[beacon.get('proximity')]);
-    });
-  });
+      .map((item) => {
+        return item
+          .updateIn(['relationships', 'beacons', 'data'], (beacons) => {
+            // Merge in proximity data
+            return beacons
+              .map((beacon) => {
+                const rangedBeacon = find(data.beacons, { uuid: beacon.get('uuid') });
+                return beacon.merge(rangedBeacon);
+              })
+              // Sort by proximity
+              .sortBy((beacon) => ProximityOrder[beacon.get('proximity')]);
+            });
+      });
   return state.set('inRange', inRange);
 }
 
