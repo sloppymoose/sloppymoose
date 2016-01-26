@@ -1,13 +1,39 @@
 import { Component, PropTypes, Text, View } from 'react-native';
-import Immutable from 'immutable';
-import ImmutablePropTypes from 'react-immutable-proptypes';
+import emptyObj from 'empty/object';
+import get from 'lodash/object/get';
+import moment from 'moment';
+
+const baseStyles = {
+  age: {
+    color: '#ccc',
+    fontWeight: 'bold'
+  },
+  root: {
+    borderBottomColor: '#ddd',
+    borderBottomWidth: 1,
+    flexDirection: 'row',
+    height: 75,
+    padding: 10
+  },
+  title: {
+    flex: 1
+  }
+};
 
 export class ActivityListItem extends Component {
   render() {
+    const attributes = get(this.props.item, 'attributes', emptyObj);
+    /* eslint-disable camelcase */
+    const eventName = attributes.event_name || 'N/A';
+    /* eslint-enable camelcase */
+    const age = moment(attributes.updated_at).fromNow();
     return (
-      <View>
-        <Text>
-          {this.props.item.getIn(['attributes', 'event_name'])}
+      <View style={baseStyles.root}>
+        <Text style={baseStyles.title}>
+          {eventName}
+        </Text>
+        <Text style={baseStyles.age}>
+          {age}
         </Text>
       </View>
     );
@@ -15,13 +41,15 @@ export class ActivityListItem extends Component {
 }
 
 ActivityListItem.propTypes = {
-  item: ImmutablePropTypes.contains({
+  item: PropTypes.shape({
     /* eslint-disable camelcase */
-    attributes: PropTypes.object,
-    event_name: PropTypes.string
+    attributes: PropTypes.shape({
+      event_name: PropTypes.string,
+      updated_at: PropTypes.string
+    })
     /* eslint-enable camelcase */
   })
 };
 ActivityListItem.defaultProps = {
-  item: Immutable.Map()
+  item: emptyObj,
 };

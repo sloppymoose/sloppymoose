@@ -19,12 +19,17 @@ export class ActivityTabScreen extends Component {
           tintColor="orange"
           title={{ title: 'Activity' }}
         />
-        <ActivityList checkIns={this.props.checkIns} style={baseStyles.content}/>
+        <ActivityList
+          checkIns={this.props.checkIns}
+          fetchCheckIns={this.props.fetchCheckIns}
+          style={baseStyles.content}
+        />
       </View>
     );
   }
 }
 
 ActivityTabScreen.propTypes = {
-  checkIns: PropTypes.any
+  checkIns: PropTypes.any,
+  fetchCheckIns: PropTypes.func
 };

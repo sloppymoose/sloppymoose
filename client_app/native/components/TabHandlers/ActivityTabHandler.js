@@ -16,6 +16,9 @@ function getActions(dispatch) {
 }
 
 class ActivityTabContainer extends Component {
+  componentWillMount() {
+    this.props.fetchCheckIns();
+  }
   render() {
     return (
       <ActivityTabScreen
