@@ -1,4 +1,4 @@
-import { Actions } from 'react-native-redux-router';
+import { Actions } from 'react-native-router-flux';
 import { bindActionCreators } from 'redux';
 import { BluetoothGate } from '../Gates';
 import { Component, PropTypes } from 'react-native';

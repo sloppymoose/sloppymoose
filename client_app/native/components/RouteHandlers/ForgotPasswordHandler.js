@@ -1,4 +1,4 @@
-import { Actions } from 'react-native-redux-router';
+import { Actions } from 'react-native-router-flux';
 import { Component } from 'react-native';
 import { connect } from 'react-redux/native';
 import emptyObj from 'empty/object';

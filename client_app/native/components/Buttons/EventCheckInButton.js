@@ -1,4 +1,4 @@
-import { Actions } from 'react-native-redux-router';
+import { Actions } from 'react-native-router-flux';
 import Button from 'apsl-react-native-button';
 import { bindActionCreators } from 'redux';
 import { Component, PropTypes, StyleSheet } from 'react-native';
@@ -45,7 +45,7 @@ export class EventCheckInAction extends Component {
       rssi: beacon.get('rssi')
       /* eslint-enable camelcase */
     })
-    .then(() => Actions.home({ activeTabIndex: 0 }))
+    .then(() => Actions.home())
     .catch(console.error);
   }
   render() {

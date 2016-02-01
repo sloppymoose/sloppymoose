@@ -11,7 +11,6 @@ import {
 import Dimensions from 'Dimensions';
 import dismissKeyboard from 'react-native/Libraries/Utilities/dismissKeyboard';
 import emptyFn from 'empty/function';
-import NavigationBar from 'react-native-navbar';
 import { SignUpForm } from '../Forms';
 
 const NavbarHeight = 64;
@@ -31,7 +30,8 @@ const baseStyles = StyleSheet.create({
     flex: 1
   },
   screen: {
-    flex: 1
+    flex: 1,
+    marginTop: 64
   },
   scrollView: {
     flex: 1
@@ -88,10 +88,6 @@ export class SignUpScreen extends Component {
     };
     return (
       <View style={baseStyles.screen}>
-        <NavigationBar
-          leftButton={{ handler: this.handleBack, title: 'Back' }}
-          title={{ title: 'Sign Up' }}
-        />
         <ScrollView
           keyboardShouldPersistTaps
           ref="scrollView"

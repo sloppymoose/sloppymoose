@@ -1,9 +1,9 @@
-import { Component, PropTypes, StyleSheet, Text, View } from 'react-native';
-import NavigationBar from 'react-native-navbar';
+import { Component, StyleSheet, Text, View } from 'react-native';
 
 const baseStyles = StyleSheet.create({
   root: {
-    flex: 1
+    flex: 1,
+    marginTop: 64
   }
 });
 
@@ -11,11 +11,7 @@ export class BadgesTabScreen extends Component {
   render() {
     return (
       <View style={baseStyles.root}>
-        <NavigationBar
-          tintColor="orange"
-          title={{ title: 'Badges' }}
-        />
-        <Text>BADGES</Text>
+        <Text>Coming Soon!</Text>
       </View>
     );
   }

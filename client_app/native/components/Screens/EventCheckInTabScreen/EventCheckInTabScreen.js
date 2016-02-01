@@ -8,12 +8,12 @@ import emptyFn from 'empty/function';
 import Immutable from 'immutable';
 import ImmutablePropTypes from 'react-immutable-proptypes';
 import { InRangeEvents } from './InRangeEvents';
-import NavigationBar from 'react-native-navbar';
 import { NoInRangeEvents } from './NoInRangeEvents';
 
 const baseStyles = StyleSheet.create({
   root: {
-    flex: 1
+    flex: 1,
+    marginTop: 64
   }
 });
 
@@ -56,10 +56,6 @@ export class EventCheckInTabScreen extends Component {
     }
     return (
       <View style={baseStyles.root}>
-        <NavigationBar
-          tintColor="orange"
-          title={{ title: 'Check In' }}
-        />
         {checkInActions}
       </View>
     );

@@ -6,17 +6,13 @@ import {
   View
 } from 'react-native';
 import emptyFn from 'empty/function';
-import NavigationBar from 'react-native-navbar';
 
 const baseStyles = StyleSheet.create({
   root: {
-    backgroundColor: '#262664',
-    flex: 1
+    flex: 1,
+    marginTop: 64
   }
 });
-const NavTitle = {
-  title: 'Sign Up'
-};
 
 export class ForgotPasswordScreen extends Component {
   constructor(props) {
@@ -27,17 +23,9 @@ export class ForgotPasswordScreen extends Component {
     this.props.onBackPress();
   }
   render() {
-    const leftNavButton = {
-      title: 'Back',
-      handler: this.handleBack
-    };
     return (
       <View style={baseStyles.root}>
-        <NavigationBar
-          leftButton={leftNavButton}
-          title={NavTitle}
-        />
-        <Text>TODO</Text>
+        <Text>Coming Soon!</Text>
       </View>
     );
   }

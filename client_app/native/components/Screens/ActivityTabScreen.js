@@ -1,13 +1,13 @@
 import { Component, PropTypes, StyleSheet, View } from 'react-native';
 import { ActivityList } from '../Lists';
-import NavigationBar from 'react-native-navbar';
 
 const baseStyles = StyleSheet.create({
   content: {
     flex: 1
   },
   root: {
-    flex: 1
+    flex: 1,
+    marginTop: 64
   }
 });
 
@@ -15,10 +15,6 @@ export class ActivityTabScreen extends Component {
   render() {
     return (
       <View style={baseStyles.root}>
-        <NavigationBar
-          tintColor="orange"
-          title={{ title: 'Activity' }}
-        />
         <ActivityList
           checkIns={this.props.checkIns}
           fetchCheckIns={this.props.fetchCheckIns}
