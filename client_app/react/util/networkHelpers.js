@@ -38,7 +38,8 @@ NetworkError.prototype = Object.create(Error.prototype);
 NetworkError.prototype.constructor = NetworkError;
 
 function appendHost(uri) {
-  return 'http://10.0.0.2:5000' + uri;
+  // return 'http://10.0.0.2:5000' + uri;
+  return 'http://sloppy-moose.dev:5000' + uri;
 }
 
 // fetch middleware that auto-appends the API host to all URLs
