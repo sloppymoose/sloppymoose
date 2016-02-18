@@ -31,6 +31,7 @@ const baseStyles = {
     color: 'white'
   }
 };
+const ConnectedRouter = connect()(Router);
 
 function getState(state) {
   return emptyObj;
@@ -56,7 +57,7 @@ class NativeRouterContainer extends Component {
           title=""
         />
         <Route hideNavBar name="home">
-          <Router
+          <ConnectedRouter
             footer={TabBar}
             navigationBarStyle={baseStyles.homeNavigationBar}
             tabBarStyle={baseStyles.homeTabBar}
@@ -70,7 +71,7 @@ class NativeRouterContainer extends Component {
             />
             <Route
               component={EventCheckInTabHandler}
-              name="checkIn"
+              name={EventCheckInTabHandler.routeName}
               schema="tab"
               title="Check In"
             />
@@ -80,7 +81,7 @@ class NativeRouterContainer extends Component {
               schema="tab"
               title="Badges"
             />
-          </Router>
+          </ConnectedRouter>
         </Route>
         <Route
           component={SignInHandler}

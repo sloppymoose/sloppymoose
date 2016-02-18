@@ -1,15 +1,16 @@
 import { Actions } from 'react-native-router-flux';
 import { bindActionCreators } from 'redux';
-import { BluetoothGate } from '../Gates';
+import { LocationGate } from '../Gates';
 import { Component, PropTypes } from 'react-native';
 import { connect } from 'react-redux/native';
 import { EventCheckInTabScreen } from '../Screens';
-import { startMonitoring, stopMonitoring } from '../../../react/actions/BeaconsActions';
 import { fetchActiveEvents } from '../../../react/actions/EventActions';
+import { startMonitoring, stopMonitoring } from '../../../react/actions/BeaconsActions';
 
 function getState(state) {
   return {
     activeEvents: state.activeEvents,
+    currentRoute: state.router.get('currentRoute'),
     beacons: state.beacons
   };
 }
@@ -19,15 +20,16 @@ function getActions(dispatch) {
 }
 
 export class EventCheckInTabContainer extends Component {
-  handleCancel() {
-    Actions.home();
-  }
   handleManualAuthChange() {
-    Actions.home({ activeTabIndex: 1 });
+    Actions.checkIn();
   }
   render() {
+    const monitorAuthorization = this.props.currentRoute == EventCheckInTabContainer.routeName;
     return (
-      <BluetoothGate onCancel={this.handleCancel} onManualChange={this.handleManualAuthChange}>
+      <LocationGate
+        monitorAuthorization={monitorAuthorization}
+        onManualChange={this.handleManualAuthChange}
+      >
         <EventCheckInTabScreen
           activeEvents={this.props.activeEvents}
           beacons={this.props.beacons}
@@ -36,7 +38,7 @@ export class EventCheckInTabContainer extends Component {
           stopMonitoring={this.props.stopMonitoring}
           tabVisible={this.props.tabVisible}
         />
-      </BluetoothGate>
+      </LocationGate>
     );
   }
 }
@@ -44,6 +46,7 @@ export class EventCheckInTabContainer extends Component {
 EventCheckInTabContainer.propTypes = {
   activeEvents: PropTypes.any,
   beacons: PropTypes.any,
+  currentRoute: PropTypes.string,
   fetchActiveEvents: PropTypes.func,
   startMonitoring: PropTypes.func,
   stopMonitoring: PropTypes.func,
@@ -52,5 +55,6 @@ EventCheckInTabContainer.propTypes = {
 EventCheckInTabContainer.defaultProps = {
   tabVisible: false
 };
+EventCheckInTabContainer.routeName = 'checkIn';
 
 export const EventCheckInTabHandler = connect(getState, getActions)(EventCheckInTabContainer);

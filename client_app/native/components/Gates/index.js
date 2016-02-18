@@ -1,1 +1,1 @@
-export { BluetoothGate } from './BluetoothGate/BluetoothGate';
+export { LocationGate } from './LocationGate/LocationGate';

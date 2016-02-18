@@ -5,7 +5,7 @@ import emptyObj from 'empty/object';
 import { store } from '../util/reduxStore';
 
 let AuthorizationChangePoller = null;
-const BluetoothAuthorizationPollInterval = 500;
+const LocationAuthorizationPollInterval = 500;
 
 function beaconDidRange(data) {
   store.dispatch({
@@ -35,7 +35,6 @@ function regionDidExit(data) {
 }
 
 function authorizationDidChange(authorization) {
-  // TODO: Determine why this does not fire
   store.dispatch({
     type: BeaconsActions.AUTHORIZATION_DID_CHANGE,
     payload: {
@@ -65,15 +64,15 @@ export function startListeningForAuthorization() {
     if(AuthorizationChangePoller) {
       return;
     }
-    const { beacons } = getState();
-    const currentState = beacons.get('authorizationState');
     AuthorizationChangePoller = setInterval(() => {
       Beacons.getAuthorizationStatus((authorization) => {
+        const { beacons } = getState();
+        const currentState = beacons.get('authorizationState');
         if(authorization !== currentState) {
           authorizationDidChange(authorization);
         }
       });
-    }, BluetoothAuthorizationPollInterval);
+    }, LocationAuthorizationPollInterval);
   };
 }
 
@@ -84,10 +83,10 @@ export function stopListeningForAuthorization() {
   };
 }
 
-export function requestBluetoothAccess() {
+export function requestLocationAccess() {
   Beacons.requestWhenInUseAuthorization();
   return {
-    type: BeaconsActions.BLUETOOTH_REQUEST_ACCESS,
+    type: BeaconsActions.LOCATION_REQUEST_ACCESS,
     payload: emptyObj
   };
 }
