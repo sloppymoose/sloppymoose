@@ -68,6 +68,17 @@ Rails.application.configure do
     port: ENV['PORT']
   }
 
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.smtp_settings = {
+    address: ENV['SMTP_ADDRESS'] || ENV['SPARKPOST_SANDBOX_DOMAIN'],
+    authentication: 'plain',
+    domain: ENV['SMTP_DOMAIN'] || ENV['SPARKPOST_SANDBOX_DOMAIN'],
+    enable_starttls_auto: true,
+    user_name: ENV['SMTP_USERNAME'] || ENV['SPARKPOST_SMTP_USERNAME'],
+    password: ENV['SMTP_PASSWORD'] || ENV['SPARKPOST_SMTP_PASSWORD'],
+    port: ENV['SMTP_PORT'] || ENV['SPARKPOST_SMTP_PORT']
+  }
+
   # Enable locale fallbacks for I18n (makes lookups for any locale fall back to
   # the I18n.default_locale when a translation cannot be found).
   config.i18n.fallbacks = true

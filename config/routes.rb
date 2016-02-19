@@ -1,3 +1,5 @@
+require 'sidekiq/web'
+
 Rails.application.routes.draw do
   use_doorkeeper
   devise_for :users
@@ -22,6 +24,7 @@ Rails.application.routes.draw do
 
   authenticate :user, lambda {|u| u.try(:admin) } do
     namespace :admin do
+      mount Sidekiq::Web => '/sidekiq'
       resources :users
     end
   end
