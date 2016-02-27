@@ -1,7 +1,7 @@
 import { BadgesTabScreen } from '../Screens';
-import { bindActionCreators } from 'redux';
-import { Component, PropTypes } from 'react-native';
+import { Component } from 'react-native';
 import { connect } from 'react-redux/native';
+import { isTabVisible } from '../../../react/util/navigationHelpers';
 
 function getState() {
   return {};
@@ -9,18 +9,12 @@ function getState() {
 
 class BadgesTabContainer extends Component {
   render() {
+    const tabVisible = isTabVisible(this);
     return (
-      <BadgesTabScreen/>
+      <BadgesTabScreen tabVisible={tabVisible}/>
     );
   }
 }
-
-BadgesTabContainer.propTypes = {
-  tabVisible: PropTypes.bool
-};
-
-BadgesTabContainer.defaultProps = {
-  tabVisible: false
-};
+BadgesTabContainer.routeName = 'badges';
 
 export const BadgesTabHandler = connect(getState)(BadgesTabContainer);

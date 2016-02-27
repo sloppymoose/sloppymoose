@@ -1,8 +1,9 @@
+import { ActivityTabScreen } from '../Screens';
 import { bindActionCreators } from 'redux';
 import { Component, PropTypes } from 'react-native';
 import { connect } from 'react-redux/native';
 import { fetchCheckIns } from '../../../react/actions/CheckInActions';
-import { ActivityTabScreen } from '../Screens';
+import { isTabVisible } from '../../../react/util/navigationHelpers';
 
 function getState(state) {
   return {
@@ -20,10 +21,12 @@ class ActivityTabContainer extends Component {
     this.props.fetchCheckIns();
   }
   render() {
+    const tabVisible = isTabVisible(this);
     return (
       <ActivityTabScreen
         checkIns={this.props.checkIns}
         fetchCheckIns={this.props.fetchCheckIns}
+        tabVisible={tabVisible}
         user={this.props.user}
       />
     );
@@ -34,11 +37,8 @@ ActivityTabContainer.propTypes = {
   checkIns: PropTypes.any,
   fetchCheckIns: PropTypes.func,
   signOutUser: PropTypes.func,
-  tabVisible: PropTypes.bool,
   user: PropTypes.any
 };
-ActivityTabContainer.defaultProps = {
-  tabVisible: false
-};
+ActivityTabContainer.routeName = 'activity';
 
 export const ActivityTabHandler = connect(getState, getActions)(ActivityTabContainer);

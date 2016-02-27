@@ -65,7 +65,7 @@ class NativeRouterContainer extends Component {
           >
             <Route
               component={ActivityTabHandler}
-              name="activity"
+              name={ActivityTabHandler.routeName}
               schema="tab"
               title="Activity"
             />
@@ -77,7 +77,7 @@ class NativeRouterContainer extends Component {
             />
             <Route
               component={BadgesTabHandler}
-              name="badges"
+              name={BadgesTabHandler.routeName}
               schema="tab"
               title="Badges"
             />

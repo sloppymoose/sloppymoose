@@ -5,6 +5,7 @@ import { Component, PropTypes } from 'react-native';
 import { connect } from 'react-redux/native';
 import { EventCheckInTabScreen } from '../Screens';
 import { fetchActiveEvents } from '../../../react/actions/EventActions';
+import { isTabVisible } from '../../../react/util/navigationHelpers';
 import { startMonitoring, stopMonitoring } from '../../../react/actions/BeaconsActions';
 
 function getState(state) {
@@ -24,10 +25,10 @@ export class EventCheckInTabContainer extends Component {
     Actions.checkIn();
   }
   render() {
-    const monitorAuthorization = this.props.currentRoute == EventCheckInTabContainer.routeName;
+    const tabVisible = isTabVisible(this);
     return (
       <LocationGate
-        monitorAuthorization={monitorAuthorization}
+        monitorAuthorization={tabVisible}
         onManualChange={this.handleManualAuthChange}
       >
         <EventCheckInTabScreen
@@ -36,7 +37,7 @@ export class EventCheckInTabContainer extends Component {
           fetchActiveEvents={this.props.fetchActiveEvents}
           startMonitoring={this.props.startMonitoring}
           stopMonitoring={this.props.stopMonitoring}
-          tabVisible={this.props.tabVisible}
+          tabVisible={tabVisible}
         />
       </LocationGate>
     );
@@ -49,11 +50,7 @@ EventCheckInTabContainer.propTypes = {
   currentRoute: PropTypes.string,
   fetchActiveEvents: PropTypes.func,
   startMonitoring: PropTypes.func,
-  stopMonitoring: PropTypes.func,
-  tabVisible: PropTypes.bool
-};
-EventCheckInTabContainer.defaultProps = {
-  tabVisible: false
+  stopMonitoring: PropTypes.func
 };
 EventCheckInTabContainer.routeName = 'checkIn';
 
