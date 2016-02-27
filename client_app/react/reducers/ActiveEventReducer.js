@@ -4,7 +4,6 @@ import emptyObj from 'empty/object';
 import EventActions from '../actionTypes/EventActions';
 import { find } from 'lodash';
 import Immutable from 'immutable';
-import { map } from 'lodash';
 
 const ProximityOrder = {
   immediate: 0,
