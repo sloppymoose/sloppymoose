@@ -19,6 +19,7 @@
     "react-addons-update": "0.14.3",
     "react-immutable-proptypes": "1.5.0",
     "react-native": "0.17.0",
+    "react-native-ibeacon": "0.6.0",
     "react-native-navbar": "1.1.3",
     "react-native-open-settings": "0.0.2",
     "react-native-refreshable-listview": "1.3.0",
