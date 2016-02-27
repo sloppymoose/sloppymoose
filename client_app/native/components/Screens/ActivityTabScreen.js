@@ -1,4 +1,10 @@
-import { Component, PropTypes, StyleSheet, View } from 'react-native';
+import {
+  Component,
+  Navigator,
+  PropTypes,
+  StyleSheet,
+  View
+} from 'react-native';
 import { ActivityList } from '../Lists';
 
 const baseStyles = StyleSheet.create({
@@ -7,7 +13,7 @@ const baseStyles = StyleSheet.create({
   },
   root: {
     flex: 1,
-    marginTop: 64
+    marginTop: 20 + Navigator.NavigationBar.Styles.General.NavBarHeight
   }
 });
 

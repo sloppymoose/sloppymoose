@@ -1,6 +1,7 @@
 import {
   Component,
   DeviceEventEmitter,
+  Navigator,
   PropTypes,
   ScrollView,
   StyleSheet,
@@ -13,7 +14,7 @@ import dismissKeyboard from 'react-native/Libraries/Utilities/dismissKeyboard';
 import emptyFn from 'empty/function';
 import { SignUpForm } from '../Forms';
 
-const NavbarHeight = 64;
+const NavbarHeight = 20 + Navigator.NavigationBar.Styles.General.NavBarHeight;
 const baseStyles = StyleSheet.create({
   content: {
     flex: 1
@@ -31,7 +32,7 @@ const baseStyles = StyleSheet.create({
   },
   screen: {
     flex: 1,
-    marginTop: 64
+    marginTop: NavbarHeight
   },
   scrollView: {
     flex: 1

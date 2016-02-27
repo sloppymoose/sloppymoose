@@ -1,6 +1,7 @@
 import Button from 'apsl-react-native-button';
 import {
   Component,
+  Navigator,
   PropTypes,
   StyleSheet,
   Text,
@@ -41,7 +42,7 @@ const baseStyles = StyleSheet.create({
   },
   root: {
     flex: 1,
-    marginTop: 64
+    marginTop: 20 + Navigator.NavigationBar.Styles.General.NavBarHeight
   }
 });
 

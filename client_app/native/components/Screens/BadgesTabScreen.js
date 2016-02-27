@@ -1,9 +1,15 @@
-import { Component, StyleSheet, Text, View } from 'react-native';
+import {
+  Component,
+  Navigator,
+  StyleSheet,
+  Text,
+  View
+} from 'react-native';
 
 const baseStyles = StyleSheet.create({
   root: {
     flex: 1,
-    marginTop: 64
+    marginTop: 20 + Navigator.NavigationBar.Styles.General.NavBarHeight
   }
 });
 

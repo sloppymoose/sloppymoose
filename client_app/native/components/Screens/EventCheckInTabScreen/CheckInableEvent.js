@@ -1,5 +1,6 @@
 import {
   Component,
+  Navigator,
   PropTypes,
   StyleSheet,
   Text,
@@ -13,7 +14,7 @@ import ImmutablePropTypes from 'react-immutable-proptypes';
 const baseStyles = StyleSheet.create({
   action: {
     position: 'absolute',
-    bottom: 0,
+    bottom: 20 + Navigator.NavigationBar.Styles.General.NavBarHeight,
     left: 20,
     right: 20
   },
