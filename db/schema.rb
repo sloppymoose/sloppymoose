@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151231090420) do
+ActiveRecord::Schema.define(version: 20160229053918) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -60,6 +60,28 @@ ActiveRecord::Schema.define(version: 20151231090420) do
     t.datetime "updated_at",                   null: false
   end
 
+  create_table "legacy_sheet_check_ins", force: :cascade do |t|
+    t.integer  "legacy_sheet_user_id", null: false
+    t.integer  "event_id",             null: false
+    t.date     "created_on",           null: false
+    t.datetime "created_at",           null: false
+    t.datetime "updated_at",           null: false
+  end
+
+  add_index "legacy_sheet_check_ins", ["event_id"], name: "index_legacy_sheet_check_ins_on_event_id", using: :btree
+  add_index "legacy_sheet_check_ins", ["legacy_sheet_user_id", "created_on"], name: "legacy_check_ins_on_user_id_and_created_on", unique: true, using: :btree
+
+  create_table "legacy_sheet_users", force: :cascade do |t|
+    t.string   "name",                            null: false
+    t.integer  "legacy_sign_ins", default: 0
+    t.integer  "shirt_size_id"
+    t.boolean  "shirt_awarded",   default: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "legacy_sheet_users", ["name", "shirt_size_id"], name: "index_legacy_sheet_users_on_name_and_shirt_size_id", unique: true, using: :btree
+
   create_table "oauth_access_grants", force: :cascade do |t|
     t.integer  "resource_owner_id", null: false
     t.integer  "application_id",    null: false
@@ -99,6 +121,14 @@ ActiveRecord::Schema.define(version: 20151231090420) do
   end
 
   add_index "oauth_applications", ["uid"], name: "index_oauth_applications_on_uid", unique: true, using: :btree
+
+  create_table "shirt_sizes", force: :cascade do |t|
+    t.string   "name",       null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "shirt_sizes", ["name"], name: "index_shirt_sizes_on_name", unique: true, using: :btree
 
   create_table "users", force: :cascade do |t|
     t.string   "email",                            default: "",    null: false

@@ -3,6 +3,8 @@ class Event < ActiveRecord::Base
   has_many :check_ins
   has_many :event_beacons
   has_many :users, through: :check_ins
+  has_many :legacy_sheet_check_ins
+  has_many :legacy_sheet_users, through: :legacy_sheet_check_ins
 
   validates :starts_at,
     presence: true

@@ -8,12 +8,14 @@ gem 'devise-async', '0.10.1'
 gem 'devise-doorkeeper', '1.1.1'
 gem 'doorkeeper', '3.0.1'
 gem 'dotenv-rails', '2.0.2'
+gem 'highline',   '1.7.8'
 gem 'rails',      '4.2.1'
 gem 'raygun4ruby', '1.1.9'
 gem 'rounding',   '1.0.1'
 gem 'pg',         '0.18.2'
 gem 'puma',       '2.15.3'
 gem 'sidekiq',    '4.1.0'
+gem 'sheet_mapper', github: 'nesquena/sheet_mapper', ref:'ad9b16d'
 gem 'sinatra',    '1.4.7', require: nil
 
 group :development, :test do
