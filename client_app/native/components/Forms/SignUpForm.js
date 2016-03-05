@@ -4,11 +4,12 @@ import {
   PropTypes,
   StyleSheet,
   Text,
-  TextInput,
   View
 } from 'react-native';
 import Button from 'apsl-react-native-button';
 import emptyFn from 'empty/function';
+import { FormInput } from './FormInput';
+import { FormSelect } from './FormSelect';
 import Immutable from 'immutable';
 import ImmutablePropTypes from 'react-immutable-proptypes';
 import { omit } from 'lodash';
@@ -42,16 +43,16 @@ const baseStyles = StyleSheet.create({
   },
   root: {
     flex: 1
-  },
-  field: {
-    borderBottomColor: '#ddd',
-    borderBottomWidth: 1,
-    margin: 10
-  },
-  input: {
-    height: 40
   }
 });
+
+function menuize(item) {
+  return (
+    <Text key={item.get('id')} value={item.get('id')}>
+      {item.getIn(['attributes', 'name'])}
+    </Text>
+  );
+}
 
 export class SignUpForm extends Component {
   constructor(props) {
@@ -65,6 +66,7 @@ export class SignUpForm extends Component {
     this.handlePromptWaiverAcceptance = this.handlePromptWaiverAcceptance.bind(this);
     this.handleHideWaiver = this.handleHideWaiver.bind(this);
     this.handleShowWaiver = this.handleShowWaiver.bind(this);
+    this.handleShirtSizeChangeSelected = this.handleShirtSizeChangeSelected.bind(this);
     this.handleSignUp = this.handleSignUp.bind(this);
     this.state = {
       email: '',
@@ -72,7 +74,8 @@ export class SignUpForm extends Component {
       password: '',
       passwordConfirmation: '',
       safetyWaiverAccepted: null,
-      showWaiver: false
+      showWaiver: false,
+      shirtSizeId: -1
     };
   }
   goToNext(ref) {
@@ -128,6 +131,11 @@ export class SignUpForm extends Component {
       ]
     );
   }
+  handleShirtSizeChangeSelected(item, selectedIndex) {
+    this.setState({
+      shirtSizeId: item.props.value
+    });
+  }
   handleShowWaiver() {
     this.setState({ showWaiver: true });
   }
@@ -147,64 +155,64 @@ export class SignUpForm extends Component {
     const reactiveSpacerStyles = {
       flex: this.props.keyboardVisible ? null : 1
     };
+    const shirtSizes = this.props.shirtSizes.get('items', Immutable.List());
+    const shirtSizeMenuItems = shirtSizes.map(menuize);
+    const selectedShirt =
+      shirtSizes
+        .find(size => size.get('id') == this.state.shirtSizeId) || Immutable.Map();
+    const selectedShirtName = selectedShirt.getIn(['attributes', 'name']);
     return (
       <View style={[baseStyles.root, reactiveRootStyles]}>
         <View style={baseStyles.form}>
-          <View style={baseStyles.field}>
-            <TextInput
-              autoCapitalize="words"
-              autoCorrect={false}
-              onChangeText={this.handleNameChangeText}
-              onSubmitEditing={this.goToNext('email')}
-              placeholder="Name"
-              ref="name"
-              returnKeyType="next"
-              style={baseStyles.input}
-              value={this.state.name}
-            />
-          </View>
-          <View style={baseStyles.field}>
-            <TextInput
-              autoCapitalize="none"
-              autoCorrect={false}
-              keyboardType="email-address"
-              onChangeText={this.handleEmailChangeText}
-              onSubmitEditing={this.goToNext('password')}
-              placeholder="Email"
-              ref="email"
-              returnKeyType="next"
-              style={baseStyles.input}
-              value={this.state.email}
-            />
-          </View>
-          <View style={baseStyles.field}>
-            <TextInput
-              autoCapitalize="none"
-              autoCorrect={false}
-              onChangeText={this.handlePasswordChangeText}
-              onSubmitEditing={this.goToNext('passwordConfirmation')}
-              placeholder="Password"
-              ref="password"
-              returnKeyType="next"
-              secureTextEntry
-              style={baseStyles.input}
-              value={this.state.password}
-            />
-          </View>
-          <View style={baseStyles.field}>
-            <TextInput
-              autoCapitalize="none"
-              autoCorrect={false}
-              onChangeText={this.handlePasswordConfirmationChangeText}
-              onSubmitEditing={this.handleSignUp}
-              placeholder="Password Confirmation"
-              ref="passwordConfirmation"
-              returnKeyType="go"
-              secureTextEntry
-              style={baseStyles.input}
-              value={this.state.passwordConfirmation}
-            />
-          </View>
+          <FormInput
+            autoCapitalize="words"
+            autoCorrect={false}
+            label="Full Name"
+            onChangeText={this.handleNameChangeText}
+            onSubmitEditing={this.goToNext('email')}
+            ref="name"
+            returnKeyType="next"
+            value={this.state.name}
+          />
+          <FormInput
+            autoCapitalize="none"
+            autoCorrect={false}
+            keyboardType="email-address"
+            label="Email"
+            onChangeText={this.handleEmailChangeText}
+            onSubmitEditing={this.goToNext('password')}
+            ref="email"
+            returnKeyType="next"
+            value={this.state.email}
+          />
+          <FormInput
+            autoCapitalize="none"
+            autoCorrect={false}
+            label="Password"
+            onChangeText={this.handlePasswordChangeText}
+            onSubmitEditing={this.goToNext('passwordConfirmation')}
+            ref="password"
+            returnKeyType="next"
+            secureTextEntry
+            value={this.state.password}
+          />
+          <FormInput
+            autoCapitalize="none"
+            autoCorrect={false}
+            label="Password Confirmation"
+            onChangeText={this.handlePasswordConfirmationChangeText}
+            onSubmitEditing={this.goToNext('shirtSizeId')}
+            ref="passwordConfirmation"
+            secureTextEntry
+            value={this.state.passwordConfirmation}
+          />
+          <FormSelect
+            label="Shirt Size"
+            onChangeSelected={this.handleShirtSizeChangeSelected}
+            value={selectedShirtName}
+          >
+            {shirtSizeMenuItems}
+          </FormSelect>
         </View>
         <View style={[baseStyles.error, reactiveSpacerStyles]}>
           <Text style={baseStyles.errorText}>
@@ -232,6 +240,14 @@ export class SignUpForm extends Component {
 
 SignUpForm.propTypes = {
   keyboardVisible: PropTypes.bool,
+  shirtSizes: ImmutablePropTypes.contains({
+    items: ImmutablePropTypes.listOf(ImmutablePropTypes.contains({
+      id: PropTypes.string.isRequired,
+      attributes: ImmutablePropTypes.contains({
+        name: PropTypes.string.isRequired
+      })
+    }))
+  }),
   signUpUser: PropTypes.func,
   user: ImmutablePropTypes.contains({
     signingUp: PropTypes.bool,
@@ -242,6 +258,7 @@ SignUpForm.propTypes = {
 };
 SignUpForm.defaultProps = {
   keyboardVisible: false,
+  shirtSizes: Immutable.Map(),
   signUpUser: emptyFn,
   user: Immutable.Map()
 };

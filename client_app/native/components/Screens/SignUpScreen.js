@@ -12,6 +12,8 @@ import {
 import Dimensions from 'Dimensions';
 import dismissKeyboard from 'react-native/Libraries/Utilities/dismissKeyboard';
 import emptyFn from 'empty/function';
+import Immutable from 'immutable';
+import ImmutablePropTypes from 'react-immutable-proptypes';
 import { SignUpForm } from '../Forms';
 
 const NavbarHeight = 20 + Navigator.NavigationBar.Styles.General.NavBarHeight;
@@ -100,6 +102,7 @@ export class SignUpScreen extends Component {
               <View style={baseStyles.content}>
                 <SignUpForm
                   keyboardVisible={this.state.keyboardVisible}
+                  shirtSizes={this.props.shirtSizes}
                   signUpUser={this.props.signUpUser}
                   spacerHeight={this.state.keyboardHeight}
                   user={this.props.user}
@@ -124,10 +127,12 @@ export class SignUpScreen extends Component {
 SignUpScreen.propTypes = {
   onBackPress: PropTypes.func,
   onSignInPress: PropTypes.func,
+  shirtSizes: ImmutablePropTypes.map,
   signUpUser: PropTypes.func,
   user: PropTypes.any
 };
 SignUpScreen.defaultProps = {
   onBackPress: emptyFn,
-  onSignInPress: emptyFn
+  onSignInPress: emptyFn,
+  shirtSizes: Immutable.Map()
 };

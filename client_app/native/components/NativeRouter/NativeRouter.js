@@ -8,6 +8,7 @@ import { Component, PropTypes } from 'react-native';
 import { connect } from 'react-redux/native';
 import emptyFn from 'empty/function';
 import emptyObj from 'empty/object';
+import { fetchShirtSizes } from '../../../react/actions/ShirtSizeActions';
 import {
   ForgotPasswordHandler,
   SignInHandler,
@@ -38,13 +39,15 @@ function getState(state) {
 }
 
 function getActions(dispatch) {
-  return bindActionCreators({ initTokens }, dispatch);
+  return bindActionCreators({ fetchShirtSizes, initTokens }, dispatch);
 }
 
 class NativeRouterContainer extends Component {
   componentWillMount() {
     this.props.initTokens()
       .catch(console.error);
+    this.props.fetchShirtSizes();
+      // .catch(console.error); TODO: ¯\_(ツ)_/¯
   }
   render() {
     return (
@@ -108,10 +111,12 @@ class NativeRouterContainer extends Component {
 }
 
 NativeRouterContainer.propTypes = {
+  fetchShirtSizes: PropTypes.func,
   initTokens: PropTypes.func
 };
 
 NativeRouterContainer.defaultProps = {
+  fetchShirtSizes: emptyFn,
   initTokens: emptyFn
 };
 

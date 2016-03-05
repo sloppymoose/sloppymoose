@@ -8,6 +8,7 @@ kyle:
   confirmation_sent_at: <%= 2.hours.ago %>
   encrypted_password: '$2a$10$NZpHhz6AJ/NEeEQVMCtA8uFbW.taMyX9F5dVjP6prxaoxXM0hrFru' # TEST PASSWORD
   safety_waiver_accepted: '1'
+  shirt_size_id: 1
 
 nancy:
   id: 10
@@ -18,6 +19,7 @@ nancy:
   confirmation_sent_at: <%= 2.hours.ago %>
   encrypted_password: '$2a$10$NZpHhz6AJ/NEeEQVMCtA8uFbW.taMyX9F5dVjP6prxaoxXM0hrFru' # TEST PASSWORD
   safety_waiver_accepted: '1'
+  shirt_size_id: 2
 
 unconfirmed:
   id: 20
@@ -28,6 +30,7 @@ unconfirmed:
   confirmation_sent_at: <%= 1.minute.ago %>
   encrypted_password: '$2a$10$NZpHhz6AJ/NEeEQVMCtA8uFbW.taMyX9F5dVjP6prxaoxXM0hrFru' # TEST PASSWORD
   safety_waiver_accepted: '1'
+  shirt_size_id: 1
 
 izzie:
   id: 30
@@ -38,3 +41,4 @@ izzie:
   confirmation_sent_at: <%= 2.hours.ago %>
   encrypted_password: '$2a$10$NZpHhz6AJ/NEeEQVMCtA8uFbW.taMyX9F5dVjP6prxaoxXM0hrFru' # TEST PASSWORD
   safety_waiver_accepted: '1'
+  shirt_size_id: 2

@@ -22,6 +22,10 @@ Rails.application.routes.draw do
     end
   end
 
+  namespace :api do
+    resources :shirt_sizes, only: %i{index}
+  end
+
   authenticate :user, lambda {|u| u.try(:admin) } do
     namespace :admin do
       mount Sidekiq::Web => '/sidekiq'

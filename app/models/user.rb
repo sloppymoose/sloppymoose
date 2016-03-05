@@ -4,6 +4,7 @@ class User < ActiveRecord::Base
 
   has_many :check_ins
   has_many :events, through: :check_ins
+  belongs_to :shirt_size
 
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
@@ -18,4 +19,6 @@ class User < ActiveRecord::Base
     presence: true
   validates :safety_waiver_acceptance,
     acceptance: true
+  validates :shirt_size,
+    presence: true
 end

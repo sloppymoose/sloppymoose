@@ -1,3 +1,7 @@
 mens_medium:
-  id: 2
+  id: 1
   name: M
+
+womens_medium:
+  id: 2
+  name: WM

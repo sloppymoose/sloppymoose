@@ -2,6 +2,8 @@ require 'rails_helper'
 
 describe Api::RegistrationsController do
   describe '#create' do
+    fixtures :shirt_sizes
+
     let(:params) do
       {
         format: :json,
@@ -10,7 +12,8 @@ describe Api::RegistrationsController do
           name: 'FIRST LAST',
           password: 'TESTPASSWORD',
           password_confirmation: 'TESTPASSWORD',
-          safety_waiver_accepted: '1'
+          safety_waiver_accepted: '1',
+          shirt_size_id: shirt_sizes(:mens_medium).id.to_s
         }
       }
     end

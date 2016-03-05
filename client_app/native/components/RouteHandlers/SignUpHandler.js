@@ -7,6 +7,7 @@ import { signUpUser } from '../../../react/actions/UserActions';
 
 function getState(state) {
   return {
+    shirtSizes: state.shirtSizes,
     user: state.user
   };
 }
@@ -21,6 +22,7 @@ export class SignUpContainer extends Component {
       <SignUpScreen
         onBackPress={Actions.signIn}
         onSignInPress={Actions.signIn}
+        shirtSizes={this.props.shirtSizes}
         signUpUser={this.props.signUpUser}
         user={this.props.user}
       />
@@ -28,6 +30,7 @@ export class SignUpContainer extends Component {
   }
 }
 SignUpContainer.propTypes = {
+  shirtSizes: PropTypes.object,
   signUpUser: PropTypes.func,
   user: PropTypes.any
 };
