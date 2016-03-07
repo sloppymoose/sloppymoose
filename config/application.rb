@@ -23,6 +23,11 @@ module Sloppymoose
     # Do not swallow errors in after_commit/after_rollback callbacks.
     config.active_record.raise_in_transactional_callbacks = true
 
+    config.action_mailer.default_url_options = {
+      host: Rails.application.secrets.action_mailer_host,
+      port: Rails.application.secrets.action_mailer_port
+    }
+
     ActiveModel::Serializer.config.adapter = :json_api
   end
 end
