@@ -3,10 +3,12 @@ kyle:
   admin: true
   name: Kyle Blakie
   email: kblakie@example.org
+  first_timer: false
   confirmation_token: abc123
   confirmed_at: <%= 1.hour.ago %>
   confirmation_sent_at: <%= 2.hours.ago %>
   encrypted_password: '$2a$10$NZpHhz6AJ/NEeEQVMCtA8uFbW.taMyX9F5dVjP6prxaoxXM0hrFru' # TEST PASSWORD
+  legacy_sheet_user_id: 1
   safety_waiver_accepted: '1'
   shirt_size_id: 1
 
@@ -14,10 +16,12 @@ nancy:
   id: 10
   name: Nancy Smith
   email: nsmith@example.org
+  first_timer: false
   confirmation_token: def456
   confirmed_at: <%= 1.hour.ago %>
   confirmation_sent_at: <%= 2.hours.ago %>
   encrypted_password: '$2a$10$NZpHhz6AJ/NEeEQVMCtA8uFbW.taMyX9F5dVjP6prxaoxXM0hrFru' # TEST PASSWORD
+  legacy_sheet_user_id: 10
   safety_waiver_accepted: '1'
   shirt_size_id: 2
 
@@ -25,10 +29,12 @@ unconfirmed:
   id: 20
   name: Rando Person
   email: rando@example.org
+  first_timer: true
   confirmation_token:
   confirmed_at:
   confirmation_sent_at: <%= 1.minute.ago %>
   encrypted_password: '$2a$10$NZpHhz6AJ/NEeEQVMCtA8uFbW.taMyX9F5dVjP6prxaoxXM0hrFru' # TEST PASSWORD
+  legacy_sheet_user_id:
   safety_waiver_accepted: '1'
   shirt_size_id: 1
 
@@ -36,9 +42,11 @@ izzie:
   id: 30
   name: Julia Gaillard
   email: jgaillard@example.org
+  first_timer: false
   confirmation_token: ghi789
   confirmed_at: <%= 1.hour.ago %>
   confirmation_sent_at: <%= 2.hours.ago %>
   encrypted_password: '$2a$10$NZpHhz6AJ/NEeEQVMCtA8uFbW.taMyX9F5dVjP6prxaoxXM0hrFru' # TEST PASSWORD
+  legacy_sheet_user_id: 30
   safety_waiver_accepted: '1'
   shirt_size_id: 2

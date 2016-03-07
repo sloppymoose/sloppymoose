@@ -8,6 +8,7 @@ import {
 } from 'react-native';
 import Button from 'apsl-react-native-button';
 import emptyFn from 'empty/function';
+import { FormCheckbox } from './FormCheckbox';
 import { FormInput } from './FormInput';
 import { FormSelect } from './FormSelect';
 import Immutable from 'immutable';
@@ -59,6 +60,7 @@ export class SignUpForm extends Component {
     super(props);
     this.goToNext = this.goToNext.bind(this);
     this.handleEmailChangeText = this.handleEmailChangeText.bind(this);
+    this.handleFirstTimerValueChange = this.handleFirstTimerValueChange.bind(this);
     this.handleNameChangeText = this.handleNameChangeText.bind(this);
     this.handlePasswordChangeText = this.handlePasswordChangeText.bind(this);
     this.handlePasswordConfirmationChangeText = this.handlePasswordConfirmationChangeText.bind(this);
@@ -70,6 +72,7 @@ export class SignUpForm extends Component {
     this.handleSignUp = this.handleSignUp.bind(this);
     this.state = {
       email: '',
+      firstTimer: true,
       name: '',
       password: '',
       passwordConfirmation: '',
@@ -83,6 +86,9 @@ export class SignUpForm extends Component {
   }
   handleEmailChangeText(email) {
     this.setState({ email });
+  }
+  handleFirstTimerValueChange(firstTimer) {
+    this.setState({ firstTimer });
   }
   handleNameChangeText(name) {
     this.setState({ name });
@@ -213,6 +219,11 @@ export class SignUpForm extends Component {
           >
             {shirtSizeMenuItems}
           </FormSelect>
+          <FormCheckbox
+            label="I am new to Sloppy Moose"
+            onValueChange={this.handleFirstTimerValueChange}
+            value={this.state.firstTimer}
+          />
         </View>
         <View style={[baseStyles.error, reactiveSpacerStyles]}>
           <Text style={baseStyles.errorText}>

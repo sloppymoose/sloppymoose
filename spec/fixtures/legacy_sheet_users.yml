@@ -2,3 +2,24 @@ alan:
   id: 901
   name: Alan Capps
   shirt_size_id: 1
+
+kyle:
+  id: 1
+  legacy_sign_ins: 10
+  name: Kyle Blaikie
+  shirt_awarded: true
+  shirt_size_id: 1
+
+nancy:
+  id: 10
+  legacy_sign_ins: 1
+  name: Nancy Smith
+  shirt_awarded: true
+  shirt_size_id: 1
+
+izzie:
+  id: 30
+  legacy_sign_ins: 5
+  name: Julie G.
+  shirt_awarded: true
+  shirt_size_id: 1
