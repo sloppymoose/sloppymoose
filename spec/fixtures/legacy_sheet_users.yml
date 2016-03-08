@@ -23,3 +23,17 @@ izzie:
   name: Julie G.
   shirt_awarded: true
   shirt_size_id: 1
+
+unconfirmed:
+  id: 40
+  legacy_sign_ins: 2
+  name: Random Person
+  shirt_awarded: false
+  shirt_size_id: 1
+
+misspelled_unconfirmed:
+  id: 41
+  legacy_sign_ins: 2
+  name: Rando Person
+  shirt_awarded: false
+  shirt_size_id: 1

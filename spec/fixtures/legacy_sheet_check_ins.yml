@@ -1,0 +1,15 @@
+check_in_for_unconfirmed_user:
+  id: 1
+  legacy_sheet_user_id: 40
+  event_id: 1
+  created_on: 2014-01-02
+  created_at: <%= Time.now %>
+  updated_at: <%= Time.now %>
+
+check_in_for_misspelled_unconfirmed_user:
+  id: 2
+  legacy_sheet_user_id: 41
+  event_id: 1
+  created_on: 2014-01-02
+  created_at: <%= Time.now %>
+  updated_at: <%= Time.now %>

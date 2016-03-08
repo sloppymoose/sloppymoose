@@ -22,4 +22,8 @@ class User < ActiveRecord::Base
     acceptance: true
   validates :shirt_size,
     presence: true
+
+  def after_confirmation
+    LinkLegacyUserToUser.delay.perform(id) unless first_timer?
+  end
 end
