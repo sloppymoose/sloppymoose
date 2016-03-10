@@ -1,0 +1,8 @@
+Is this you?
+
+<% @matching_legacy_users.each do |legacy_match| %>
+| **Name**               | <%= legacy_match.name %> |
+| **Last Check-In Date** | <%= legacy_match.legacy_sheet_check_ins.order(:created_on).last.created_on.strftime('%B %e, %Y') %> |
+<% end %>
+
+(Yes, this is me!)[#yesitsme]

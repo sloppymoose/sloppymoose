@@ -1,0 +1,13 @@
+Hello and thank you for registering on our website!
+
+You indicated during your registration that you had run with us before and we want to make sure that you retain credit for all your previous runs.
+
+In order to do that, all we need is for you to verify that we've found the correct record!
+
+<% if @matching_legacy_users.one? %>
+<%= render 'verify_single_match' %>
+<% else %>
+<%= render 'select_from_matches' %>
+<% end %>
+
+One your account is linked, we'll import your previous check-in history and you'll be good to go!
