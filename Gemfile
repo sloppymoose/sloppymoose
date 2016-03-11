@@ -20,6 +20,7 @@ gem 'sidekiq',    '4.1.0'
 gem 'sinatra',    '1.4.7', require: nil
 
 group :development, :test do
+  gem 'fastlane',    '1.66.0'
   gem 'foreman',     '0.78.0'
   gem 'spring'
   gem 'rspec-rails', '3.2.1'
