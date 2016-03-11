@@ -5,7 +5,7 @@ You indicated during your registration that you had run with us before and we wa
 In order to do that, all we need is for you to verify that we've found the correct record!
 
 <% if @matching_legacy_users.one? %>
-<%= render 'verify_single_match' %>
+<%= render partial: 'verify_single_match', locals: { legacy_match: @matching_legacy_users.first } %>
 <% else %>
 <%= render 'select_from_matches' %>
 <% end %>

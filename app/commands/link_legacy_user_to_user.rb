@@ -11,22 +11,7 @@ class LinkLegacyUserToUser
 
   # Returns the LegacySheetUser records that best match the User's details
   def find_best_match_for_user(user)
-    LegacySheetUser.
-      includes(:legacy_sheet_check_ins, :user).
-      # Calculate the similarity between the names of the two data sources
-      select("similarity(legacy_sheet_users.name, #{LegacySheetUser.sanitize(user.name)}) as __sim__").
-      # Include required columns
-      select('*').
-      # Users that have not already been linked
-      where(users: { legacy_sheet_user_id: nil }).
-      # Users with the *same* Shirt Size
-      where(shirt_size_id: user.shirt_size_id).
-      # Users with similar names
-      where('similarity(legacy_sheet_users.name, ?) > 0.3', user.name).
-      # Rank by the result of the similarity comparison
-      order('__sim__').
-      # With _most_ similar first
-      reverse_order
+    LegacySheetUser.find_best_user_match(user)
   end
 
   def send_mail_to(user, matching_legacy_users)

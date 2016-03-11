@@ -26,4 +26,8 @@ class User < ActiveRecord::Base
   def after_confirmation
     LinkLegacyUserToUser.delay.perform(id) unless first_timer?
   end
+
+  def legacy_link?
+    legacy_sheet_user_id.present?
+  end
 end

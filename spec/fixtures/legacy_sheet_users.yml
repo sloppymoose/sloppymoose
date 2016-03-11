@@ -22,7 +22,7 @@ izzie:
   legacy_sign_ins: 5
   name: Julie G.
   shirt_awarded: true
-  shirt_size_id: 1
+  shirt_size_id: 2
 
 unconfirmed:
   id: 40

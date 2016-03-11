@@ -1,8 +1,6 @@
-Is this you?
+So, is this you?
 
-<% @matching_legacy_users.each do |legacy_match| %>
 | **Name**               | <%= legacy_match.name %> |
 | **Last Check-In Date** | <%= legacy_match.legacy_sheet_check_ins.order(:created_on).last.created_on.strftime('%B %e, %Y') %> |
-<% end %>
 
-(Yes, this is me!)[#yesitsme]
+[Yes, that is me!](<%= linked_legacy_account_url(access_token: @access_token.token, id: legacy_match.id) %>)

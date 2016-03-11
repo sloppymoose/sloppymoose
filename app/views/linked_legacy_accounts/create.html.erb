@@ -1,0 +1,15 @@
+<% if current_user.errors.any? %>
+  <p>
+    Oh dear! We've run into a problem linking your account. Please try again
+    and if the problem persists, please email us at <%= mail_to 'moose@sloppymoose.club' %>
+  </p>
+  <ul>
+    <% current_user.errors.full_messages.each do |err| %>
+      <li><%= err %></li>
+    <% end %>
+  </ul>
+<% else %>
+  <p>
+    Account linked! All of your past check-ins have been linked to your account.
+  </p>
+<% end %>

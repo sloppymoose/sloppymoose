@@ -8,6 +8,8 @@ Rails.application.routes.draw do
 
   authenticate :user do
     resources :check_ins, only: %i{index}
+    resource :linked_legacy_account, only: %i{create}
+    get :linked_legacy_account, to: 'linked_legacy_accounts#create'
     namespace :api do
       resources :active_events, only: %i{index}
       resources :check_ins, only: %i{index create}

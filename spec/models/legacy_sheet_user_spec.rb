@@ -12,4 +12,9 @@ describe LegacySheetUser do
     legacy_user = described_class.create(name: name, shirt_size_id: shirt_size.id)
     expect(legacy_user.errors.full_messages).to include 'Name has already been taken'
   end
+
+  describe '.find_best_match_for_user' do
+    xit 'returns all potential matches for the user' do
+    end
+  end
 end
