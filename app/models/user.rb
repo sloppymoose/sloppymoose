@@ -2,7 +2,7 @@ class User < ActiveRecord::Base
   include Authority::UserAbilities
   include Authority::Abilities
 
-  has_many :check_ins
+  has_many :check_ins, dependent: :destroy
   has_many :events, through: :check_ins
   belongs_to :shirt_size
   belongs_to :legacy_sheet_user
