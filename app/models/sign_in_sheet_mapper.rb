@@ -1,4 +1,4 @@
-class SignInSheetMapper < SheetMapper::Base
+class SignInSheetMapper# < SheetMapper::Base
   attr_reader :data
   attr_accessor :raw_worksheet
 
