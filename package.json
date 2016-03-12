@@ -3,6 +3,8 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
+    "deploy:staging": "git push staging master",
+    "deploy:production": "git push production master",
     "reset-cache": "rctapp clean",
     "start": "react-native start"
   },
