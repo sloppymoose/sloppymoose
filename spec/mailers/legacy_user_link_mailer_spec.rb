@@ -20,7 +20,7 @@ describe LegacyUserLinkMailer, type: :mailer do
       expect(subject.subject).to eql 'Returning Sloppy Mooser: Link your account to retain credit for previous runs!'
     end
 
-    it 'foo' do
+    it 'includes a direct sign-in link' do
       expect(subject.body.parts.last.body).to match(/access_token=\w+/)
     end
 
