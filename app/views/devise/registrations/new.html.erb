@@ -16,6 +16,11 @@
   </div>
 
   <div class="field">
+    <%= f.label :shirt_size %><br />
+    <%= f.collection_select(:shirt_size_id, ShirtSize.all, :id, :name) %>
+  </div>
+
+  <div class="field">
     <%= f.label :password %>
     <% if @minimum_password_length %>
     <em>(<%= @minimum_password_length %> characters minimum)</em>
