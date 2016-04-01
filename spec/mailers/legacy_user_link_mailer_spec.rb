@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 describe LegacyUserLinkMailer, type: :mailer do
-  fixtures :legacy_sheet_check_ins, :legacy_sheet_users, :users
+  fixtures :check_ins, :legacy_sheet_users, :users
 
   let(:legacy_sheet_user) { legacy_sheet_users(:unconfirmed) }
   let(:user) { users(:unconfirmed) }

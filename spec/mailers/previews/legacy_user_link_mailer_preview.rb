@@ -5,6 +5,12 @@ class LegacyUserLinkMailerPreview < ActionMailer::Preview
   end
 
   def confirm_link_email__multi
+    # NOTE: This uses LegacySheetUser.all because we need to test for "many"
+    # user instances and LegacySheetUser.find_best_user_match obviously doesn't
+    # always return more than one record.
+    #
+    # So when you are scared becaused you think this email is weird because its
+    # returning a bunch of non-matching records, its OK. That's by design!
     LegacyUserLinkMailer.confirm_link_email(user, LegacySheetUser.all.limit(5))
   end
 

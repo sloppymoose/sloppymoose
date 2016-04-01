@@ -3,8 +3,8 @@ We found several records that look like they might be you and we need you to ver
 | Name  | Last Check-In Date | |
 |-------|--------------------|-|
 <% @matching_legacy_users.each do |legacy_match| %>
-<% last_check_in = legacy_match.legacy_sheet_check_ins.order(:created_on).last %>
-| <%= legacy_match.name %> | <%= last_check_in ? last_check_in.created_on.strftime('%B %e, %Y') : '' %> | [This is me!](<%= linked_legacy_account_url(access_token: @access_token.token, id: legacy_match.id) %>) |
+<% last_check_in = legacy_match.check_ins.where(legacy:true).order(:created_at).last %>
+| <%= legacy_match.name %> | <%= last_check_in ? last_check_in.created_at.strftime('%B %e, %Y') : '' %> | [This is me!](<%= linked_legacy_account_url(access_token: @access_token.token, id: legacy_match.id) %>) |
 <% end %>
 
 All you need to do is click on the "This is me!" link that is next to the record that best matches you and your Sloppy Moose history.

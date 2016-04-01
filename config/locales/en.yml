@@ -24,15 +24,12 @@ en:
     attributes:
       check_in:
         event_id: Event
-      legacy_sheet_check_in:
-        event_id: Event
     errors:
       models:
         check_in:
           attributes:
-            event_id:
-              taken: has already been checked in
-        legacy_sheet_check_in:
-          attributes:
+            base:
+              xor_blank: Specify a user or a legacy_sheet_user
+              xor_present: Specify a user or a legacy_sheet_user, but not both
             event_id:
               taken: has already been checked in

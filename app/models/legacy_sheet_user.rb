@@ -1,15 +1,15 @@
 class LegacySheetUser < ActiveRecord::Base
   has_one :shirt_size
   has_one :user
-  has_many :legacy_sheet_check_ins
-  has_many :events, through: :legacy_sheet_check_ins
+  has_many :check_ins, dependent: :destroy
+  has_many :events, through: :check_ins
 
   validates :name,
     presence: true,
     uniqueness: { scope: :shirt_size_id }
 
   def self.find_best_user_match(user)
-    includes(:legacy_sheet_check_ins, :user).
+    includes(:check_ins, :user).
     # Calculate the similarity between the names of the two data sources
     select("similarity(#{table_name}.name, #{sanitize(user.name)}) as __sim__").
     # Include required columns

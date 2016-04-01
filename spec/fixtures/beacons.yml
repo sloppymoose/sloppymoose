@@ -15,3 +15,12 @@ alternate_roaming_beacon:
   major: 1
   minor: 2
   default: false
+
+legacy_beacon:
+  id: 3
+  name: <%= Beacon::LegacyPseudoBeaconName %>
+  identifier: SM Networks
+  uuid: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
+  major: 1
+  minor: 1
+  default: false

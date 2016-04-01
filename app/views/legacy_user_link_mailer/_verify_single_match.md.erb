@@ -1,6 +1,6 @@
 So, is this you?
 
 | **Name**               | <%= legacy_match.name %> |
-| **Last Check-In Date** | <%= legacy_match.legacy_sheet_check_ins.order(:created_on).last.created_on.strftime('%B %e, %Y') %> |
+| **Last Check-In Date** | <%= legacy_match.check_ins.where(legacy:true).order(:created_at).last.created_at.strftime('%B %e, %Y') %> |
 
 [Yes, that is me!](<%= linked_legacy_account_url(access_token: @access_token.token, id: legacy_match.id) %>)

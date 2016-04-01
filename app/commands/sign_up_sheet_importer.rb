@@ -19,7 +19,7 @@ class SignUpSheetImporter
     }
     sheet = SheetMapper::Spreadsheet.new(options)
     sheet.spreadsheet.worksheets.reject do |worksheet|
-      SheetBlackList.include? worksheet.title
+      SheetBlackList.include?(worksheet.title)
     end.map do |worksheet|
       SheetMapper::Collection.new(sheet, worksheet)
     end
@@ -27,6 +27,7 @@ class SignUpSheetImporter
 
   def process_sign_ins(sign_ins)
     puts %Q[  Processing "#{sign_ins.worksheet.title}"]
+    legacy_beacon = Beacon.legacy_beacon
     sign_ins.each do |sign_in|
       LegacySheetUser.transaction do
         legacy_sheet_user = build_user(sign_in, sign_ins.worksheet.title)
@@ -34,9 +35,15 @@ class SignUpSheetImporter
         (8..68).each do |col|
           next if sign_in.data[col - 1].blank?
           starts_at, event = build_event(sign_ins, col)
-          check_in = legacy_sheet_user.legacy_sheet_check_ins.where(
-            created_on: starts_at.to_s(:db),
-            event_id: event.id
+          check_in = legacy_sheet_user.check_ins.where(
+            accuracy: 0.01,
+            beacon: legacy_beacon,
+            created_at: starts_at.to_s(:db),
+            event_id: event.id,
+            legacy: true,
+            proximity: 'near',
+            rssi: 0,
+            updated_at: starts_at.to_s(:db)
           ).first_or_initialize
           finalize_record(check_in)
         end
@@ -116,6 +123,7 @@ class SignUpSheetImporter
       check_in.save
       if check_in.errors.any?
         puts "   Legacy check-in failed for #{check_in.legacy_sheet_user.name} on #{check_in.event.starts_at}"
+        puts "     #{check_in.errors.full_messages}"
       else
         puts "   Legacy check-in created for #{check_in.legacy_sheet_user.name} on #{check_in.event.starts_at}"
       end

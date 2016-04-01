@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160307202714) do
+ActiveRecord::Schema.define(version: 20160312092426) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -30,14 +30,16 @@ ActiveRecord::Schema.define(version: 20160307202714) do
   end
 
   create_table "check_ins", force: :cascade do |t|
-    t.integer  "user_id",    null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.integer  "user_id"
+    t.datetime "created_at",                           null: false
+    t.datetime "updated_at",                           null: false
     t.integer  "event_id"
-    t.integer  "beacon_id",  null: false
-    t.decimal  "accuracy",   null: false
-    t.string   "proximity",  null: false
-    t.integer  "rssi",       null: false
+    t.integer  "beacon_id",                            null: false
+    t.decimal  "accuracy",                             null: false
+    t.string   "proximity",                            null: false
+    t.integer  "rssi",                                 null: false
+    t.boolean  "legacy",               default: false, null: false
+    t.integer  "legacy_sheet_user_id"
   end
 
   add_index "check_ins", ["event_id"], name: "index_check_ins_on_event_id", using: :btree
@@ -61,17 +63,6 @@ ActiveRecord::Schema.define(version: 20160307202714) do
     t.datetime "created_at",                   null: false
     t.datetime "updated_at",                   null: false
   end
-
-  create_table "legacy_sheet_check_ins", force: :cascade do |t|
-    t.integer  "legacy_sheet_user_id", null: false
-    t.integer  "event_id",             null: false
-    t.date     "created_on",           null: false
-    t.datetime "created_at",           null: false
-    t.datetime "updated_at",           null: false
-  end
-
-  add_index "legacy_sheet_check_ins", ["event_id"], name: "index_legacy_sheet_check_ins_on_event_id", using: :btree
-  add_index "legacy_sheet_check_ins", ["legacy_sheet_user_id", "created_on"], name: "legacy_check_ins_on_user_id_and_created_on", unique: true, using: :btree
 
   create_table "legacy_sheet_users", force: :cascade do |t|
     t.string   "name",                            null: false

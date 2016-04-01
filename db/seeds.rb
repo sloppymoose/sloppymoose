@@ -6,26 +6,9 @@
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
-if Rails.env.development?
-  User.where(id: 1).first_or_create!(
-    admin: true,
-    name: 'Derek Lindahl',
-    email: 'derek.lindahl@gmail.com',
-    password: 'test password',
-    password_confirmation: 'test password',
-
-    # Confirmable
-    confirmed_at: Time.now.utc
-  )
-
-  User.where(id: 2).first_or_create!(
-    admin: false,
-    name: 'Nick Faragasso',
-    email: 'nick@example.org',
-    password: 'password password password',
-    password_confirmation: 'password password password',
-
-    # Confirmable
-    unconfirmed_email: 'nick@example.org'
-  )
-end
+# Pseudo-beacon for Legacy Check-In processing
+Beacon.where(name: Beacon::LegacyPseudoBeaconName).first_or_create!(
+  default: false,
+  identifier: 'SM Networks',
+  uuid: 'xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx'
+)
