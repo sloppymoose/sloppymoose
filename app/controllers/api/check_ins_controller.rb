@@ -1,6 +1,6 @@
 class Api::CheckInsController < ApiController
   def index
-    @check_ins = current_user.check_ins
+    @check_ins = current_user.check_ins.order(:created_at)
     respond_with(@check_ins)
   end
 
