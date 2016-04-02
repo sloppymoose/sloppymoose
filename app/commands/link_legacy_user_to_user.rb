@@ -17,7 +17,7 @@ class LinkLegacyUserToUser
   def send_mail_to(user, matching_legacy_users)
     if user.legacy_link?
       Rails.logger.info("Skipping linking of legacy user: #{user.name} is already linked")
-    elsif matching_legacy_users
+    elsif matching_legacy_users.size > 0
       mail_link_confirmation!(user, matching_legacy_users)
     else
       mail_link_not_found!(user)
