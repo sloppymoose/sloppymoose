@@ -30,6 +30,6 @@ class LinkLegacyUserToUser
 
   # TODO
   def mail_link_not_found!(user)
-    LegacyUserLinkMailer.no_potential_links_email(user, matching_legacy_users).deliver
+    LegacyUserLinkMailer.no_potential_links_email(user).deliver
   end
 end
