@@ -5,7 +5,6 @@ import {
   View
 } from 'react-native';
 import emptyAry from 'empty/array';
-import { ActivityListEmpty } from './ActivityListEmpty';
 import { ActivityListItem } from './ActivityListItem';
 import emptyFn from 'empty/function';
 import Immutable from 'immutable';
@@ -50,9 +49,7 @@ export class ActivityList extends Component {
     return this.props.fetchCheckIns();
   }
   render() {
-    if(this.props.checkIns.get('items').size < 1) {
-      return <ActivityListEmpty/>;
-    }
+    // TODO: Add Refresh Prompt to render ActivityListEmpty when empty
     return (
       <View style={baseStyles.root}>
         <RefreshableListView
