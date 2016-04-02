@@ -24,7 +24,7 @@ class User < ActiveRecord::Base
     presence: true
 
   def after_confirmation
-    LinkLegacyUserToUser.delay.perform(id) unless first_timer?
+    LinkLegacyUserToUser.delay.confirm_link(id) unless first_timer?
   end
 
   def legacy_link?
