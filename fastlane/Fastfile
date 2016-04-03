@@ -16,15 +16,15 @@
 
 # This is the minimum version number required.
 # Update this, if you use features of a newer version
-fastlane_version "1.66.0"
+fastlane_version "1.70.0"
 
 default_platform :ios
 
 platform :ios do
   before_all do
     # ENV["SLACK_URL"] = "https://hooks.slack.com/services/..."
-    
-    
+
+
   end
 
   desc "Runs all the tests"
