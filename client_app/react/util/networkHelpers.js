@@ -10,6 +10,13 @@ import { fetchWithMiddleware, middleware } from 'fetch-oauth2';
 import { store as reduxStore } from './reduxStore';
 import UserActions from '../actionTypes/UserActions';
 
+import { NativeModules } from 'react-native';
+const { EnvironmentManager } = NativeModules;
+
+if(!EnvironmentManager.apiOrigin) {
+  throw new Error(`ApiOriginNotFound: No apiOrigin value was found in EnvironmentManager. Ensure that EnvironmentManager.m has been generated (via fastlane) and that the value is defined in the appropriate .env file for the ${EnvironmentManager.environment} environment.`);
+}
+
 const DefaultHeaders = {
   'Accept': 'application/json',
   'Content-Type': 'application/json'
@@ -38,8 +45,7 @@ NetworkError.prototype = Object.create(Error.prototype);
 NetworkError.prototype.constructor = NetworkError;
 
 function appendHost(uri) {
-  // return 'http://10.0.0.2:5000' + uri;
-  return 'http://sloppy-moose.dev:5000' + uri;
+  return EnvironmentManager.apiOrigin + uri;
 }
 
 // fetch middleware that auto-appends the API host to all URLs

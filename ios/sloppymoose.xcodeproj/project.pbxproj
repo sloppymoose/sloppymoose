@@ -27,6 +27,7 @@
 		204CFAA2469A4145BC2D650C /* Foundation.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 762CB83425164B60BE073BF0 /* Foundation.ttf */; };
 		24915671A4D34CE3B3820263 /* Entypo.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C554E58F946C4CA6AD0CD9AD /* Entypo.ttf */; };
 		4A660D1231AF41A9B1502CE3 /* EvilIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 7AF994B2D8D04EA1AD97736F /* EvilIcons.ttf */; };
+		6D63548B1CB21C0A00F3AE06 /* EnvironmentManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D63548A1CB21C0A00F3AE06 /* EnvironmentManager.m */; };
 		6D666C141C30A35100239039 /* libRNBeacon.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6D666C131C30A33300239039 /* libRNBeacon.a */; };
 		6D666C161C30A36200239039 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6D666C151C30A36200239039 /* CoreLocation.framework */; };
 		832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
@@ -169,6 +170,7 @@
 		3B207D519B1A420DA52270C9 /* RNBeacon.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 0; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNBeacon.xcodeproj; path = "../node_modules/react-native-ibeacon/RNBeacon.xcodeproj"; sourceTree = "<group>"; };
 		3DF7F615652B4672AB731642 /* Zocial.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 0; includeInIndex = 0; lastKnownFileType = unknown; name = Zocial.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Zocial.ttf"; sourceTree = "<group>"; };
 		44D780E09C604E909AB10B44 /* React Native Open Settings.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 0; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = "React Native Open Settings.xcodeproj"; path = "../node_modules/react-native-open-settings/React Native Open Settings.xcodeproj"; sourceTree = "<group>"; };
+		6D63548A1CB21C0A00F3AE06 /* EnvironmentManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EnvironmentManager.m; path = sloppymoose/EnvironmentManager.m; sourceTree = "<group>"; };
 		6D666C041C30A33300239039 /* RNBeacon.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNBeacon.xcodeproj; path = "../node_modules/react-native-ibeacon/RNBeacon.xcodeproj"; sourceTree = "<group>"; };
 		6D666C151C30A36200239039 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		762CB83425164B60BE073BF0 /* Foundation.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 0; includeInIndex = 0; lastKnownFileType = unknown; name = Foundation.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Foundation.ttf"; sourceTree = "<group>"; };
@@ -384,6 +386,7 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
+				6D63548A1CB21C0A00F3AE06 /* EnvironmentManager.m */,
 				6D666C151C30A36200239039 /* CoreLocation.framework */,
 				13B07FAE1A68108700A75B9A /* sloppymoose */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
@@ -448,6 +451,7 @@
 				13B07F871A680F5B00A75B9A /* Sources */,
 				13B07F8C1A680F5B00A75B9A /* Frameworks */,
 				13B07F8E1A680F5B00A75B9A /* Resources */,
+				6DE4816E1CB4E0B200C36DF2 /* ShellScript */,
 				00DD1BFF1BD5951E006B06BC /* Bundle React Native code and images */,
 			);
 			buildRules = (
@@ -694,6 +698,19 @@
 			shellPath = /bin/sh;
 			shellScript = "../node_modules/react-native/packager/react-native-xcode.sh";
 		};
+		6DE4816E1CB4E0B200C36DF2 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Set a variable in Info.plist that reflects the current development machine's IP Address\n# This is used in React Native to connect to the React Native development web server\nif [ \"$CONFIGURATION\" == \"Debug\" ]; then\n  echo -n ${TARGET_BUILD_DIR}/${INFOPLIST_PATH} | xargs -0 /usr/libexec/PlistBuddy -c \"Set :SMRCTDevServerIP `ipconfig getifaddr en0`\"\nelse\n  echo -n ${TARGET_BUILD_DIR}/${INFOPLIST_PATH} | xargs -0 /usr/libexec/PlistBuddy -c \"Delete :SMRCTDevServerIP\"\nfi";
+		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -710,6 +727,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */,
+				6D63548B1CB21C0A00F3AE06 /* EnvironmentManager.m in Sources */,
 				13B07FC11A68108700A75B9A /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -872,6 +890,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
+				OTHER_CFLAGS = "";
 				SDKROOT = iphoneos;
 			};
 			name = Debug;

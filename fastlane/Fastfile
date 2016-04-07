@@ -20,23 +20,59 @@ fastlane_version "1.81.0"
 
 default_platform :ios
 
+EnvironmentManagerPath = '../ios/sloppymoose/EnvironmentManager.m'
+
+# Generates Obj-C code that exports certain ENV vars into the XCode
+def generate_environment
+  raise ArgumentError, "No --env specified" if Actions.lane_context[:ENVIRONMENT].nil?
+  require 'active_support/inflector'
+
+  erb = ERB.new(File.read("#{EnvironmentManagerPath}.template.erb"), nil, '-')
+  file = File.open(EnvironmentManagerPath, 'w')
+
+  @env = {
+    API_ORIGIN: ENV['API_ORIGIN'],
+    DEBUG: !!ENV['DEBUG'],
+    LANE_NAME: Actions.lane_context[:LANE_NAME],
+    PLATFORM_NAME: Actions.lane_context[:PLATFORM_NAME],
+    ENVIRONMENT: Actions.lane_context[:ENVIRONMENT]
+  }
+
+  file.write(erb.result(binding))
+  file.close
+end
+
 platform :ios do
   before_all do
     # ENV["SLACK_URL"] = "https://hooks.slack.com/services/..."
 
+    File.delete(EnvironmentManagerPath) if File.exists?(EnvironmentManagerPath)
+  end
 
+  desc "Development"
+  lane :dev do
+    generate_environment
+    # scan
+    # gym(scheme: "sloppymoose") # Build your app - more options available
   end
 
   desc "Runs all the tests"
   lane :test do
+    generate_environment
     scan
   end
 
   desc "Submit a new Beta Build to Apple TestFlight"
   desc "This will also make sure the profile is up to date"
   lane :beta do
+    generate_environment
+
+    sigh
+
+    increment_build_number
+
     # match(type: "appstore") # more information: https://codesigning.guide
-    gym(scheme: "sloppymoose") # Build your app - more options available
+    gym(scheme: "sloppymoose-release") # Build your app - more options available
     pilot
 
     # sh "your_script.sh"
@@ -45,9 +81,11 @@ platform :ios do
 
   desc "Deploy a new version to the App Store"
   lane :appstore do
+    generate_environment
+
     # match(type: "appstore")
     # snapshot
-    gym(scheme: "sloppymoose") # Build your app - more options available
+    gym(scheme: "sloppymoose-release") # Build your app - more options available
     deliver(force: true)
     # frameit
   end
@@ -55,11 +93,9 @@ platform :ios do
   # You can define as many lanes as you want
 
   after_all do |lane|
-    # This block is called, only if the executed lane was successful
-
-    # slack(
-    #   message: "Successfully deployed new App Update."
-    # )
+    if Actions.lane_context[:ENVIRONMENT] != 'development'
+      puts "Don't forget to re-run `DEBUG=true fastlane dev --env development`"
+    end
   end
 
   error do |lane, exception|

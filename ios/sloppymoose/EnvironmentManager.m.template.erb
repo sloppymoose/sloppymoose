@@ -1,0 +1,25 @@
+#import "RCTBridgeModule.h"
+
+@interface EnvironmentManager : NSObject <RCTBridgeModule>
+
+@end
+
+
+@implementation EnvironmentManager
+
+RCT_EXPORT_MODULE()
+
+- (NSDictionary *)constantsToExport
+{
+  return @{
+<% @env.keys.each do |key| -%>
+  <%- if !!@env[key] == @env[key] -%>
+    <%= "@\"#{ActiveSupport::Inflector.camelize(key.downcase, false)}\": @#{@env[key] ? 'YES' : 'NO'}," %>
+  <%- else -%>
+    <%= "@\"#{ActiveSupport::Inflector.camelize(key.downcase, false)}\": @\"#{@env[key].to_s}\"," %>
+  <%- end -%>
+<% end -%>
+  };
+}
+
+@end

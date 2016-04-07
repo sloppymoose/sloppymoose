@@ -58,3 +58,7 @@ npm-debug.log
 
 # Google API Integration
 .oauth_refresh_token
+
+# Fastlane
+fastlane/report.xml
+ios/sloppymoose/EnvironmentManager.m
