@@ -1,5 +1,5 @@
 source 'https://rubygems.org'
-ruby '2.2.2'
+ruby '2.3.0'
 
 gem 'active_model_serializers', '0.10.0.rc3'
 gem 'authority',  '3.1.0'
