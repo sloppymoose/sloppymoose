@@ -2,9 +2,28 @@
   "name": "sloppymoose",
   "version": "0.0.1",
   "private": true,
+  "description": "Sloppy Moose Running Club Event Check-In Application",
+  "author": "Derek Lindahl <derek.lindahl@gmail.com>",
+  "bugs": "info@sloppymoose.club",
+  "contributors": [
+    "Derek Lindahl <derek.lindahl@gmail.com>"
+  ],
+  "engines": {
+    "node" : ">=4.2"
+  },
+  "email": "info@sloppymoose.club",
+  "homepage": "http://sloppymoose.club",
+  "keywords": [],
+  "licenses": [],
+  "repository": {
+    "type" : "git",
+    "url" : "https://github.com/sloppymoose/sloppymoose.git"
+  },
   "scripts": {
     "deploy:staging": "git push staging master",
     "deploy:production": "git push production master",
+    "ios:dev": "fastlane dev --env development",
+    "ios:testflight": "fastlane beta --env staging",
     "reset-cache": "rctapp clean",
     "start": "react-native start"
   },

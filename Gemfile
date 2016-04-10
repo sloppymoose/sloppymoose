@@ -16,11 +16,10 @@ gem 'rounding',   '1.0.1'
 gem 'pg',         '0.18.2'
 gem 'puma',       '2.15.3'
 gem 'sidekiq',    '4.1.0'
-# gem 'sheet_mapper', github: 'nesquena/sheet_mapper', ref:'ad9b16d'
+gem 'sheet_mapper', github: 'nesquena/sheet_mapper', ref:'ad9b16d'
 gem 'sinatra',    '1.4.7', require: nil
 
 group :development, :test do
-  gem 'fastlane',    '1.81.0'
   gem 'foreman',     '0.78.0'
   gem 'spring'
   gem 'rspec-rails', '3.2.1'
