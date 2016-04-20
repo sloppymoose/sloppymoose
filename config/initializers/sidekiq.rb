@@ -1,4 +1,4 @@
-# Calculated from http://manuel.manuelles.nl/sidekiq-heroku-redis-calc/
+# Calculated from http://manuelvanrijn.nl/sidekiq-heroku-redis-calc/
 
 Sidekiq.configure_server do |config|
   config.redis = {
