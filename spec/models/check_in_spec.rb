@@ -7,6 +7,7 @@ describe CheckIn do
   let(:event) { events(:unchecked_into_current_sloppy_moose) }
   let(:user) { users(:izzie) }
   let(:legacy_sheet_user) { legacy_sheet_users(:izzie) }
+  let(:other_legacy_sheet_user) { legacy_sheet_users(:nancy) }
   let(:beacon_metrics) do
     {
       accuracy: 0.1,
@@ -27,12 +28,20 @@ describe CheckIn do
       expect(check_in.errors[:base]).to include I18n.t('activerecord.errors.models.check_in.attributes.base.xor_blank')
     end
 
-    it 'is invalid with both a user and legacy_sheet_user' do
+    it 'is invalid with mismatched user and legacy_sheet_user' do
+      check_in = CheckIn.create(
+        user: user,
+        legacy_sheet_user: other_legacy_sheet_user
+      )
+      expect(check_in.errors[:base]).to include I18n.t('activerecord.errors.models.check_in.attributes.base.xor_present')
+    end
+
+    it 'is valid with both an equal user and legacy_sheet_user' do
       check_in = CheckIn.create(
         user: user,
         legacy_sheet_user: legacy_sheet_user
       )
-      expect(check_in.errors[:base]).to include I18n.t('activerecord.errors.models.check_in.attributes.base.xor_present')
+      expect(check_in.errors[:base]).to be_empty
     end
 
     it 'is valid without a user and a legacy_sheet_user' do

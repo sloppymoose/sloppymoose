@@ -30,6 +30,6 @@ en:
           attributes:
             base:
               xor_blank: Specify a user or a legacy_sheet_user
-              xor_present: Specify a user or a legacy_sheet_user, but not both
+              xor_present: Specify a user or a legacy_sheet_user, but not both (unless they are the same user)
             event_id:
               taken: has already been checked in

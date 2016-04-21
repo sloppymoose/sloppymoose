@@ -30,7 +30,9 @@ class CheckIn < ActiveRecord::Base
     if user.blank? && legacy_sheet_user.blank?
       errors.add(:base, :xor_blank)
     elsif user.present? && legacy_sheet_user.present?
-      errors.add(:base, :xor_present)
+      if user.legacy_sheet_user_id != legacy_sheet_user.id
+        errors.add(:base, :xor_present)
+      end
     end
   end
 end

@@ -31,6 +31,7 @@ class SignUpSheetImporter
     sign_ins.each do |sign_in|
       LegacySheetUser.transaction do
         legacy_sheet_user = build_user(sign_in, sign_ins.worksheet.title)
+        user_id = legacy_sheet_user.user.try(:id)
 
         (8..68).each do |col|
           next if sign_in.data[col - 1].blank?
@@ -43,7 +44,8 @@ class SignUpSheetImporter
             legacy: true,
             proximity: 'near',
             rssi: 0,
-            updated_at: starts_at.to_s(:db)
+            updated_at: starts_at.to_s(:db),
+            user_id: user_id
           ).first_or_initialize
           finalize_record(check_in)
         end
