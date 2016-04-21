@@ -709,7 +709,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "# Set a variable in Info.plist that reflects the current development machine's IP Address\n# This is used in React Native to connect to the React Native development web server\nif [ \"$CONFIGURATION\" == \"Debug\" ]; then\n  echo -n ${TARGET_BUILD_DIR}/${INFOPLIST_PATH} | xargs -0 /usr/libexec/PlistBuddy -c \"Set :SMRCTDevServerIP `ipconfig getifaddr en0`\"\nelse\n  echo -n ${TARGET_BUILD_DIR}/${INFOPLIST_PATH} | xargs -0 /usr/libexec/PlistBuddy -c \"Delete :SMRCTDevServerIP\"\nfi";
+			shellScript = "# Set a variable in Info.plist that reflects the current development machine's IP Address\n# This is used in React Native to connect to the React Native development web server\nif [ \"$CONFIGURATION\" == \"Debug\" ]; then\n  echo -n ${TARGET_BUILD_DIR}/${INFOPLIST_PATH} | xargs -0 /usr/libexec/PlistBuddy -c \"Set :SMRCTDevServerIP `ipconfig getifaddr en0`\"\nelse\n  echo -n ${TARGET_BUILD_DIR}/${INFOPLIST_PATH} | xargs -0 /usr/libexec/PlistBuddy -c \"Delete :SMRCTDevServerIP\" || true\nfi";
 		};
 /* End PBXShellScriptBuildPhase section */
 
