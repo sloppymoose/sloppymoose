@@ -2,11 +2,11 @@ import Button from 'apsl-react-native-button';
 import {
   Component,
   DeviceEventEmitter,
+  Image,
   PropTypes,
   ScrollView,
   StatusBarIOS,
   StyleSheet,
-  Text,
   TouchableWithoutFeedback,
   View
 } from 'react-native';
@@ -130,9 +130,7 @@ export class SignInScreen extends Component {
           <View style={[baseStyles.root, reactiveRootStyles]}>
             <View style={baseStyles.hero}>
               <View style={baseStyles.sloppyMooseLogo}>
-                <Text style={{ borderWidth: 1, height: 150, width: 150 }}>
-                  [MOOSE]
-                </Text>
+                <Image source={require('image!SplashLogo')}/>
               </View>
             </View>
             <View ref="content" style={baseStyles.content}>
