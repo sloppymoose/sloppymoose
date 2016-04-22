@@ -43,7 +43,7 @@ DerivedData
 *.xcuserstate
 project.xcworkspace
 ios/main.jsbundle
-sloppymoose.app.dSYM.zip
+Sloppy Moose.app.dSYM.zip
 *.mobileprovision
 
 # Android/IJ
