@@ -1,5 +1,6 @@
 import {
   Component,
+  Image,
   StyleSheet,
   Text,
   View
@@ -24,7 +25,8 @@ const baseStyles = StyleSheet.create({
   root: {
     flex: 1,
     padding: 10,
-    backgroundColor: 'orange'
+    width: null,
+    height: null
   },
   title: {
     fontSize: 22,
@@ -35,9 +37,12 @@ const baseStyles = StyleSheet.create({
 export class NoInRangeEvents extends Component {
   render() {
     return (
-      <View style={baseStyles.root}>
+      <Image
+        resizeMode={Image.resizeMode.cover}
+        source={require('image!NoInRangeEventsBackground')}
+        style={baseStyles.root}
+      >
         <View style={baseStyles.hero}>
-          <Text style={{ width: 150, height: 150, textAlign: 'center' }}>[IMG]</Text>
           <Text style={baseStyles.title}>Find Mousse!</Text>
         </View>
         <View style={baseStyles.content}>
@@ -48,7 +53,7 @@ export class NoInRangeEvents extends Component {
             Getting close to her will unlock the ability to check in.
           </Text>
         </View>
-      </View>
+      </Image>
     );
   }
 }
