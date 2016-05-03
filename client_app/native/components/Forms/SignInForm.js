@@ -1,15 +1,14 @@
-import Button from 'apsl-react-native-button';
 import {
+  Alert,
   Component,
   PropTypes,
   StyleSheet,
-  Text,
   TextInput,
   View
 } from 'react-native';
+import Button from 'apsl-react-native-button';
 import emptyFn from 'empty/function';
-import emptyObj from 'empty/object';
-import { get } from 'lodash';
+import HttpError from 'standard-http-error';
 import Immutable from 'immutable';
 import ImmutablePropTypes from 'react-immutable-proptypes';
 
@@ -24,13 +23,6 @@ const baseStyles = StyleSheet.create({
   divider: {
     borderBottomColor: '#ddd',
     borderBottomWidth: 1
-  },
-  error: {
-    padding: 10
-  },
-  errorText: {
-    color: 'hotpink',
-    textAlign: 'center'
   },
   field: {
 
@@ -80,13 +72,19 @@ export class SignInForm extends Component {
   }
   handleSignIn() {
     this.props.signInUser(this.state.email, this.state.password)
-      .catch(emptyFn);
+      .catch((err) => {
+        let title = 'Unspecified Sign Up Error';
+        let msg = 'Please try again later';
+        switch(err.code) {
+          case HttpError.UNAUTHORIZED:
+            title = 'Oops!';
+            msg = 'Incorrect login informtion. Please try again.';
+            break;
+        }
+        Alert.alert(title, msg);
+      });
   }
   render() {
-    const errMsg = get(this.props.user.get('signInError'), 'message', ' ');
-    const reactiveSpacerStyles = {
-      height: this.props.spacerHeight
-    };
     return (
       <View style={baseStyles.root}>
         <View style={baseStyles.form}>
@@ -128,13 +126,6 @@ export class SignInForm extends Component {
             Sign In
           </Button>
         </View>
-        <View style={reactiveSpacerStyles}>
-          <View style={baseStyles.error}>
-            <Text style={baseStyles.errorText}>
-              {errMsg}
-            </Text>
-          </View>
-        </View>
       </View>
     );
   }
@@ -146,9 +137,6 @@ SignInForm.propTypes = {
   signInUser: PropTypes.func,
   spacerHeight: PropTypes.number,
   user: ImmutablePropTypes.contains({
-    signInError: PropTypes.shape({
-      message: PropTypes.string
-    }),
     signingIn: PropTypes.bool
   })
 };
@@ -157,7 +145,5 @@ SignInForm.defaultProps = {
   onFocus: emptyFn,
   signInUser: emptyFn,
   spacerHeight: 0,
-  user: Immutable.fromJS({
-    signInError: emptyObj
-  })
+  user: Immutable.Map()
 };
