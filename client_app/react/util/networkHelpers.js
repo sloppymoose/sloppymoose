@@ -1,8 +1,6 @@
-import { assign } from 'lodash';
+import { assign, merge } from 'lodash';
 import emptyObj from 'empty/object';
-import merge from 'lodash/object/merge';
 import querystring from 'querystring';
-
 import { Store } from '../reducers/StorageReducer';
 import StorageKeys from '../constants/StorageKeys';
 import { tokenStorage } from 'fetch-oauth2';

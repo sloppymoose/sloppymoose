@@ -1,6 +1,6 @@
 import { Component, PropTypes, Text, View } from 'react-native';
 import emptyObj from 'empty/object';
-import get from 'lodash/object/get';
+import { get } from 'lodash';
 import moment from 'moment';
 
 const baseStyles = {
