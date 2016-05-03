@@ -8,11 +8,14 @@ import {
 } from 'react-native';
 import Button from 'apsl-react-native-button';
 import emptyFn from 'empty/function';
+import { first, toPairs } from 'lodash';
 import { FormCheckbox } from './FormCheckbox';
 import { FormInput } from './FormInput';
 import { FormSelect } from './FormSelect';
+import HttpError from 'standard-http-error';
 import Immutable from 'immutable';
 import ImmutablePropTypes from 'react-immutable-proptypes';
+import Inflector from 'inflected';
 import { omit } from 'lodash';
 import { SafetyWaiverModal } from '../Modals';
 import { snakeCaseKeys } from '../../../react/util/objectHelpers';
@@ -31,13 +34,6 @@ const baseStyles = StyleSheet.create({
   },
   createButtonLabel: {
     color: 'white'
-  },
-  error: {
-    flex: 1,
-    padding: 10
-  },
-  errorText: {
-    color: 'red'
   },
   form: {
 
@@ -150,15 +146,20 @@ export class SignUpForm extends Component {
     this.handleHideWaiver();
     this.props.signUpUser(snakeCaseKeys(omit(this.state, 'showWaiver')))
       .catch(err => {
-        console.info('TODO: RENDER ERROR?', err);
+        let title = 'Unspecified Sign Up Error';
+        let msg = 'Please try again later';
+        switch(err.code) {
+          case HttpError.UNPROCESSABLE_ENTITY:
+            title = 'Oops!';
+            const fieldErrs = first(toPairs(err.json.errors));
+            msg = `${Inflector.titleize(fieldErrs[0])} ${fieldErrs[1][0]}`;
+            break;
+        }
+        Alert.alert(title, msg);
       });
   }
   render() {
-    const errMsg = this.props.user.get('signUpError').message;
     const reactiveRootStyles = {
-      flex: this.props.keyboardVisible ? null : 1
-    };
-    const reactiveSpacerStyles = {
       flex: this.props.keyboardVisible ? null : 1
     };
     const shirtSizes = this.props.shirtSizes.get('items', Immutable.List());
@@ -225,11 +226,6 @@ export class SignUpForm extends Component {
             value={this.state.firstTimer}
           />
         </View>
-        <View style={[baseStyles.error, reactiveSpacerStyles]}>
-          <Text style={baseStyles.errorText}>
-            {errMsg}
-          </Text>
-        </View>
         <View style={baseStyles.actions}>
           <Button
             isLoading={this.props.user.get('signingUp')}
@@ -261,10 +257,7 @@ SignUpForm.propTypes = {
   }),
   signUpUser: PropTypes.func,
   user: ImmutablePropTypes.contains({
-    signingUp: PropTypes.bool,
-    signUpError: PropTypes.shape({
-      message: PropTypes.string
-    })
+    signingUp: PropTypes.bool
   })
 };
 SignUpForm.defaultProps = {

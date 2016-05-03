@@ -1,5 +1,6 @@
 import { assign, merge } from 'lodash';
 import emptyObj from 'empty/object';
+import HttpError from 'standard-http-error';
 import querystring from 'querystring';
 import { Store } from '../reducers/StorageReducer';
 import StorageKeys from '../constants/StorageKeys';
@@ -26,21 +27,6 @@ const signedFetch = fetchWithMiddleware(
   middleware.authorisationChallengeHandler(storage),
   middleware.setOAuth2Authorization(storage)
 );
-
-class NetworkError {
-  constructor(json, response) {
-    const errorMessage = json.message || json.error_description;
-    const statusCode = json.statusCode || response.status;
-    this.origError = json.error;
-    this.origMessage = errorMessage;
-    this.origStatusCode = statusCode;
-    this.name = 'NetworkError';
-    this.message = `${json.error}: ${errorMessage} (${statusCode})`;
-    this.stack = (new Error()).stack;
-  }
-}
-NetworkError.prototype = Object.create(Error.prototype);
-NetworkError.prototype.constructor = NetworkError;
 
 function appendHost(uri) {
   return EnvironmentManager.apiOrigin + uri;
@@ -111,7 +97,7 @@ function handleResponse(response) {
     }
   } else {
     return response.json().then(json => {
-      throw new NetworkError(json, response);
+      throw new HttpError(response.status, { json });
     }, function(err) {
       throw err;
     });
