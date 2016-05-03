@@ -13,8 +13,6 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable,
          :confirmable, :doorkeeper
 
-  validates :email,
-    uniqueness: true
   validates :name,
     length: { minimum: 1 },
     presence: true
