@@ -5,6 +5,8 @@ class Event < ActiveRecord::Base
   has_many :users, through: :check_ins
   has_many :legacy_sheet_users, through: :check_ins
 
+  validates :name,
+    presence: true
   validates :starts_at,
     presence: true
 
