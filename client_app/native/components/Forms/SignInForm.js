@@ -73,8 +73,8 @@ export class SignInForm extends Component {
   handleSignIn() {
     this.props.signInUser(this.state.email, this.state.password)
       .catch((err) => {
-        let title = 'Unspecified Sign Up Error';
-        let msg = 'Please try again later';
+        let title = 'Unspecified Sign In Error';
+        let msg = err.message || 'Please try again later';
         switch(err.code) {
           case HttpError.UNAUTHORIZED:
             title = 'Oops!';
@@ -118,6 +118,7 @@ export class SignInForm extends Component {
         </View>
         <View style={baseStyles.actions}>
           <Button
+            activityIndicatorColor="white"
             isLoading={this.props.user.get('signingIn')}
             onPress={this.handleSignIn}
             style={[baseStyles.button, baseStyles.signInButton]}

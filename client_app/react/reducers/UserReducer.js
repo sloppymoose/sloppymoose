@@ -21,7 +21,7 @@ function initialState() {
 function beginSigningIn(state) {
   return state.merge({
     signInError: emptyObj,
-    signingIn: false
+    signingIn: true
   });
 }
 
