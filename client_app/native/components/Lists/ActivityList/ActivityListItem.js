@@ -1,9 +1,9 @@
-import { Component, PropTypes, Text, View } from 'react-native';
+import { Component, PropTypes, StyleSheet, Text, View } from 'react-native';
 import emptyObj from 'empty/object';
 import { get } from 'lodash';
 import moment from 'moment';
 
-const baseStyles = {
+const baseStyles = StyleSheet.create({
   age: {
     color: '#ccc',
     fontWeight: 'bold'
@@ -18,7 +18,7 @@ const baseStyles = {
   title: {
     flex: 1
   }
-};
+});
 
 export class ActivityListItem extends Component {
   render() {
@@ -51,5 +51,5 @@ ActivityListItem.propTypes = {
   })
 };
 ActivityListItem.defaultProps = {
-  item: emptyObj,
+  item: emptyObj
 };

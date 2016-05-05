@@ -2,6 +2,7 @@ import {
   Component,
   ListView,
   PropTypes,
+  StyleSheet,
   View
 } from 'react-native';
 import emptyAry from 'empty/array';
@@ -11,11 +12,11 @@ import Immutable from 'immutable';
 import ImmutablePropTypes from 'react-immutable-proptypes';
 import RefreshableListView from 'react-native-refreshable-listview';
 
-const baseStyles = {
+const baseStyles = StyleSheet.create({
   root: {
     flex: 1
   }
-};
+});
 const DS = new ListView.DataSource({
   rowHasChanged(a, b) {
     return a !== b;
