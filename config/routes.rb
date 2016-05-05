@@ -12,6 +12,7 @@ Rails.application.routes.draw do
     get :linked_legacy_account, to: 'linked_legacy_accounts#create'
     namespace :api do
       resources :active_events, only: %i{index}
+      resources :badges, only: %i{index show}
       resources :check_ins, only: %i{index create}
     end
   end
