@@ -1,4 +1,5 @@
 export { activeEvents } from './ActiveEventReducer';
+export { badges } from './BadgesReducer';
 export { beacons } from './BeaconsReducer';
 export { checkIns } from './CheckInsReducer';
 export { router } from './RouterReducer';

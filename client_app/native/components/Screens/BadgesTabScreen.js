@@ -1,10 +1,11 @@
 import {
   Component,
   Navigator,
+  PropTypes,
   StyleSheet,
-  Text,
   View
 } from 'react-native';
+import { BadgeList } from '../Lists';
 
 const baseStyles = StyleSheet.create({
   root: {
@@ -17,16 +18,17 @@ export class BadgesTabScreen extends Component {
   render() {
     return (
       <View style={baseStyles.root}>
-        <Text>Coming Soon!</Text>
+        <BadgeList
+          badges={this.props.badges}
+          fetchBadges={this.props.fetchBadges}
+          style={baseStyles.content}
+        />
       </View>
     );
   }
 }
 
 BadgesTabScreen.propTypes = {
-
-};
-
-BadgesTabScreen.defaultProps = {
-
+  badges: PropTypes.any,
+  fetchBadges: PropTypes.func
 };
