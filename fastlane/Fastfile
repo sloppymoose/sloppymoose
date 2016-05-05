@@ -72,7 +72,7 @@ platform :ios do
     increment_build_number
 
     # match(type: "appstore") # more information: https://codesigning.guide
-    gym(scheme: "sloppymoose-release") # Build your app - more options available
+    gym(scheme: 'sloppymoose-release', project: './ios/sloppymoose.xcodeproj') # Build your app - more options available
     pilot
 
     # sh "your_script.sh"
@@ -85,7 +85,7 @@ platform :ios do
 
     # match(type: "appstore")
     # snapshot
-    gym(scheme: "sloppymoose-release") # Build your app - more options available
+    gym(scheme: 'sloppymoose-release', project: './ios/sloppymoose.xcodeproj') # Build your app - more options available
     deliver(force: true)
     # frameit
   end
