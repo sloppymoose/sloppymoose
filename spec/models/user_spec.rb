@@ -3,6 +3,22 @@ require 'rails_helper'
 describe User do
   subject { described_class.new }
 
+  describe '#award_first_check_in?' do
+    xit 'returns FALSE if there are no non-legacy check-ins'
+
+    xit 'returns TRUE if the check-in count is 1'
+
+    xit 'returns FALSE if the check-in count is too high'
+  end
+
+  describe '#award_moose_shirt?' do
+    xit 'returns FALSE if already awarded'
+
+    xit 'returns FALSE if check-in count is too low'
+
+    xit 'returns TRUE if check-in count is high enough'
+  end
+
   describe '#after_confirmation' do
     xit 'links to a legacy user if not a first-time member' do
     end

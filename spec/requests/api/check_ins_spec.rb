@@ -53,7 +53,7 @@ describe 'Check-Ins requests' do
       expect(user.reload.badges.collect(&:name)).to eq ['first-check-in']
     end
 
-    it 'grants a moose-shirt-awarded badge on fifth check-in' do
+    it 'grants a moose-shirt badge on fifth check-in' do
       4.times do |i|
         event = Event.create!(name: "Event #{i}", starts_at: i.days.ago, created_at: i.days.ago, updated_at: i.days.ago)
         params.merge!(
@@ -64,7 +64,7 @@ describe 'Check-Ins requests' do
 
       subject
       expect(response.status).to eql 201
-      expect(user.reload.badges.collect(&:name)).to include 'moose-shirt-awarded'
+      expect(user.reload.badges.collect(&:name)).to include 'moose-shirt'
     end
   end
 end

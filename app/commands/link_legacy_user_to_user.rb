@@ -20,6 +20,7 @@ class LinkLegacyUserToUser
     user.legacy_sheet_user = legacy_sheet_user
     if user.save
       legacy_sheet_user.check_ins.where(legacy: true).update_all(user_id: user.id)
+      backfill_awarded_badges(user)
     end
   end
 
@@ -39,6 +40,11 @@ class LinkLegacyUserToUser
   end
 
   private
+
+  # Add any badges that apply to legacy check-ins
+  def backfill_awarded_badges(user)
+    user.add_badge(User::MooseShirtBadge.id) if user.award_moose_shirt?
+  end
 
   def mail_link_confirmation!(user, matching_legacy_users)
     LegacyUserLinkMailer.confirm_link_email(user, matching_legacy_users).deliver_now

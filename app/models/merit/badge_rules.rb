@@ -22,11 +22,11 @@ module Merit
 
     def initialize
       grant_on 'api/check_ins#create', badge: 'first-check-in', model_name: 'CheckIn' do |check_in|
-        check_in.user.check_ins.size === 1
+        check_in.user.award_first_check_in?
       end
 
-      grant_on 'api/check_ins#create', badge: 'moose-shirt-awarded', model_name: 'CheckIn' do |check_in|
-        check_in.user.check_ins.size === 5
+      grant_on 'api/check_ins#create', badge: 'moose-shirt', model_name: 'CheckIn' do |check_in|
+        check_in.user.award_moose_shirt?
       end
 
       # If it creates user, grant badge

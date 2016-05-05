@@ -31,7 +31,7 @@ Merit::Badge.create!(
 
 Merit::Badge.create!(
   id: 2,
-  name: 'moose-shirt-awarded',
+  name: 'moose-shirt',
   description: "You're officially part of the herd with your new orange Sloppy Moose shirt!",
   custom_fields: {
     display_name: 'Sloppy Moose Shirt Awarded',
