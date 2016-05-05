@@ -43,7 +43,7 @@ class LinkLegacyUserToUser
 
   # Add any badges that apply to legacy check-ins
   def backfill_awarded_badges(user)
-    user.add_badge(User::MooseShirtBadge.id) if user.award_moose_shirt?
+    MeritRebuilder.new.rebuild_merit_for(user)
   end
 
   def mail_link_confirmation!(user, matching_legacy_users)

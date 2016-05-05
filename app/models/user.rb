@@ -3,6 +3,7 @@ class User < ActiveRecord::Base
 
   include Authority::UserAbilities
   include Authority::Abilities
+  include Meritocracy::User
 
   has_many :check_ins, dependent: :destroy
   has_many :events, through: :check_ins
@@ -22,16 +23,6 @@ class User < ActiveRecord::Base
     acceptance: true
   validates :shirt_size,
     presence: true
-
-  MooseShirtBadge = Merit::Badge.find{|m| m.name == 'moose-shirt'}.first
-
-  def award_first_check_in?
-    check_ins.where(legacy: false).size === 1
-  end
-
-  def award_moose_shirt?
-    !badges.collect(&:name).include?(MooseShirtBadge.name) && check_ins.size >= 5
-  end
 
   def after_confirmation
     LinkLegacyUserToUser.delay.confirm_link(id) unless first_timer?
