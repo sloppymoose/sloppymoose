@@ -1,5 +1,5 @@
-import keyMirror from 'keymirror';
+const StorageKeys = {
+  USER_CREDENTIALS: 'USERCREDENTIALS'
+};
 
-export default keyMirror({
-  USER_CREDENTIALS: true
-});
+export { StorageKeys as default };
