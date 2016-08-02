@@ -59,7 +59,8 @@
   "devDependencies": {
     "babel-eslint": "6.1.2",
     "eslint": "3.2.2",
-    "eslint-plugin-react": "3.10.0",
+    "eslint-plugin-import": "1.12.0",
+    "eslint-plugin-react": "6.0.0",
     "rctapp": "0.2.4"
   }
 }
