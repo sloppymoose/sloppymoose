@@ -57,7 +57,7 @@
     "standard-http-error": "2.0.0"
   },
   "devDependencies": {
-    "babel-eslint": "4.1.6",
+    "babel-eslint": "6.1.2",
     "eslint": "1.10.2",
     "eslint-plugin-react": "3.10.0",
     "rctapp": "0.2.4"
