@@ -143,6 +143,7 @@ export function signUpUser(user) {
     return unsignedRequest('/api/users', body, 'POST')
       .then(newUser => dispatch(receiveSignUpData(user, newUser)))
       .then(() => dispatch(endSignUpUser(user)))
+      .then(() => Actions.splash()) // TODO: Show some intermediary screen (spinner?) while user is signed in
       .then(() => signInUser(user.email, user.password)(dispatch, getState))
       .catch(error => {
         dispatch(reportSignUpError(user, error));

@@ -1,13 +1,13 @@
+import { Actions, ActionConst, Router, Scene } from 'react-native-router-flux';
 import {
   ActivityTabHandler,
   BadgesTabHandler,
   EventCheckInTabHandler
 } from '../TabHandlers';
 import { bindActionCreators } from 'redux';
-import { Component, PropTypes } from 'react-native';
-import { connect } from 'react-redux/native';
+import { Component, PropTypes } from 'react';
+import { connect } from 'react-redux';
 import emptyFn from 'empty/function';
-import emptyObj from 'empty/object';
 import { fetchShirtSizes } from '../../../react/actions/ShirtSizeActions';
 import {
   ForgotPasswordHandler,
@@ -16,27 +16,36 @@ import {
   SplashHandler
 } from '../RouteHandlers';
 import { initTokens } from '../../../react/actions/UserActions';
-import { Router, Route, Schema, TabBar } from 'react-native-router-flux';
 import TabIcon from './TabIcon';
 
+const BackArrowIcon = require('image!BackImageChevronWhite');
 const baseStyles = {
-  homeNavigationBar: {
+  navBar: {
     backgroundColor: 'orange',
     borderBottomWidth: 0
   },
-  homeTabBar: {
+  transparentNavBar: {
+    backgroundColor: 'transparent',
+  },
+  title: {
+    color: 'white'
+  },
+  scene: {
+    flex: 1,
+    backgroundColor: 'white'
+  },
+  tabBar: {
+    backgroundColor: 'white',
     borderTopWidth: 1,
     borderTopColor: '#ccc'
-  },
-  homeTitle: {
-    color: 'white'
   }
 };
-const ConnectedRouter = connect()(Router);
-
-function getState(state) {
-  return emptyObj;
-}
+const RouterWithRedux = connect()(Router);
+const DefaultTabProps = {
+  backButtonImage: BackArrowIcon,
+  navigationBarStyle: baseStyles.navBar,
+  titleStyle: baseStyles.title
+};
 
 function getActions(dispatch) {
   return bindActionCreators({ fetchShirtSizes, initTokens }, dispatch);
@@ -47,65 +56,70 @@ class NativeRouterContainer extends Component {
     this.props.initTokens()
       .catch(console.error);
     this.props.fetchShirtSizes();
-      // .catch(console.error); TODO: ¯\_(ツ)_/¯
+      // .catch(console.error); // TODO: ¯\_(ツ)_/¯
   }
   render() {
     return (
-      <Router>
-        <Schema icon={TabIcon} name="tab" type="switch"/>
-        <Route
+      <RouterWithRedux sceneStyle={baseStyles.scene}>
+        <Scene
           component={SplashHandler}
+          hideNavBar
           initial
-          name="splash"
-          title=""
+          key="splash"
         />
-        <Route hideNavBar name="home">
-          <ConnectedRouter
-            footer={TabBar}
-            navigationBarStyle={baseStyles.homeNavigationBar}
-            tabBarStyle={baseStyles.homeTabBar}
-            titleStyle={baseStyles.homeTitle}
-          >
-            <Route
-              component={ActivityTabHandler}
-              name={ActivityTabHandler.routeName}
-              schema="tab"
-              title="Activity"
-            />
-            <Route
-              component={EventCheckInTabHandler}
-              name={EventCheckInTabHandler.routeName}
-              schema="tab"
-              title="Check In"
-            />
-            <Route
-              component={BadgesTabHandler}
-              name={BadgesTabHandler.routeName}
-              schema="tab"
-              title="Badges"
-            />
-          </ConnectedRouter>
-        </Route>
-        <Route
+        <Scene
+          key="home"
+          tabBarIconContainerStyle={baseStyles.tabBar}
+          tabs
+          type={ActionConst.RESET}
+        >
+          <Scene
+            {...DefaultTabProps}
+            component={ActivityTabHandler}
+            icon={TabIcon}
+            key={ActivityTabHandler.routeName}
+            title="Activity"
+          />
+          <Scene
+            {...DefaultTabProps}
+            component={EventCheckInTabHandler}
+            icon={TabIcon}
+            key={EventCheckInTabHandler.routeName}
+            navigationBarStyle={[ DefaultTabProps.navigationBarStyle, baseStyles.transparentNavBar ]}
+            title="Check In"
+          />
+          <Scene
+            {...DefaultTabProps}
+            component={BadgesTabHandler}
+            icon={TabIcon}
+            key={BadgesTabHandler.routeName}
+            title="Badges"
+          />
+        </Scene>
+        <Scene
           component={SignInHandler}
           hideNavBar
-          name="signIn"
+          key="signIn"
           title="Sign In"
-          type="replace"
+          type={ActionConst.RESET}
         />
-        <Route
+        <Scene
+          {...DefaultTabProps}
           component={SignUpHandler}
-          name="signUp"
+          hideNavBar={false}
+          key="signUp"
+          onBack={Actions.BACK}
           title="Sign Up"
-          type="replace"
         />
-        <Route
+        <Scene
+          {...DefaultTabProps}
           component={ForgotPasswordHandler}
-          name="forgotPassword"
+          hideNavBar={false}
+          key="forgotPassword"
+          onBack={Actions.BACK}
           title="Forgot Password"
-          type="push"
         />
-      </Router>
+      </RouterWithRedux>
     );
   }
 }
@@ -120,4 +134,4 @@ NativeRouterContainer.defaultProps = {
   initTokens: emptyFn
 };
 
-export const NativeRouter = connect(getState, getActions)(NativeRouterContainer);
+export const NativeRouter = connect(null, getActions)(NativeRouterContainer);

@@ -1,13 +1,7 @@
 import Button from 'apsl-react-native-button';
-import {
-  Component,
-  Navigator,
-  PropTypes,
-  StyleSheet,
-  Text,
-  View
-} from 'react-native';
+import { Component, PropTypes } from 'react';
 import emptyFn from 'empty/function';
+import { Navigator, StyleSheet, Text, View } from 'react-native';
 import RNOpenSettings from 'react-native-open-settings';
 
 const baseStyles = StyleSheet.create({

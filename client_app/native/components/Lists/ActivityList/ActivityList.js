@@ -1,16 +1,10 @@
-import {
-  Component,
-  ListView,
-  PropTypes,
-  StyleSheet,
-  View
-} from 'react-native';
-import emptyAry from 'empty/array';
 import { ActivityListItem } from './ActivityListItem';
+import { Component, PropTypes } from 'react';
+import emptyAry from 'empty/array';
 import emptyFn from 'empty/function';
 import Immutable from 'immutable';
 import ImmutablePropTypes from 'react-immutable-proptypes';
-import RefreshableListView from 'react-native-refreshable-listview';
+import { ListView, RefreshControl, StyleSheet, View } from 'react-native';
 
 const baseStyles = StyleSheet.create({
   root: {
@@ -23,8 +17,8 @@ const DS = new ListView.DataSource({
   }
 });
 
-function componentize(item) {
-  return <ActivityListItem item={item} key={item.id}/>;
+function componentize(rowData, sectionID, rowID, highlightRow) {
+  return <ActivityListItem item={rowData} key={rowData.id}/>;
 }
 
 export class ActivityList extends Component {
@@ -51,12 +45,20 @@ export class ActivityList extends Component {
   }
   render() {
     // TODO: Add Refresh Prompt to render ActivityListEmpty when empty
+    const loading = this.props.checkIns.get('loading');
+    const refreshControl = (
+      <RefreshControl
+        onRefresh={this.handleRefresh}
+        refreshing={loading}
+        title="Refreshing activities..."
+      />
+    );
     return (
       <View style={baseStyles.root}>
-        <RefreshableListView
+        <ListView
           dataSource={this.state.datasource}
-          loadData={this.handleRefresh}
-          refreshDescription="Refreshing activities..."
+          enableEmptySections
+          refreshControl={refreshControl}
           renderRow={componentize}
         />
       </View>

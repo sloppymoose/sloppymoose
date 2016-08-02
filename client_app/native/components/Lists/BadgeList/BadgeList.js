@@ -1,24 +1,17 @@
 import { BadgeListItem } from './BadgeListItem';
-import {
-  Component,
-  ListView,
-  PropTypes,
-  StyleSheet,
-  View
-} from 'react-native';
+import { Component, PropTypes } from 'react';
 import emptyAry from 'empty/array';
 import emptyFn from 'empty/function';
 import Immutable from 'immutable';
 import ImmutablePropTypes from 'react-immutable-proptypes';
-import RefreshableListView from 'react-native-refreshable-listview';
+import { ListView, RefreshControl, StyleSheet, View } from 'react-native';
 
 const baseStyles = StyleSheet.create({
   root: {
-
+    flex: 1
   },
-  list: {
-    flexDirection: 'row',
-    flexWrap: 'wrap'
+  listCt: {
+    flexDirection: 'row'
   }
 });
 const DS = new ListView.DataSource({
@@ -54,13 +47,21 @@ export class BadgeList extends Component {
     return this.props.fetchBadges();
   }
   render() {
+    const loading = this.props.badges.get('loading');
+    const refreshControl = (
+      <RefreshControl
+        onRefresh={this.handleRefresh}
+        refreshing={loading}
+        title="Refreshing badges..."
+      />
+    );
     return (
       <View style={baseStyles.root}>
-        <RefreshableListView
-          contentContainerStyle={baseStyles.list}
+        <ListView
+          contentContainerStyle={baseStyles.listCt}
           dataSource={this.state.datasource}
-          loadData={this.handleRefresh}
-          refreshDescription="Refreshing badges..."
+          enableEmptySections
+          refreshControl={refreshControl}
           renderRow={componentize}
         />
       </View>

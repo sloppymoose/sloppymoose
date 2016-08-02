@@ -1,12 +1,6 @@
-import {
-  Alert,
-  Component,
-  PropTypes,
-  StyleSheet,
-  Text,
-  View
-} from 'react-native';
+import { Alert, StyleSheet, Text, View } from 'react-native';
 import Button from 'apsl-react-native-button';
+import { Component, PropTypes } from 'react';
 import emptyFn from 'empty/function';
 import { first, toPairs } from 'lodash';
 import { FormCheckbox } from './FormCheckbox';

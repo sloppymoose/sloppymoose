@@ -1,11 +1,10 @@
 import Button from 'apsl-react-native-button';
+import { Component, PropTypes } from 'react';
 import {
-  Component,
-  DeviceEventEmitter,
+  Keyboard,
   Image,
-  PropTypes,
   ScrollView,
-  StatusBarIOS,
+  StatusBar,
   StyleSheet,
   TouchableWithoutFeedback,
   View
@@ -79,17 +78,16 @@ export class SignInScreen extends Component {
     };
   }
   componentWillMount() {
-    StatusBarIOS.setStyle('light-content');
     this._listeners = [
-      DeviceEventEmitter.addListener('keyboardDidHide', this.handleKeyboardDidHide),
-      DeviceEventEmitter.addListener('keyboardWillHide', this.handleKeyboardWillHide),
-      DeviceEventEmitter.addListener('keyboardWillShow', this.handleKeyboardWillShow)
+      Keyboard.addListener('keyboardDidHide', this.handleKeyboardDidHide),
+      Keyboard.addListener('keyboardWillHide', this.handleKeyboardWillHide),
+      Keyboard.addListener('keyboardWillShow', this.handleKeyboardWillShow)
     ];
   }
   componentDidUpdate(prevProps, prevState) {
     if(this.state.keyboardVisible && !prevState.keyboardVisible) {
       this.refs.content.measure((x, y) => {
-        this.refs.scrollView.scrollTo(y - KeyboardScrollOffset);
+        this.refs.scrollView.scrollTo({ y: y - KeyboardScrollOffset });
       });
     }
   }
@@ -97,7 +95,7 @@ export class SignInScreen extends Component {
     this._listeners.forEach(listener => listener.remove());
   }
   handleKeyboardDidHide() {
-    this.refs.scrollView.scrollTo(0);
+    this.refs.scrollView.scrollTo({ x: 0, y: 0 });
   }
   handleKeyboardWillHide() {
     this.setState({
@@ -126,6 +124,7 @@ export class SignInScreen extends Component {
         scrollEnabled={false}
         style={baseStyles.scrollView}
       >
+        <StatusBar barStyle="light-content"/>
         <TouchableWithoutFeedback onPress={this.handleRootPress}>
           <View style={[baseStyles.root, reactiveRootStyles]}>
             <View style={baseStyles.hero}>

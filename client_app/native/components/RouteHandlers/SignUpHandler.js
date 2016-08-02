@@ -1,7 +1,7 @@
 import { Actions } from 'react-native-router-flux';
 import { bindActionCreators } from 'redux';
-import { Component, PropTypes } from 'react-native';
-import { connect } from 'react-redux/native';
+import { Component, PropTypes } from 'react';
+import { connect } from 'react-redux';
 import { SignUpScreen } from '../Screens';
 import { signUpUser } from '../../../react/actions/UserActions';
 
@@ -20,8 +20,7 @@ export class SignUpContainer extends Component {
   render() {
     return (
       <SignUpScreen
-        onBackPress={Actions.signIn}
-        onSignInPress={Actions.signIn}
+        onSignInPress={Actions.pop}
         shirtSizes={this.props.shirtSizes}
         signUpUser={this.props.signUpUser}
         user={this.props.user}

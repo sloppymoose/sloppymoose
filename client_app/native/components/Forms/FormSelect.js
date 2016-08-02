@@ -1,16 +1,14 @@
+import { Children, Component, PropTypes } from 'react';
+import emptyFn from 'empty/function';
+import { FormField } from './FormField';
 import {
-  Children,
-  Component,
   Modal,
-  PropTypes,
   ScrollView,
   StyleSheet,
   Text,
   TouchableHighlight,
   View
 } from 'react-native';
-import emptyFn from 'empty/function';
-import { FormField } from './FormField';
 import NavigationBar from 'react-native-navbar';
 import { partial } from 'lodash';
 
@@ -79,7 +77,7 @@ export class FormSelect extends Component {
           underlayColor={InputTextColor}
         >
           <View>
-            <FormField icon="ios-arrow-right" label={this.props.label}>
+            <FormField icon="ios-arrow-forward" label={this.props.label}>
               <Text style={baseStyles.value}>
                 {this.props.value}
               </Text>

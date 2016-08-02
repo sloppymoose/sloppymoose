@@ -1,8 +1,7 @@
+import { Component, PropTypes } from 'react';
 import {
-  Component,
-  DeviceEventEmitter,
+  Keyboard,
   Navigator,
-  PropTypes,
   ScrollView,
   StyleSheet,
   Text,
@@ -44,7 +43,6 @@ const baseStyles = StyleSheet.create({
 export class SignUpScreen extends Component {
   constructor(props) {
     super(props);
-    this.handleBack = this.handleBack.bind(this);
     this.handleKeyboardWillHide = this.handleKeyboardWillHide.bind(this);
     this.handleKeyboardWillShow = this.handleKeyboardWillShow.bind(this);
     this.handleRootPress = this.handleRootPress.bind(this);
@@ -56,15 +54,12 @@ export class SignUpScreen extends Component {
   }
   componentWillMount() {
     this._listeners = [
-      DeviceEventEmitter.addListener('keyboardWillHide', this.handleKeyboardWillHide),
-      DeviceEventEmitter.addListener('keyboardWillShow', this.handleKeyboardWillShow)
+      Keyboard.addListener('keyboardWillHide', this.handleKeyboardWillHide),
+      Keyboard.addListener('keyboardWillShow', this.handleKeyboardWillShow)
     ];
   }
   componentWillUnmount() {
     this._listeners.forEach(listener => listener.remove());
-  }
-  handleBack() {
-    this.props.onBackPress();
   }
   handleKeyboardWillHide() {
     this.setState({
@@ -125,14 +120,12 @@ export class SignUpScreen extends Component {
 }
 
 SignUpScreen.propTypes = {
-  onBackPress: PropTypes.func,
   onSignInPress: PropTypes.func,
   shirtSizes: ImmutablePropTypes.map,
   signUpUser: PropTypes.func,
   user: PropTypes.any
 };
 SignUpScreen.defaultProps = {
-  onBackPress: emptyFn,
   onSignInPress: emptyFn,
   shirtSizes: Immutable.Map()
 };

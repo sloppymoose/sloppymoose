@@ -48,6 +48,7 @@ Sloppy Moose.app.dSYM.zip
 
 # Android/IJ
 #
+*.iml
 .idea
 .gradle
 local.properties
@@ -64,3 +65,9 @@ npm-debug.log
 # Fastlane
 fastlane/report.xml
 ios/sloppymoose/EnvironmentManager.m
+
+# BUCK
+buck-out/
+\.buckd/
+android/app/libs
+android/keystores/debug.keystore

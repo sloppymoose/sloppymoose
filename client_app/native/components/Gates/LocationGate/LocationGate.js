@@ -2,8 +2,8 @@ import { bindActionCreators } from 'redux';
 import { LocationDenied } from './LocationDenied';
 import emptyFn from 'empty/function';
 import { EnableLocationPrompt } from './EnableLocationPrompt';
-import { Component, PropTypes } from 'react-native';
-import { connect } from 'react-redux/native';
+import { Component, PropTypes } from 'react';
+import { connect } from 'react-redux';
 import ImmutablePropTypes from 'react-immutable-proptypes';
 import {
   startListeningForAuthorization,

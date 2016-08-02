@@ -1,17 +1,16 @@
 import { App } from './client_app/native/components/App';
-import { Provider } from 'react-redux/native';
-import React from 'react-native';
+import { AppRegistry } from 'react-native';
+import React, { Component } from 'react';
+import { Provider } from 'react-redux';
 import { store } from './client_app/react/util/reduxStore';
 
-window.React = React;
-
-const { AppRegistry, Component } = React;
+window.React = React; // TODO: Why is this needed?
 
 class SloppyMoose extends Component {
   render() {
     return (
       <Provider store={store}>
-        {() => <App/>}
+        <App/>
       </Provider>
     );
   }

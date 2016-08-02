@@ -1,7 +1,7 @@
 import { BadgesTabScreen } from '../Screens';
 import { bindActionCreators } from 'redux';
-import { Component, PropTypes } from 'react-native';
-import { connect } from 'react-redux/native';
+import { Component, PropTypes } from 'react';
+import { connect } from 'react-redux';
 import { fetchBadges } from '../../../react/actions/BadgeActions';
 import { isTabVisible } from '../../../react/util/navigationHelpers';
 

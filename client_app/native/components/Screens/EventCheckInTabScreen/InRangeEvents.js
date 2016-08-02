@@ -1,12 +1,8 @@
-import {
-  Component,
-  PropTypes,
-  StyleSheet,
-  View
-} from 'react-native';
 import { CheckInableEvent } from './CheckInableEvent';
+import { Component, PropTypes } from 'react';
 import Immutable from 'immutable';
 import ImmutablePropTypes from 'react-immutable-proptypes';
+import { StyleSheet, View } from 'react-native';
 
 const baseStyles = StyleSheet.create({
   root: {

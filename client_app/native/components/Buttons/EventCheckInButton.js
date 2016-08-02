@@ -1,13 +1,14 @@
 import { Actions } from 'react-native-router-flux';
 import Button from 'apsl-react-native-button';
 import { bindActionCreators } from 'redux';
-import { Component, PropTypes, StyleSheet } from 'react-native';
 import { checkInToEvent } from '../../../react/actions/CheckInActions';
-import { connect } from 'react-redux/native';
+import { Component, PropTypes } from 'react';
+import { connect } from 'react-redux';
 import emptyFn from 'empty/function';
 import emptyObj from 'empty/object';
 import Immutable from 'immutable';
 import ImmutablePropTypes from 'react-immutable-proptypes';
+import { StyleSheet } from 'react-native';
 
 const baseStyles = StyleSheet.create({
   button: {

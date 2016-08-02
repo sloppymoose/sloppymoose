@@ -1,4 +1,4 @@
-import { Component } from 'react-native';
+import { Component } from 'react';
 import { NativeRouter } from '../NativeRouter';
 
 export class App extends Component {

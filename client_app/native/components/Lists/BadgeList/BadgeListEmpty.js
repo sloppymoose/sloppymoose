@@ -1,4 +1,5 @@
-import { Component, StyleSheet, Text, View } from 'react-native';
+import { Component } from 'react';
+import { StyleSheet, Text, View } from 'react-native';
 
 const baseStyles = StyleSheet.create({
   root: {

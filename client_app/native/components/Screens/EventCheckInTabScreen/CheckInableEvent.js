@@ -1,15 +1,8 @@
-import {
-  Component,
-  Navigator,
-  PropTypes,
-  StyleSheet,
-  Text,
-  VibrationIOS,
-  View
-} from 'react-native';
+import { Component, PropTypes } from 'react';
 import { EventCheckInButton } from '../../Buttons';
 import Immutable from 'immutable';
 import ImmutablePropTypes from 'react-immutable-proptypes';
+import { Navigator, StyleSheet, Text, VibrationIOS, View } from 'react-native';
 
 const baseStyles = StyleSheet.create({
   action: {

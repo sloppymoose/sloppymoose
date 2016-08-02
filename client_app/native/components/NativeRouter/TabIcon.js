@@ -1,4 +1,5 @@
-import { Component, PropTypes, Text } from 'react-native';
+import { Component, PropTypes } from 'react';
+import { Text } from 'react-native';
 
 const baseStyles = {
   selected: {

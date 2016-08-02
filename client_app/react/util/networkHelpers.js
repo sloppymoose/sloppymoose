@@ -12,6 +12,9 @@ import UserActions from '../actionTypes/UserActions';
 import { NativeModules } from 'react-native';
 const { EnvironmentManager } = NativeModules;
 
+if(!EnvironmentManager) {
+  throw new Error(`EnvironmentManager not found! Make sure that EnvironmentManager.m is listed as a Compiled Source in the XCode Project's Build Phases`);
+}
 if(!EnvironmentManager.apiOrigin) {
   throw new Error(`ApiOriginNotFound: No apiOrigin value was found in EnvironmentManager. Ensure that EnvironmentManager.m has been generated (via fastlane) and that the value is defined in the appropriate .env file for the ${EnvironmentManager.environment} environment.`);
 }

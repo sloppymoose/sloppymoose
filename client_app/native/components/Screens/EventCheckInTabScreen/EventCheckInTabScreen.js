@@ -1,20 +1,14 @@
-import {
-  Component,
-  Navigator,
-  PropTypes,
-  StyleSheet,
-  View
-} from 'react-native';
+import { Component, PropTypes } from 'react';
 import emptyFn from 'empty/function';
 import Immutable from 'immutable';
 import ImmutablePropTypes from 'react-immutable-proptypes';
 import { InRangeEvents } from './InRangeEvents';
+import { StyleSheet, View } from 'react-native';
 import { NoInRangeEvents } from './NoInRangeEvents';
 
 const baseStyles = StyleSheet.create({
   root: {
-    flex: 1,
-    marginTop: 20 + Navigator.NavigationBar.Styles.General.NavBarHeight
+    flex: 1
   }
 });
 

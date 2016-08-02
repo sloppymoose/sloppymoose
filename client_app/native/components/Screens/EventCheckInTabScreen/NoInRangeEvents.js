@@ -1,10 +1,5 @@
-import {
-  Component,
-  Image,
-  StyleSheet,
-  Text,
-  View
-} from 'react-native';
+import { Component } from 'react';
+import { Image, StyleSheet, Text, View } from 'react-native';
 
 const baseStyles = StyleSheet.create({
   content: {
@@ -16,6 +11,7 @@ const baseStyles = StyleSheet.create({
     justifyContent: 'flex-end'
   },
   paragraph: {
+    backgroundColor: 'transparent',
     margin: 10,
     paddingLeft: 40,
     paddingRight: 40,
@@ -29,6 +25,7 @@ const baseStyles = StyleSheet.create({
     height: null
   },
   title: {
+    backgroundColor: 'transparent',
     fontSize: 22,
     color: 'white'
   }

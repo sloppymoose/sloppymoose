@@ -1,6 +1,7 @@
-import { Component, PropTypes, StyleSheet, Text, View } from 'react-native';
+import { Component, PropTypes } from 'react';
 import emptyObj from 'empty/object';
 import { get } from 'lodash';
+import { StyleSheet, Text, View } from 'react-native';
 
 const baseStyles = StyleSheet.create({
   name: {

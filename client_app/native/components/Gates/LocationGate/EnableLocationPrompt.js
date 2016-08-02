@@ -1,14 +1,9 @@
 import Button from 'apsl-react-native-button';
-import {
-  Component,
-  PropTypes,
-  StyleSheet,
-  Text,
-  View
-} from 'react-native';
+import { Component, PropTypes } from 'react';
 import emptyFn from 'empty/function';
 import Immutable from 'immutable';
 import ImmutablePropTypes from 'react-immutable-proptypes';
+import { StyleSheet, Text, View } from 'react-native';
 
 const baseStyles = StyleSheet.create({
   actions: {

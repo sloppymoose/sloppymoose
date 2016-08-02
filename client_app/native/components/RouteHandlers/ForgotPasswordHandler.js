@@ -1,6 +1,6 @@
 import { Actions } from 'react-native-router-flux';
-import { Component } from 'react-native';
-import { connect } from 'react-redux/native';
+import { Component } from 'react';
+import { connect } from 'react-redux';
 import emptyObj from 'empty/object';
 import { ForgotPasswordScreen } from '../Screens';
 

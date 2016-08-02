@@ -1,8 +1,8 @@
 import { Actions } from 'react-native-router-flux';
 import { bindActionCreators } from 'redux';
 import { LocationGate } from '../Gates';
-import { Component, PropTypes } from 'react-native';
-import { connect } from 'react-redux/native';
+import { Component, PropTypes } from 'react';
+import { connect } from 'react-redux';
 import { EventCheckInTabScreen } from '../Screens';
 import { fetchActiveEvents } from '../../../react/actions/EventActions';
 import { isTabVisible } from '../../../react/util/navigationHelpers';

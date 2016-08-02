@@ -1,11 +1,5 @@
-import {
-  Component,
-  PropTypes,
-  StyleSheet,
-  Switch,
-  TouchableWithoutFeedback,
-  View
-} from 'react-native';
+import { Component, PropTypes } from 'react';
+import { StyleSheet, Switch, TouchableWithoutFeedback, View } from 'react-native';
 import { FormField } from './FormField';
 
 const baseStyles = StyleSheet.create({

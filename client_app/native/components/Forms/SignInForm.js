@@ -1,12 +1,6 @@
-import {
-  Alert,
-  Component,
-  PropTypes,
-  StyleSheet,
-  TextInput,
-  View
-} from 'react-native';
+import { Alert, StyleSheet, TextInput, View } from 'react-native';
 import Button from 'apsl-react-native-button';
+import { Component, PropTypes } from 'react';
 import emptyFn from 'empty/function';
 import HttpError from 'standard-http-error';
 import Immutable from 'immutable';

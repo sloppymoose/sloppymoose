@@ -1,13 +1,6 @@
-import {
-  Component,
-  Modal,
-  PropTypes,
-  ScrollView,
-  StyleSheet,
-  Text,
-  View
-} from 'react-native';
+import { Component, PropTypes } from 'react';
 import emptyFn from 'empty/function';
+import { Modal, ScrollView, StyleSheet, Text, View } from 'react-native';
 import NavigationBar from 'react-native-navbar';
 
 const baseStyles = StyleSheet.create({
@@ -38,7 +31,7 @@ export class SafetyWaiverModal extends Component {
   render() {
     return (
       <Modal
-        animated
+        animationType="slide"
         visible={this.props.visible}
       >
         <NavigationBar

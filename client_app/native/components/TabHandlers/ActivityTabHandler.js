@@ -1,7 +1,7 @@
 import { ActivityTabScreen } from '../Screens';
 import { bindActionCreators } from 'redux';
-import { Component, PropTypes } from 'react-native';
-import { connect } from 'react-redux/native';
+import { Component, PropTypes } from 'react';
+import { connect } from 'react-redux';
 import { fetchCheckIns } from '../../../react/actions/CheckInActions';
 import { isTabVisible } from '../../../react/util/navigationHelpers';
 

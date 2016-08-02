@@ -1,11 +1,6 @@
-import {
-  Component,
-  Navigator,
-  PropTypes,
-  StyleSheet,
-  View
-} from 'react-native';
 import { ActivityList } from '../Lists';
+import { Component, PropTypes } from 'react';
+import { Navigator, StyleSheet, View } from 'react-native';
 
 const baseStyles = StyleSheet.create({
   content: {
