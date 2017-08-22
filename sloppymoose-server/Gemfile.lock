@@ -273,5 +273,8 @@ DEPENDENCIES
   sinatra (= 1.4.7)
   spring
 
+RUBY VERSION
+   ruby 2.3.0p0
+
 BUNDLED WITH
-   1.11.2
+   1.15.3
