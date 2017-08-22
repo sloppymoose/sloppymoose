@@ -2,6 +2,18 @@
   "name": "sloppymoose-react-native",
   "version": "0.1.0",
   "private": true,
+  "description": "Sloppy Moose Running Club Event Check-In Application",
+  "author": "Derek Lindahl <derek.lindahl@gmail.com>",
+  "bugs": "info@sloppymoose.club",
+  "contributors": ["Derek Lindahl <derek.lindahl@gmail.com>"],
+  "email": "info@sloppymoose.club",
+  "homepage": "http://sloppymoose.club",
+  "keywords": [],
+  "licenses": [],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/sloppymoose/sloppymoose.git"
+  },
   "devDependencies": {
     "babel-preset-react-native-stage-0": "^1.0.1",
     "jest-expo": "~20.0.0",
