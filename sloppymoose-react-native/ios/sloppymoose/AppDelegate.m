@@ -10,6 +10,10 @@
 #import "AppDelegate.h"
 
 #import <React/RCTBundleURLProvider.h>
+
+// Next line is for `react-native-navigation`
+#import "RCCManager.h"
+
 #import <React/RCTRootView.h>
 
 @implementation AppDelegate
@@ -20,6 +24,16 @@
 
   jsCodeLocation = [[RCTBundleURLProvider sharedSettings] jsBundleURLForBundleRoot:@"index.ios" fallbackResource:nil];
 
+
+  // The following section is part of the `react-native-navigation` installation
+  // instructions
+  // **********************************************
+  // *** DON'T MISS: THIS IS HOW WE BOOTSTRAP *****
+  // **********************************************
+  self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
+  self.window.backgroundColor = [UIColor whiteColor];
+  [[RCCManager sharedInstance] initBridgeWithBundleURL:jsCodeLocation launchOptions:launchOptions];
+  /*
   RCTRootView *rootView = [[RCTRootView alloc] initWithBundleURL:jsCodeLocation
                                                       moduleName:@"sloppymoose"
                                                initialProperties:nil
@@ -31,6 +45,8 @@
   rootViewController.view = rootView;
   self.window.rootViewController = rootViewController;
   [self.window makeKeyAndVisible];
+  */
+
   return YES;
 }
 
