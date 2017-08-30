@@ -30,6 +30,7 @@
     "jest-expo": "~20.0.0",
     "npm-run-all": "^4.0.2",
     "prettier-eslint-cli": "^4.2.1",
+    "react-native-dotenv": "^0.1.0",
     "react-test-renderer": "16.0.0-alpha.12"
   },
   "scripts": {
@@ -44,9 +45,23 @@
     "preset": "jest-expo"
   },
   "dependencies": {
+    "apsl-react-native-button": "^3.1.0",
+    "empty": "^0.10.1",
+    "fetch-oauth2": "^0.1.5",
+    "keymirror": "^0.1.1",
+    "lodash": "^4.17.4",
     "prop-types": "^15.5.10",
+    "querystring": "^0.2.0",
     "react": "16.0.0-alpha.12",
     "react-native": "^0.47.0",
-    "react-native-navigation": "^1.1.206"
+    "react-native-navigation": "^1.1.206",
+    "react-native-storage": "^0.2.2",
+    "react-redux": "^5.0.6",
+    "react-refetch": "^1.0.0",
+    "redux": "^3.7.2",
+    "redux-thunk": "^2.2.0",
+    "standard-http-error": "^2.0.0",
+    "tcomb-form-native": "^0.6.9",
+    "url-join": "^2.0.2"
   }
 }

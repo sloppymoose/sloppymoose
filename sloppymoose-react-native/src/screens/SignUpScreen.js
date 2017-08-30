@@ -1,52 +1,37 @@
-import { Button, Text } from 'react-native'
-// import Navigator from 'native-navigation'
+import { Button, StyleSheet, Text, View } from 'react-native'
+import { object } from 'prop-types'
+import { goToSignIn } from '../utils/navigationHelpers'
+import ProtectedContent from '../components/ProtectedContent'
 import React from 'react'
-import Screen from '../components/Screen'
 
-import { Navigation } from 'react-native-navigation'
-
-export default class SplashScreen extends React.Component {
-  componentWillMount () {
-    // this.props.fetchShirtSizes();
-    //   // .catch(console.error); // TODO: ¯\_(ツ)_/¯
+export default class SignUpScreen extends React.Component {
+  static propTypes = {
+    navigator: object.isRequired
   }
-  handleGoodSignUp = () => {
-    console.info('SIGNED UP!', this.props.navigator)
-    this.props.navigator.setOnNavigatorEvent(this.onNavigatorEvent)
-    // this.props.navigator.pop()
-    Navigation.startTabBasedApp({
-      tabs: [
-        {
-          label: 'Activity',
-          screen: 'SM/Activity',
-          title: 'Activity Feed'
-        },
-        {
-          label: 'Check In',
-          screen: 'SM/CheckIn',
-          title: 'CheckIn'
-        },
-        {
-          label: 'Badges',
-          screen: 'SM/Badges',
-          title: 'Badges'
-        }
-      ]
-    })
-  }
-  handleBadSignUp = () => {
-    alert('Nope! Try Again.')
-  }
-  onNavigatorEvent (e) {
-    console.info('NAV?', e)
+  handleExistingUser = () => {
+    goToSignIn(this.props.navigator, 'push')
   }
   render () {
     return (
-      <Screen title="Sign Up">
-        <Text>Sign Up Screen</Text>
-        <Button onPress={this.handleGoodSignUp} title="Sign Up OK" />
-        <Button onPress={this.handleBadSignUp} title="Sign Up Fail" />
-      </Screen>
+      <View style={styles.container}>
+        <ProtectedContent navigator={this.props.navigator} />
+        <View style={styles.content}>
+          <Text>Sign Up Screen</Text>
+        </View>
+        <View>
+          <Text>Already have an account?</Text>
+          <Button onPress={this.handleExistingUser} title="Sign In" />
+        </View>
+      </View>
     )
   }
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1
+  },
+  content: {
+    flex: 1
+  }
+})

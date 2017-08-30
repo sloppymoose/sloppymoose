@@ -30,3 +30,6 @@ ios/main.jsbundle
 .idea
 .gradle
 local.properties
+
+# Dotenv
+.env.development
