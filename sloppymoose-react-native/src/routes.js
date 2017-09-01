@@ -1,6 +1,7 @@
 export const ACTIVITY = 'SM/Activity'
 export const BADGES = 'SM/Badges'
 export const CHECK_IN = 'SM/CheckIn'
+export const CHECK_IN_MODAL = 'SM/CheckInModal'
 export const CHECK_IN_OK = 'SM/CheckInOk'
 export const FORGOT_PASS = 'SM/ForgotPassword'
 export const SIGN_IN = 'SM/SignIn'

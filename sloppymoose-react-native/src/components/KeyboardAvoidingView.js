@@ -4,8 +4,7 @@ import {
   Animated,
   Keyboard,
   KeyboardAvoidingView as RNKeyboardAvoidingView,
-  StyleSheet,
-  Text
+  StyleSheet
 } from 'react-native'
 
 // From https://medium.freecodecamp.org/how-to-make-your-react-native-app-respond-gracefully-when-the-keyboard-pops-up-7442c1535580

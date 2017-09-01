@@ -120,11 +120,7 @@ class SignInForm extends React.Component {
 export default unsignedConnect(props => ({
   signInUser: (email, password) => ({
     signInUserResponse: {
-      // then: props.onSuccess,
-      then: response => {
-        console.info('THEN', response, props.onSuccess)
-        props.onSuccess(response)
-      },
+      then: props.onSuccess,
       catch: handleSignInError,
       url: '/oauth/token',
       method: 'POST',

@@ -26,7 +26,6 @@ class SignInScreen extends React.Component {
     goToForgotPassword(this.props.navigator, 'push')
   }
   handleSignIn = authentication => {
-    console.info('HANDLE SING IN')
     this.props.persistAuthentication(authentication)
   }
   render () {

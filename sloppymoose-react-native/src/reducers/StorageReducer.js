@@ -14,10 +14,11 @@ function initialState () {
 }
 
 function signedIn (state, payload) {
+  if (!payload.expires_in) {
+    throw new Error('Invalid authentication token format')
+  }
   dataStore.save({
-    // TODO: Tokens expire quickly and are automatically refreshed. Expiring at
-    // the Store level causes more complexity than its worth.
-    // expires: payload.expires_in,
+    expires: payload.expires_in * 1000,
     key: StorageKeys.USER_CREDENTIALS,
     data: payload
   })

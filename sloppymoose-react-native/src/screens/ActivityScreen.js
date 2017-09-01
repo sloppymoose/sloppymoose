@@ -9,19 +9,20 @@ class ActivityScreen extends React.Component {
     activitiesFetch: instanceOf(PromiseState)
   }
   render () {
+    const { activitiesFetch } = this.props
     return (
       <View style={styles.container}>
         <Text style={styles.text}>ACTIVITIES</Text>
         <Text>
-          Pending? {String(this.props.activitiesFetch.pending)}
+          Pending? {String(activitiesFetch.pending)}
         </Text>
         <Text>
-          Fulfilled? {String(this.props.activitiesFetch.fulfilled)} -{' '}
-          {JSON.stringify(this.props.activitiesFetch.value)}
+          Fulfilled? {String(activitiesFetch.fulfilled)} -{' '}
+          {JSON.stringify(activitiesFetch.value)}
         </Text>
         <Text>
-          Rejected? {String(this.props.activitiesFetch.rejected)} -{' '}
-          {String(this.props.activitiesFetch.reason)}
+          Rejected? {String(activitiesFetch.rejected)} -{' '}
+          {String(activitiesFetch.reason)}
         </Text>
       </View>
     )

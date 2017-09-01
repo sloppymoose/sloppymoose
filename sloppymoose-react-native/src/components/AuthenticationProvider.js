@@ -2,7 +2,10 @@ import { Alert } from 'react-native'
 import { bindActionCreators } from 'redux'
 import { bool, func, node } from 'prop-types'
 import { connect } from 'react-redux'
-import { restoreAuthentication } from '../actions/UserActions'
+import {
+  clearAuthentication,
+  restoreAuthentication
+} from '../actions/UserActions'
 import React from 'react'
 
 function getState (store) {
@@ -12,25 +15,39 @@ function getState (store) {
 }
 
 function getActions (dispatch) {
-  return bindActionCreators({ restoreAuthentication }, dispatch)
+  return bindActionCreators(
+    { clearAuthentication, restoreAuthentication },
+    dispatch
+  )
 }
 
 class AuthenticationProvider extends React.Component {
   static propTypes = {
     authenticated: bool,
     children: node,
+    clearAuthentication: func,
     restoreAuthentication: func
   }
   componentWillMount () {
-    this.restoreAuthentication()
+    if (this.props.authenticated === null) {
+      this.restoreAuthentication()
+    }
   }
   handleAuthRestoration = auth => {
-    console.info('AuthenticationProvider#handleAuthRestoration', auth)
+    // No-op
   }
   handleAuthError = err => {
+    if (err instanceof Error) {
+      return Alert.alert('Unexpected Error', err.message, [
+        { text: 'OK', onPress: this.handleSignOut }
+      ])
+    }
     Alert.alert('Authentication Error', err.message, [
-      { text: 'Try Again', onPress: this.restoreAuthentication }
+      { text: 'Sign In', onPress: this.handleSignOut }
     ])
+  }
+  handleSignOut = () => {
+    this.props.clearAuthentication()
   }
   restoreAuthentication = () => {
     return this.props
