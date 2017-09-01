@@ -12,7 +12,7 @@ export const DefaultHeaders = {
   'Content-Type': 'application/json'
 }
 
-function fetchToken () {
+export function fetchToken () {
   return dataStore
     .load({
       autoSync: false,
@@ -27,7 +27,7 @@ function handleNetworkError (err) {
     // If token refresh is 401, then the refresh token has expired. Return NULL
     // so that the appropriate sign in/up workflow can execute
     return null
-  } else if (err.message === 'Network request failed') {
+  } else {
     return new Promise((resolve, reject) => {
       Alert.alert('Sloppy Network Error', err.message, [
         {
@@ -53,21 +53,34 @@ function handleTokenStoreError (err) {
   }
 }
 
-function generateToken (token) {
-  if (!token) {
+export function generateToken (tokenOrErr) {
+  if (!tokenOrErr) {
+    /* istanbul ignore next */
     throw new Error('cannot refresh empty token')
   }
-  return requestTokenRefresh(token)
-    .then(handleFetchResponse, handleNetworkError)
+  if (tokenOrErr instanceof Error) {
+    throw tokenOrErr
+  }
+  return requestTokenRefresh(tokenOrErr)
+    .then(handleFetchResponse)
     .then(newTokens => ({
-      ...token,
+      ...tokenOrErr,
       ...newTokens
     }))
+    .catch(handleNetworkError)
 }
 
 function recoverExpiredToken (err) {
   let [_, payload] = err.message.match(/Params: ({+.*}$)/)
   payload = JSON.parse(payload)
+  if (typeof payload.ret === 'object') {
+    // TODO: This happens during testing for some reason. I think using
+    // `node-localstorage` as a polyfill for RN's AsyncStorage is storing the
+    // data in a slightly different format. Its important to note this
+    // difference by not skipping the code coverage of the non-test logic flow
+    // to highlight that it is important but untested code.
+    return payload.ret.rawData
+  }
   const expiredData = JSON.parse(payload.ret)
   return expiredData.rawData
 }

@@ -33,3 +33,10 @@ local.properties
 
 # Dotenv
 .env.development
+
+# Jest
+coverage
+
+# node-localstorage
+# (used for testing AsyncStorage)
+tmp/test-localStorage
