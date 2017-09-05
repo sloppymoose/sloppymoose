@@ -42,7 +42,7 @@ class AuthenticationProvider extends React.Component {
         { text: 'OK', onPress: this.handleSignOut }
       ])
     }
-    Alert.alert('Authentication Error', err.message, [
+    Alert.alert('Authentication Error', '', [
       { text: 'Sign In', onPress: this.handleSignOut }
     ])
   }

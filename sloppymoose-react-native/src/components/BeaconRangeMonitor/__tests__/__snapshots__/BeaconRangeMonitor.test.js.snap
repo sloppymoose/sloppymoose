@@ -1,0 +1,129 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`BeaconRangeMonitor #componentWillMount starts ranging the specified beacons 1`] = `
+Array [
+  Array [
+    Object {
+      "identifier": "REGION A",
+      "major": 1,
+      "minor": 1,
+      "uuid": "REGION_A_1_1",
+    },
+  ],
+]
+`;
+
+exports[`BeaconRangeMonitor #componentWillReceiveProps with a different set of regions to range does not modify the ranging of legacy regions 1`] = `
+Array [
+  Array [
+    Object {
+      "identifier": "REGION A",
+      "major": 1,
+      "minor": 1,
+      "uuid": "REGION_A_1_1",
+    },
+  ],
+  Array [
+    Object {
+      "identifier": "REGION B",
+      "major": 1,
+      "minor": 1,
+      "uuid": "REGION_B_1_1",
+    },
+  ],
+  Array [
+    Object {
+      "identifier": "REGION C",
+      "major": 1,
+      "minor": 1,
+      "uuid": "REGION_C_1_1",
+    },
+  ],
+]
+`;
+
+exports[`BeaconRangeMonitor #componentWillReceiveProps with a different set of regions to range starts ranging the newly added regions 1`] = `
+Array [
+  Array [
+    Object {
+      "identifier": "REGION C",
+      "major": 1,
+      "minor": 1,
+      "uuid": "REGION_C_1_1",
+    },
+  ],
+]
+`;
+
+exports[`BeaconRangeMonitor #componentWillReceiveProps with a different set of regions to range stops ranging the deprecated regions 1`] = `
+Array [
+  Array [
+    Object {
+      "identifier": "REGION A",
+      "major": 1,
+      "minor": 1,
+      "uuid": "REGION_A_1_1",
+    },
+  ],
+]
+`;
+
+exports[`BeaconRangeMonitor #componentWillReceiveProps with no change in monitored regions does not stop or restart ranging of existing regions 1`] = `
+Array [
+  Array [
+    Object {
+      "identifier": "REGION A",
+      "major": 1,
+      "minor": 1,
+      "uuid": "REGION_A_1_1",
+    },
+  ],
+  Array [
+    Object {
+      "identifier": "REGION B",
+      "major": 1,
+      "minor": 1,
+      "uuid": "REGION_B_1_1",
+    },
+  ],
+]
+`;
+
+exports[`BeaconRangeMonitor #componentWillReceiveProps with no change in monitored regions does not stop or restart ranging of existing regions 2`] = `Array []`;
+
+exports[`BeaconRangeMonitor #componentWillUnmount stops ranging the specified beacons 1`] = `
+Array [
+  Array [
+    Object {
+      "identifier": "REGION A",
+      "major": 1,
+      "minor": 1,
+      "uuid": "REGION_A_1_1",
+    },
+  ],
+]
+`;
+
+exports[`BeaconRangeMonitor when one of two in-range beacons moves out of range keeps the region in the list of in-range regions 1`] = `
+Array [
+  Object {
+    "identifier": "REGION A",
+    "major": 1,
+    "minor": 1,
+    "uuid": "REGION_A_1_1",
+  },
+]
+`;
+
+exports[`BeaconRangeMonitor when one of two in-range beacons moves out of range removes the out-of-range beacon from the list of in-range beacons 1`] = `
+Array [
+  Object {
+    "accuracy": 1,
+    "major": 1,
+    "minor": 1,
+    "proximity": "immediate",
+    "rssi": 0,
+    "uuid": "REGION_A_1_1",
+  },
+]
+`;

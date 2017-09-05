@@ -20,18 +20,36 @@ function handleSignInError (err) {
   if (err instanceof HttpError) {
     switch (err.code) {
       case HttpError.UNAUTHORIZED:
-        Alert.alert('Oops!', 'Incorrect login informtion. Please try again.')
-        break
-      default:
-        Alert.alert(
-          'Unspecified Sign In Error',
-          err.message || 'Please try again later'
+        return Alert.alert(
+          'Oops!',
+          'Incorrect login informtion. Please try again.'
         )
     }
   }
+  Alert.alert(
+    'Unspecified Sign In Error',
+    err.message || 'Please try again later'
+  )
 }
 
-class SignInForm extends React.Component {
+@unsignedConnect(props => ({
+  signInUser: (email, password) => ({
+    signInUserResponse: {
+      then: props.onSuccess,
+      catch: handleSignInError,
+      url: '/oauth/token',
+      method: 'POST',
+      body: {
+        grant_type: 'password',
+        user: {
+          email,
+          password
+        }
+      }
+    }
+  })
+}))
+export default class SignInForm extends React.Component {
   static propTypes = {
     onForgotPassword: func.isRequired,
     onSuccess: func.isRequired,
@@ -71,7 +89,10 @@ class SignInForm extends React.Component {
     this.props.onForgotPassword()
   }
   handleSubmit = () => {
-    const { email, password } = this.state.value
+    // const { email, password } = this.state.value
+    // TODO: DO NOT COMMIT
+    let email = 'derek.lindahl@gmail.com'
+    let password = 'password1234'
     this.props.signInUser(email.trim(), password.trim())
   }
   focus = field => {
@@ -116,24 +137,6 @@ class SignInForm extends React.Component {
     )
   }
 }
-
-export default unsignedConnect(props => ({
-  signInUser: (email, password) => ({
-    signInUserResponse: {
-      then: props.onSuccess,
-      catch: handleSignInError,
-      url: '/oauth/token',
-      method: 'POST',
-      body: {
-        grant_type: 'password',
-        user: {
-          email,
-          password
-        }
-      }
-    }
-  })
-}))(SignInForm)
 
 const styles = StyleSheet.create({
   forgotPass: {

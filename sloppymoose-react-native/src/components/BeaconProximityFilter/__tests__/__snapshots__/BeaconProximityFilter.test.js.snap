@@ -1,0 +1,108 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`BeaconProximityFilter #componentWillMount sorts regions by proximity 1`] = `
+Array [
+  Object {
+    "accuracy": 100,
+    "major": 1,
+    "minor": 2,
+    "proximity": "near",
+    "rssi": 0,
+    "uuid": "REGION_B_1_1",
+  },
+  Object {
+    "accuracy": 1,
+    "major": 1,
+    "minor": 1,
+    "proximity": "near",
+    "rssi": 0,
+    "uuid": "REGION_B_1_1",
+  },
+  Object {
+    "accuracy": 100,
+    "major": 1,
+    "minor": 2,
+    "proximity": "far",
+    "rssi": 0,
+    "uuid": "REGION_A_1_1",
+  },
+  Object {
+    "accuracy": 1,
+    "major": 1,
+    "minor": 1,
+    "proximity": "far",
+    "rssi": 0,
+    "uuid": "REGION_A_1_1",
+  },
+]
+`;
+
+exports[`BeaconProximityFilter #componentWillMount sorts regions by proximity 2`] = `
+Array [
+  Object {
+    "identifier": "REGION B",
+    "major": 1,
+    "minor": 1,
+    "uuid": "REGION_B_1_1",
+  },
+  Object {
+    "identifier": "REGION A",
+    "major": 1,
+    "minor": 1,
+    "uuid": "REGION_A_1_1",
+  },
+]
+`;
+
+exports[`BeaconProximityFilter #componentWillReceiveProps with new ranged beacon regions re-sorts the ranged beacon and regions 1`] = `
+Object {
+  "nearestBeacons": Array [
+    Object {
+      "accuracy": 100,
+      "major": 1,
+      "minor": 2,
+      "proximity": "near",
+      "rssi": 0,
+      "uuid": "REGION_B_1_1",
+    },
+    Object {
+      "accuracy": 1,
+      "major": 1,
+      "minor": 1,
+      "proximity": "near",
+      "rssi": 0,
+      "uuid": "REGION_B_1_1",
+    },
+    Object {
+      "accuracy": 100,
+      "major": 1,
+      "minor": 2,
+      "proximity": "far",
+      "rssi": 0,
+      "uuid": "REGION_A_1_1",
+    },
+    Object {
+      "accuracy": 1,
+      "major": 1,
+      "minor": 1,
+      "proximity": "far",
+      "rssi": 0,
+      "uuid": "REGION_A_1_1",
+    },
+  ],
+  "nearestRegions": Array [
+    Object {
+      "identifier": "REGION B",
+      "major": 1,
+      "minor": 1,
+      "uuid": "REGION_B_1_1",
+    },
+    Object {
+      "identifier": "REGION A",
+      "major": 1,
+      "minor": 1,
+      "uuid": "REGION_A_1_1",
+    },
+  ],
+}
+`;
