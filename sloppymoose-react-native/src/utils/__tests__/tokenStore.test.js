@@ -4,6 +4,22 @@ import { fetchToken, generateToken } from '../tokenStore'
 import StorageKeys from '../../constants/StorageKeys'
 import { tokenStorage } from 'fetch-oauth2'
 
+jest.mock('react-native', () => {
+  const HttpError = require('standard-http-error')
+  const LocalStorage = require('node-localstorage').LocalStorage
+  return {
+    Alert: {
+      alert: (title, message, buttons) => {
+        if (buttons[0].error instanceof HttpError) {
+          return buttons[0].onPress()
+        }
+        throw buttons[0].error
+      }
+    },
+    AsyncStorage: new LocalStorage('./tmp/test-localStorage')
+  }
+})
+
 const DefaultToken = Object.freeze({
   access_token: 'abc123',
   created_at: Math.floor(Date.now() / 1000),
@@ -20,6 +36,7 @@ const RefreshedToken = Object.freeze({
 
 describe('Token Store', () => {
   beforeEach(() => {
+    jest.resetAllMocks()
     this.tokenStore = tokenStorage({ fetchToken, generateToken })
   })
   afterEach(() => {
@@ -56,6 +73,9 @@ describe('Token Store', () => {
     describe('when an old token expires from the data store', () => {
       beforeEach(() => {
         this.request = fetch.mockResponseOnce(JSON.stringify(RefreshedToken), {
+          headers: {
+            'Content-Type': 'application/json'
+          },
           status: 200
         })
         return dataStore.save({
@@ -89,6 +109,9 @@ describe('Token Store', () => {
     describe('when an old token expires from its own properties', () => {
       beforeEach(() => {
         fetch.mockResponseOnce(JSON.stringify(RefreshedToken), {
+          headers: {
+            'Content-Type': 'application/json'
+          },
           status: 200
         })
         return dataStore.save({

@@ -31,6 +31,7 @@ function handleNetworkError (err) {
     return new Promise((resolve, reject) => {
       Alert.alert('Sloppy Network Error', err.message, [
         {
+          error: err,
           text: 'OK',
           onPress: reject
         }
