@@ -1,3 +1,4 @@
+import { API_ORIGIN } from 'react-native-dotenv'
 import { dataStore } from '../../reducers/StorageReducer'
 import { fetchToken, generateToken } from '../tokenStore'
 import StorageKeys from '../../constants/StorageKeys'
@@ -67,7 +68,7 @@ describe('Token Store', () => {
         return this.tokenStore.getToken().then(token => {
           expect(
             this.request
-          ).toHaveBeenCalledWith('http://localhost:5000/oauth/token', {
+          ).toHaveBeenCalledWith(`${API_ORIGIN}/oauth/token`, {
             body: '{"grant_type":"refresh_token","refresh_token":"456def"}',
             headers: {
               Accept: 'application/json',
