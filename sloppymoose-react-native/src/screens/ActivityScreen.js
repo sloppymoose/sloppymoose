@@ -13,9 +13,7 @@ class ActivityScreen extends React.Component {
     return (
       <View style={styles.container}>
         <Text style={styles.text}>ACTIVITIES</Text>
-        <Text>
-          Pending? {String(activitiesFetch.pending)}
-        </Text>
+        <Text>Pending? {String(activitiesFetch.pending)}</Text>
         <Text>
           Fulfilled? {String(activitiesFetch.fulfilled)} -{' '}
           {JSON.stringify(activitiesFetch.value)}

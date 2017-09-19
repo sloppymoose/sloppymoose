@@ -35,7 +35,7 @@ class SignInScreen extends React.Component {
     return (
       <View style={styles.container}>
         <KeyboardAvoidingView heightMax={maxHeight} heightMin={minHeight}>
-          {height =>
+          {height => (
             <Animated.View style={[styles.wrapper, { height }]}>
               <Animated.Image
                 resizeMode="contain"
@@ -46,7 +46,8 @@ class SignInScreen extends React.Component {
                 onForgotPassword={this.handleForgotPassword}
                 onSuccess={this.handleSignIn}
               />
-            </Animated.View>}
+            </Animated.View>
+          )}
         </KeyboardAvoidingView>
       </View>
     )
