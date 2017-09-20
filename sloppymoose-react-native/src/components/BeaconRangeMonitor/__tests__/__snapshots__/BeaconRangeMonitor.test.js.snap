@@ -118,11 +118,11 @@ Array [
 exports[`BeaconRangeMonitor when one of two in-range beacons moves out of range removes the out-of-range beacon from the list of in-range beacons 1`] = `
 Array [
   Object {
-    "accuracy": 1,
+    "accuracy": 0.001,
     "major": 1,
     "minor": 1,
     "proximity": "immediate",
-    "rssi": 0,
+    "rssi": -54,
     "uuid": "REGION_A_1_1",
   },
 ]

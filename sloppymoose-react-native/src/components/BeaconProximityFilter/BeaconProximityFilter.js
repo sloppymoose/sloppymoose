@@ -17,13 +17,10 @@ function byProximity (beaconA, beaconB) {
   if (PROXIMITY[beaconA.proximity] > PROXIMITY[beaconB.proximity]) {
     return 1
   }
-  if (beaconA.accuracy > beaconB.accuracy) {
-    return -1
-  }
-  if (beaconA.accuracy > beaconB.accuracy) {
-    return -1
-  }
   if (beaconA.accuracy < beaconB.accuracy) {
+    return -1
+  }
+  if (beaconA.accuracy > beaconB.accuracy) {
     return 1
   }
   return 0
