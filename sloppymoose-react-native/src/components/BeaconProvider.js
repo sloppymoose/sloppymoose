@@ -17,8 +17,8 @@ export default class BeaconProvider extends React.Component {
       <BeaconRangeMonitor regions={this.props.regions}>
         {({ beaconsInRange, regionsInRange }) => (
           <BeaconProximityFilter
-            beacons={beaconsInRange}
-            regions={regionsInRange}
+            rangedBeacons={beaconsInRange}
+            rangedRegions={regionsInRange}
           >
             {({ nearestBeacons, nearestRegions }) =>
               this.props.children({
