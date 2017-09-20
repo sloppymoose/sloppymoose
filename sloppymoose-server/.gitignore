@@ -22,3 +22,6 @@
 # OSX
 #
 .DS_Store
+
+# Google Authentication
+google_service_account.json

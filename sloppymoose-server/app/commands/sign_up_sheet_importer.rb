@@ -1,11 +1,19 @@
+require 'awesome_print'
+require 'google_drive'
+require 'sheet_mapper'
+
 class SignUpSheetImporter
   SheetBlackList = ['Orirginal', 'Sheet2']
   LegacySheetTitle = '2014'
 
+  def initialize
+    @auth_service_recommended = false
+  end
+
   def perform(oauth_client_id, spreadsheet_key, key_path = '')
     @oauth_client_id, @spreadsheet_key, @key_path = oauth_client_id, spreadsheet_key, key_path
     strategy, params = prompt_for_strategy!
-    @google_api = strategy.new.perform(*params.values)
+    @google_drive_session = strategy.new.perform(*params.values)
     fetch_sign_ins!.map(&method(:process_sign_ins))
   end
 
@@ -15,7 +23,7 @@ class SignUpSheetImporter
     options = {
       mapper: SignInSheetMapper,
       key: @spreadsheet_key,
-      session: @google_api.session
+      session: @google_drive_session
     }
     sheet = SheetMapper::Spreadsheet.new(options)
     sheet.spreadsheet.worksheets.reject do |worksheet|
@@ -60,34 +68,26 @@ class SignUpSheetImporter
   def prompt_for_strategy!
     highline = HighLine.new
     highline.choose do |menu|
-      menu.prompt = "Please choose an OAuth Strategy:  "
-      menu.choice(service_label) do
+      menu.prompt = "Choose an authentication strategy:"
+      menu.choice(service_account_label) do
         [
-          GoogleAuthService,
-          oauth_client_id: @oauth_client_id,
-          service_email: ENV['GOOGLE_SERVICE_EMAIL'],
-          key_path: @key_path
-        ]
-      end
-      menu.choice(native_label) do
-        [
-          GoogleAuthNative,
-          oauth_client_id: @oauth_client_id,
-          oauth_client_secret: ENV['GOOGLE_CLIENT_SECRET']
+          GoogleServiceAccount,
+          config_path: service_account_config_path
         ]
       end
     end
   end
 
-  def native_label
-    lbl = 'User Consent'
-    lbl << ' (recommended)' if @key_path.blank?
-    lbl
+  def service_account_config_path
+    File.join(File.dirname(__FILE__), '..', '..', 'google_service_account.json')
   end
 
-  def service_label
-    lbl = 'Stored P12 Key'
-    lbl << ' (recommended)' unless @key_path.blank?
+  def service_account_label
+    lbl = 'Google Service Account'
+    if File.exists?(service_account_config_path)
+      @auth_service_recommended = true
+      lbl << ' (recommended)'
+    end
     lbl
   end
 
